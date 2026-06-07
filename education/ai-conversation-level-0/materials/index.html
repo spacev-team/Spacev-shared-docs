@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI와 대화하는 가장 쉬운 기술 · 같이 볼 자료</title>
+    <link rel="stylesheet" href="../../../shared/styles/base.css" />
+    <link rel="stylesheet" href="./materials.css" />
+  </head>
+  <body>
+    <main class="material-shell">
+      <nav class="top-nav">
+        <a href="../">← 자료 홈</a>
+        <a href="../slides/">발표자료 보기</a>
+      </nav>
+
+      <header class="material-hero">
+        <p class="eyebrow">같이 볼 자료</p>
+        <h1>AI가 왜 이러지?</h1>
+        <p class="lead">
+          AI를 쓰다 보면 누구나 답답한 순간을 만나요. 그 장면을 먼저 보고, 왜 그런 일이 생기는지,
+          다음에는 어떤 기준을 같이 줘야 하는지 정리해요. 마지막에는 내 AI에 넣을 지침과 메모리 초안까지 가져가요.
+        </p>
+      </header>
+
+      <section class="material-section">
+        <h2>이 자료를 만든 방식</h2>
+        <div class="process-list">
+          <span>원하는 느낌은 아니라고 말해요</span>
+          <span>답답했던 장면을 먼저 꺼내요</span>
+          <span>주제를 다시 묶어요</span>
+          <span>정해진 내용만 반영해요</span>
+          <span>화면을 보고 다시 고쳐요</span>
+        </div>
+        <p class="section-note">
+          AI에게 결과물을 맡길 때도 같아요. 바로 “만들어줘”라고 하기보다, 어떤 방향의 결과물이 필요한지 먼저 맞추면 결과가 달라져요.
+        </p>
+      </section>
+
+
+      <section class="material-section">
+        <h2>먼저 큰 그림</h2>
+        <p class="section-note">오늘 다루는 불편함은 따로 떨어진 문제가 아니에요. AI가 답을 만드는 방식, 대화를 기억하는 방식, 기준과 도구를 받는 방식으로 이어져요.</p>
+        <div class="principle-grid">
+          <article><strong>AI는 이어질 말을 만들어요</strong><p>정답 창고에서 꺼내기보다, 지금 문맥에서 자연스러운 답을 만들어내요.</p></article>
+          <article><strong>AI는 작업 기억을 보고 답해요</strong><p>대화, 지침, 예시가 컨텍스트 안에 쌓이고 길어지면 요약될 수 있어요.</p></article>
+          <article><strong>기준과 도구가 있어야 일해요</strong><p>원하는 형식, 제외 조건, 작업 공간을 줘야 답변을 넘어 결과물까지 만들 수 있어요.</p></article>
+        </div>
+      </section>
+
+      <section class="material-section">
+        <h2>1. AI가 말을 안 들어요</h2>
+        <p class="problem-quote">“하지 말라고 했는데 자꾸 계속해요.”</p>
+        <div class="issue-grid">
+          <article>
+            <strong>원인은 이거예요</strong>
+            <p>AI는 “하지 말 것”만 보면 빈자리를 자기 방식으로 채워요. 그래서 금지보다 “대신 어떻게 할지”가 같이 필요해요.</p>
+          </article>
+          <article>
+            <strong>지침이 필요한 이유예요</strong>
+            <p>매번 반복해서 말해야 하는 내 상황, 해야 할 것, 하지 말아야 할 것을 미리 적어두면 답변 품질이 안정돼요.</p>
+          </article>
+        </div>
+        <div class="instruction-example-block">
+          <div>
+            <strong>지침에는 이런 내용이 들어가요</strong>
+            <p>한 번만 쓸 기준은 요청문에 적고, 반복되는 기준은 <code>CLAUDE.md</code>, 프로젝트 지침, 맞춤 설정에 적어둬요.</p>
+          </div>
+          <pre><code># 작업 기준
+
+## 내 상황
+- 비개발자 대상 0레벨 강의자료를 만들고 있어요.
+- 어려운 용어보다 일상적인 예시를 먼저 보여줘요.
+
+## 해야 할 것
+- "~해요" 톤으로 자연스럽게 써요.
+- 추상 설명 뒤에는 Before/After 예시를 붙여요.
+- 필요하면 표, 코드 블럭, 도식으로 보여줘요.
+
+## 하지 말아야 할 것
+- 어색한 비유나 어려운 전문 용어는 피해주세요.
+- AI가 만든 것처럼 딱딱한 문장은 피해주세요.</code></pre>
+        </div>
+        <p class="section-note">지침은 결과를 보장하는 장치라기보다, 내가 원하는 퀄리티의 답변을 받을 확률을 높이는 장치예요.</p>
+        <div class="same-prompt-material">
+          <div class="prompt-line">
+            <strong>같은 프롬프트</strong>
+            <span>금요일 디자인 리뷰 일정을 팀 공지로 정리해줘</span>
+          </div>
+          <div class="applied-guideline-code material-guideline-code">
+            <div class="guideline-code-header">
+              <span></span><span></span><span></span>
+              <strong>CLAUDE.md에 추가된 지침</strong>
+            </div>
+            <pre><code>## 팀 공지 작성 기준
+- 말투: "~해요"로 부드럽게 써요.
+- 형식: 해야 할 일은 체크리스트로 보여줘요.
+- 제외: 긴 배경 설명은 빼요.
+- 확인: 참석이 어려울 때의 행동을 적어줘요.</code></pre>
+          </div>
+          <div class="result-grid">
+            <article class="bad">
+              <strong>지침 없음</strong>
+              <div class="mini-result muted">
+                <p>공지사항</p>
+                <h3>디자인 리뷰 회의 안내</h3>
+                <ul>
+                  <li>금요일 오후 3시에 회의가 있습니다</li>
+                  <li>발표자료 초안을 준비해 주세요</li>
+                  <li>참석 바랍니다</li>
+                </ul>
+                <div class="missing-points">
+                  <span>말투가 딱딱해요</span>
+                  <span>준비물이 애매해요</span>
+                  <span>불참 시 행동이 없어요</span>
+                </div>
+              </div>
+              <small>공지처럼 보이지만, 팀원이 바로 행동하기에는 정보가 흐려요.</small>
+            </article>
+            <article class="good">
+              <strong><code>CLAUDE.md</code> 있음</strong>
+              <div class="mini-result polished">
+                <p>팀 공지</p>
+                <h3>금요일 디자인 리뷰 안내</h3>
+                <div class="notice-line">금요일 3시에 디자인 리뷰를 진행해요. <em>말투</em></div>
+                <div class="task-list">
+                  <p><b>준비</b> 발표자료 초안 1장을 올려주세요. <em>형식</em></p>
+                  <p><b>공유</b> 좋았던 점과 수정할 점을 1개씩 적어주세요. <em>형식</em></p>
+                  <p><b>확인</b> 참석이 어렵다면 오늘 5시까지 댓글로 알려주세요. <em>확인</em></p>
+                </div>
+                <div class="omit-note">긴 배경 설명은 뺐어요. <em>제외</em></div>
+              </div>
+              <small>지침에 적어둔 말투, 형식, 제외 조건, 확인 방식이 결과물 줄마다 반영돼요.</small>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="material-section">
+        <h2>2. 나와 했던 이야기를 자꾸 까먹어요</h2>
+        <p class="problem-quote">“분명히 말했잖아요. 왜 또 물어봐요?”</p>
+        <div class="issue-grid">
+          <article>
+            <strong>원인은 이거예요</strong>
+            <p>AI는 지금까지의 대화 기억에 기반하여 답해요. 대화가 길어지면 그 기억이 요약되어 이어지고, 그 과정에서 일부 기억이 유실될 수 있어요.</p>
+          </article>
+          <article>
+            <strong>다음에는 이렇게</strong>
+            <p>중요한 조건은 새 요청 앞에 다시 적어요. 압축 과정에서 빠졌거나 약해진 기억도, 다시 적으면 이번 답변의 기준으로 다시 올라오기 때문이에요.</p>
+          </article>
+        </div>
+        <div class="context-mini">
+          <span>처음 대화<br /><small>목표 · 톤 · 금지어 · 예시</small></span>
+          <span>압축<br /><small>일부 기억이 유실될 수 있어요</small></span>
+          <span>다음 답변<br /><small>중요한 기억은 다시 올려요</small></span>
+        </div>
+        <div class="example-grid">
+          <article class="bad"><strong>Before</strong><p>아까 말한 기준대로 다시 해줘.</p></article>
+          <article class="good"><strong>After</strong><p>압축 중에 빠지면 안 되는 기준을 다시 적을게. 비개발자 대상, 어려운 말은 쉬운 말로 풀기, 먼저 불편한 상황을 보여주기, 뒤에 Before/After 붙이기. 이 기준으로 다시 정리해줘.</p></article>
+        </div>
+      </section>
+
+      <section class="material-section">
+        <h2>3. 왜 이렇게 그럴듯하게 틀려요?</h2>
+        <p class="problem-quote">“틀렸는데 너무 자신 있게 말해요.”</p>
+        <div class="issue-grid">
+          <article>
+            <strong>원인은 이거예요</strong>
+            <p>AI는 정답 창고에서 꺼내는 방식보다, 지금 문맥에서 이어질 법한 말을 만드는 방식에 가까워요. 그래서 빈칸이 있으면 근거 있는 답, 그럴듯한 추측, 최신 확인이 필요한 내용이 섞일 수 있어요.</p>
+          </article>
+          <article>
+            <strong>다음에는 이렇게</strong>
+            <p>정확해야 할 때는 답을 바로 믿지 말고 검증표로 받게 해요. AI가 그럴듯한 추측을 섞을 수 있어서, 확인 상태를 나누면 오답을 발견하기 쉬워요.</p>
+          </article>
+        </div>
+        <div class="choice-mini">
+          <span>근거 있는 답</span>
+          <span>그럴듯하지만 확인 안 된 답</span>
+          <span>최신 확인이 필요한 답</span>
+        </div>
+        <div class="example-grid">
+          <article class="bad"><strong>Before</strong><p>이거 맞아?</p></article>
+          <article class="good"><strong>After</strong><p>아래 내용을 사실인지 검토해줘. 맞는 내용, 의심되는 내용, 최신 확인 필요를 나눠줘. 근거가 부족하거나 최신 정보라면 “확인 필요”라고 표시해줘.</p></article>
+        </div>
+        <div class="request-table">
+          <div>맞는 내용</div><div>문서에 근거가 있는 일정</div>
+          <div>의심되는 내용</div><div>출처가 없는 장소 설명</div>
+          <div>최신 확인 필요</div><div>모집 인원처럼 바뀔 수 있는 정보</div>
+        </div>
+      </section>
+
+      <section class="material-section">
+        <h2>4. 결과가 너무 평범해요</h2>
+        <p class="problem-quote">“누구나 할 법한 말만 해줘요.”</p>
+        <div class="issue-grid">
+          <article>
+            <strong>원인은 이거예요</strong>
+            <p>대상, 목적, 결과물 형식이 없으면 AI는 가장 무난한 평균 답을 줘요. 나쁜 답은 아니지만, 내 일에는 덜 맞아요.</p>
+          </article>
+          <article>
+            <strong>다음에는 이렇게</strong>
+            <p>반복 작업이라면 지침서나 스킬처럼 “작업 레시피”를 만들어둬요. 매번 기준을 새로 설명하지 않아도, AI가 같은 순서와 형식으로 시작할 수 있기 때문이에요.</p>
+          </article>
+        </div>
+        <div class="material-guideline-code">
+          <div class="guideline-code-header">
+            <span></span><span></span><span></span>
+            <strong>작업 레시피 예시</strong>
+          </div>
+          <pre><code>## 강의 목차 만들기 기준
+- 대상: AI 초보 비개발자
+- 시작: 흔한 불편함을 먼저 보여줘요.
+- 순서: 경험 → 이유 → 바로 쓸 문장
+- 제외: 어려운 용어부터 꺼내지 않아요.</code></pre>
+        </div>
+        <div class="example-grid">
+          <article class="bad"><strong>Before</strong><p>강의 목차 만들어줘.</p></article>
+          <article class="good"><strong>After</strong><p>AI를 처음 쓰는 비개발자 6명을 위한 45분 강의 목차를 만들어줘. 어려운 용어보다 일상에서 겪는 답답한 상황을 먼저 보여주는 흐름이면 좋겠어.</p></article>
+        </div>
+      </section>
+
+
+      <section class="material-section">
+        <h2>지침, 스킬, 에이전트는 기준을 두는 위치가 달라요</h2>
+        <p class="section-note">결과가 평범할 때는 기준을 어디에 둘지 정하면 좋아요. 한 번만 쓸 기준은 요청문에, 반복되는 기준은 지침이나 스킬에, 여러 단계를 맡길 때는 에이전트에게 작업 범위와 권한을 줘요.</p>
+        <div class="principle-grid compact">
+          <article><strong>지침</strong><p>말투, 금지어, 선호 형식처럼 항상 지킬 기준이에요.</p></article>
+          <article><strong>스킬</strong><p>자료 검토나 회의록 정리처럼 반복 작업의 순서를 고정해요.</p></article>
+          <article><strong>에이전트</strong><p>파일 읽기, 수정, 확인처럼 도구를 써서 수행하는 역할이에요.</p></article>
+        </div>
+      </section>
+
+      <section class="material-section">
+        <h2>5~7. 형식과 범위가 흔들려요</h2>
+        <p class="problem-quote">“표로 달랬는데 문장으로 줘요. 요약만 달랬는데 자꾸 덧붙여요.”</p>
+        <div class="issue-grid">
+          <article>
+            <strong>원인은 비슷해요</strong>
+            <p>결과물의 틀, 빼야 할 것, 멈춰야 할 기준이 약하면 AI가 자기 방식으로 채워요. “짧게” 같은 말은 사람마다 기준이 달라요.</p>
+          </article>
+          <article>
+            <strong>하나로 묶어 말해요</strong>
+            <p>형식, 제외 조건, 길이, 확인 방식을 한 번에 줘요. 기준이 비어 있으면 AI가 자기 방식으로 채우기 때문에, 결과물 규칙으로 빈칸을 줄여요.</p>
+          </article>
+        </div>
+        <div class="contract-mini">
+          <span>형식</span>
+          <span>범위</span>
+          <span>제외</span>
+          <span>확인</span>
+        </div>
+        <div class="material-guideline-code">
+          <div class="guideline-code-header">
+            <span></span><span></span><span></span>
+            <strong>결과물 규칙 템플릿</strong>
+          </div>
+          <pre><code>## 결과물 규칙
+- 어디에 쓸지: 회의록에 붙여넣을 표
+- 어떤 형식인지: 4열 표
+- 어디까지 할지: 핵심만 5줄 안쪽
+- 무엇을 뺄지: 의견, 추천, 긴 배경 설명
+- 어떻게 확인할지: 근거 부족은 확인 필요</code></pre>
+        </div>
+        <div class="example-grid">
+          <article class="bad"><strong>Before</strong><p>회의 내용 짧게 정리해줘.</p></article>
+          <article class="good"><strong>After</strong><p>회의록에 붙여넣을 수 있게 표로 정리해줘. 항목은 배경, 결정사항, 다음 할 일, 확인 필요로 나눠줘. 의견과 추천은 넣지 말아줘.</p></article>
+        </div>
+        <div class="request-table">
+          <div>배경</div><div>일정 조율 필요</div>
+          <div>결정사항</div><div>금요일까지 초안 공유</div>
+          <div>다음 할 일</div><div>담당자별 수정안 작성</div>
+          <div>확인 필요</div><div>최종 리뷰 참석자</div>
+        </div>
+      </section>
+
+      <section class="material-section">
+        <h2>지침서에 넣기 좋은 기준</h2>
+        <p class="section-note">
+          ChatGPT의 맞춤 설정, Claude의 프로젝트 지침, Claude Code의 <code>CLAUDE.md</code> 같은 곳에
+          자주 반복되는 기준을 적어두면 매번 길게 설명하지 않아도 돼요.
+        </p>
+        <div class="instruction-box">
+          <p><strong>어디에 쓸지:</strong> 수강생이 보는 발표자료 / 팀 공유용 문서 / 회의록</p>
+          <p><strong>어떤 형식인지:</strong> 슬라이드 / 표 / 체크리스트 / 문장형 초안</p>
+          <p><strong>무엇을 빼야 하는지:</strong> 어려운 용어 / 과한 홍보 문구 / AI 같은 표현</p>
+          <p><strong>어떻게 확인할지:</strong> 근거가 부족한 부분은 “확인 필요”로 표시</p>
+        </div>
+        <div class="example-grid">
+          <article class="bad"><strong>Before</strong><p>발표자료 만들어줘.</p></article>
+          <article class="good"><strong>After</strong><p>비개발자 대상 강의자료예요. 일상에서 겪는 답답한 상황을 먼저 보여주고, 그 이유를 쉬운 말로 설명해주세요. 추상 설명 뒤에는 실제 Before/After를 붙이고, 어색한 표현은 피해주세요.</p></article>
+        </div>
+      </section>
+
+
+      <section id="ai-relation" class="material-section">
+        <h2>챗봇, 생성형 AI, 작업형 AI의 관계</h2>
+        <p class="section-note">챗봇은 생성형 AI를 쓰는 가장 익숙한 화면이에요. 작업형 AI는 여기에 파일, 도구, 권한이 연결된 사용 방식이에요.</p>
+        <div class="principle-grid">
+          <article><strong>생성형 AI</strong><p>글, 이미지, 코드처럼 없던 결과물을 만드는 기술이에요.</p></article>
+          <article><strong>챗봇</strong><p>대화창에서 질문하고 답을 받는 방식이에요.</p></article>
+          <article><strong>작업형 AI</strong><p>허용한 작업 공간 안에서 파일을 읽고 수정하며 결과물을 만들어요.</p></article>
+        </div>
+      </section>
+
+      <section class="material-section">
+        <h2>8. AI가 답은 주는데, 작업은 내가 다 해요</h2>
+        <p class="problem-quote">“좋은 말은 해주는데 문서 반영은 결국 내가 해요.”</p>
+        <div class="issue-grid">
+          <article>
+            <strong>챗봇처럼 쓰기</strong>
+            <p>ChatGPT, Claude, Gemini를 채팅창처럼만 쓰면 답을 받는 데서 끝나요. 옮기고 적용하는 건 내가 해야 해요.</p>
+          </article>
+          <article>
+            <strong>작업 도구처럼 쓰기</strong>
+            <p>Codex, Claude Code처럼 작업 공간을 다루는 도구는 허용한 폴더나 파일 안에서 읽기, 수정, 미리보기 확인을 맡길 수 있어요. 답변만 받는 채팅창과 달리, 실제 파일을 작업 대상으로 삼기 때문이에요.</p>
+          </article>
+        </div>
+        <div class="context-mini">
+          <span>챗봇<br /><small>답변 받기</small></span>
+          <span>내가 직접<br /><small>복사하고 붙이기</small></span>
+          <span>작업형 AI<br /><small>파일 읽기 · 수정 · 확인</small></span>
+        </div>
+      </section>
+
+      <section class="material-section">
+        <h2>내 AI에 지침과 메모리 넣기</h2>
+        <p class="section-note">도구마다 이름은 조금 달라요. ChatGPT는 메모리와 맞춤 설정, Claude는 프로필 선호와 프로젝트 지침, Gemini는 저장된 정보나 이전 대화 참고처럼 부르기도 해요. 중요한 건 이름보다 무엇을 어디 성격의 저장소에 넣을지예요.</p>
+        <div class="principle-grid">
+          <article><strong>지침</strong><p>AI가 어떻게 답해야 하는지 정해요. 말투, 형식, 제외 조건, 확인 방식을 넣어요.</p></article>
+          <article><strong>메모리</strong><p>AI가 나에 대해 기억할 정보를 정해요. 내 역할, 자주 하는 일, 선호 방식을 넣어요.</p></article>
+          <article><strong>이번 대화</strong><p>오늘만 필요한 조건은 대화 첫머리에 붙여넣어요. 기능이 없어도 바로 쓸 수 있어요.</p></article>
+        </div>
+        <div class="principle-grid compact">
+          <article><strong>계정 전체</strong><p>매번 적용할 내 정보와 선호를 넣어요.</p></article>
+          <article><strong>작업 / 프로젝트</strong><p>특정 업무에만 쓰는 자료와 기준을 넣어요.</p></article>
+          <article><strong>대화 첫머리</strong><p>이번 답변에 꼭 필요한 조건을 다시 올려요.</p></article>
+        </div>
+        <div class="setup-template-block">
+          <div>
+            <strong>처음에는 여섯 칸만 채워요</strong>
+            <p>메모리는 나에 대한 정보, 지침은 답변 방식이에요. 나눠 적으면 나중에 고치기 쉬워요.</p>
+          </div>
+          <pre><code>## 나에 대해 기억할 것
+- 나는 [역할/직무] 일을 해요.
+- 자주 하는 일은 [업무 1], [업무 2]예요.
+
+## 답변 지침
+- 말투는 [원하는 톤]으로 해요.
+- 결과물은 주로 [표/체크리스트/초안]으로 줘요.
+- 정확하지 않으면 추측하지 말고 확인 필요라고 써요.
+- [넣지 말아야 할 표현/내용]은 빼요.</code></pre>
+        </div>
+        <div class="setup-example-block">
+          <div>
+            <strong>예시로 채우면 이렇게 돼요</strong>
+            <p>처음에는 완벽하게 쓰려고 하지 말고, 내 역할과 자주 하는 일부터 적어요.</p>
+          </div>
+          <pre><code>## 나에 대해 기억할 것
+- 나는 디자인과 기획을 함께 다루는 일을 해요.
+- 자주 하는 일은 아이디어 정리, 공지문 작성,
+  이미지 생성 프롬프트 만들기예요.
+
+## 답변 지침
+- 말투는 부드러운 "~해요"로 해요.
+- 결과물은 표나 체크리스트로 먼저 정리해요.
+- 확실하지 않으면 "확인 필요"라고 표시해요.
+- 긴 배경 설명과 과한 표현은 빼요.</code></pre>
+        </div>
+        <div class="safety-note">
+          <strong>메모리에 남기지 않을 것</strong>
+          <p>비밀번호, API 키, 고객 개인정보, 계약 금액, 회사 내부 기밀, 민감한 개인 정보는 넣지 않아요.</p>
+        </div>
+        <div class="setup-list">
+          <span>강의 끝나고 10분</span>
+          <p>1. 내 역할을 한 줄로 적어요.</p>
+          <p>2. 원하는 답변 형식을 적어요.</p>
+          <p>3. 정확하지 않을 때 “확인 필요”라고 쓰게 해요.</p>
+          <p>4. 실제 질문 하나로 답변이 달라졌는지 확인해요.</p>
+        </div>
+      </section>
+
+      <section class="material-section closing">
+        <h2>한 문장으로 정리하면</h2>
+        <p>AI는 문맥을 바탕으로 답을 만들어요. 답변 방식은 지침에, 나에 대한 반복 정보는 메모리에 남기고, 중요한 기준과 확인 방식은 결과물을 만들기 전에 다시 올려요.</p>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+import { resolve } from 'node:path';
+import { defineConfig } from 'vite';
+
+const base = process.env.BASE_PATH || '/';
+
+export default defineConfig({
+  base,
+  build: {
+    rollupOptions: {
+      input: {
+        home: resolve(__dirname, 'index.html'),
+        aiConversation: resolve(__dirname, 'education/ai-conversation-level-0/index.html'),
+        aiConversationSlides: resolve(__dirname, 'education/ai-conversation-level-0/slides/index.html'),
+        aiConversationMaterials: resolve(__dirname, 'education/ai-conversation-level-0/materials/index.html')
+      }
+    }
+  }
+});
