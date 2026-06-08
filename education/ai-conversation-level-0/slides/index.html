@@ -6,673 +6,354 @@
     <title>AI와 대화하는 가장 쉬운 기술 · 발표자료</title>
   </head>
   <body>
+    <img class="deck-logo" src="../../../shared/assets/logo_dark.png" alt="삼삼엠투" />
+
     <div class="reveal">
       <div class="slides">
-        <section class="title-slide" data-transition="zoom">
-          <p class="kicker">Level 0 · 45분 강의</p>
+        <section class="cover-slide">
+          <p class="eyebrow">Level 0 · 45분 강의</p>
           <h1>AI와 대화하는<br />가장 쉬운 기술</h1>
-          <p class="subtitle">“AI가 왜 이러지?”라는 순간에서 시작해요.</p>
-          <aside class="notes">
-            오늘은 어려운 AI 용어를 먼저 설명하지 않아요. 우리가 실제로 AI를 쓰다가 답답했던 장면을 먼저 보고, 왜 그런 일이 생기는지 쉬운 말로 풀어가요.
-          </aside>
+          <p class="lead">잘 쓰는 법을 외우기보다,<br />왜 그런 답이 나오는지부터 봐요.</p>
         </section>
 
-        <section class="focus-slide" data-transition="fade">
-          <p class="kicker">오늘의 방식</p>
-          <h2>불편했던 경험을 먼저 보고,<br />그 이유를 하나씩 풀어봐요.</h2>
-          <p>AI가 말을 안 듣고, 까먹고, 그럴듯하게 틀리고, 원하는 형식으로 안 줄 때가 있어요. 오늘은 그 이유를 이해한 뒤, 마지막에는 내 AI에 남길 지침과 메모리 초안까지 가져가요.</p>
+        <section>
+          <p class="eyebrow">오늘의 방식</p>
+          <h2>불편했던 장면에서<br />개념 하나씩만 꺼내요.</h2>
+          <p class="lead">AI가 말을 안 듣고, 까먹고, 그럴듯하게 틀리고, 답만 주고 끝나는 순간들이 있어요.</p>
+          <p class="thin">오늘은 그 장면들을 어렵게 부르지 않고, 일상적인 말로 먼저 이해해요.</p>
         </section>
 
-        <section class="process-slide" data-auto-animate>
-          <p class="kicker">이 자료도 이렇게 만들고 있어요</p>
-          <h2>무난한 결과물에서<br />원하는 방향으로 다시 맞춰요.</h2>
-          <div class="process-row">
-            <span class="fragment fade-up">원하는 느낌은 아니라고 말해요</span>
-            <span class="fragment fade-up">답답했던 장면을 먼저 꺼내요</span>
-            <span class="fragment fade-up">주제를 다시 묶어요</span>
-            <span class="fragment fade-up">정해진 내용만 반영해요</span>
-            <span class="fragment fade-up">화면을 보고 다시 고쳐요</span>
-          </div>
-          <p class="bottom-line">AI에게 일을 맡길 때도 같아요. 결과물을 바로 요구하기보다, 어떤 방향으로 만들지 먼저 맞추면 결과가 달라져요.</p>
-        </section>
-
-        <section class="topic-map" data-transition="fade">
-          <p class="kicker">오늘 다룰 장면</p>
-          <h2>AI를 쓰다 보면 한 번쯤 겪는 일이에요.</h2>
-          <div class="topic-grid">
-            <span class="fragment fade-up">1. 말을 안 들어요</span>
-            <span class="fragment fade-up">2. 자꾸 까먹어요</span>
-            <span class="fragment fade-up">3. 그럴듯하게 틀려요</span>
-            <span class="fragment fade-up">4. 결과가 평범해요</span>
-            <span class="fragment fade-up">5~7. 형식과 범위가 흔들려요</span>
-            <span class="fragment fade-up">8. 답만 주고 끝나요</span>
+        <section>
+          <p class="eyebrow">오늘 가져갈 개념</p>
+          <h2>여섯 단어만<br />구분하면 충분해요.</h2>
+          <div class="word-grid">
+            <span>Prompt<br /><small>(요청)</small></span>
+            <span>Context<br /><small>(작업 기억)</small></span>
+            <span>Instruction<br /><small>(지침)</small></span>
+            <span>Memory<br /><small>(기억)</small></span>
+            <span>Skill<br /><small>(작업 템플릿)</small></span>
+            <span>Agent<br /><small>(작업자 AI)</small></span>
           </div>
         </section>
 
+        <section class="md-example-slide">
+          <p class="eyebrow">파일로 보면</p>
+          <h2>처음 세 개는<br />이런 메모처럼 생겼어요.</h2>
+          <div class="md-grid">
+            <article>
+              <strong>prompt.md</strong>
+              <pre><code># Prompt(요청)
 
-        <section class="visual-slide concept-anchor-slide" data-transition="zoom">
-          <p class="kicker">먼저 큰 그림</p>
-          <h2>오늘 볼 문제들은<br />세 가지 원리로 이어져요.</h2>
-          <div class="concept-anchor-grid">
-            <article class="fragment fade-up">
-              <span>원리 1</span>
-              <strong>AI는 이어질 말을 만들어요</strong>
-              <p>정답 창고에서 꺼내기보다, 지금 문맥에서 자연스러운 답을 만들어내요.</p>
+이번 회의 내용을
+3줄로 요약해줘.</code></pre>
             </article>
-            <article class="fragment fade-up">
-              <span>원리 2</span>
-              <strong>AI는 작업 기억을 보고 답해요</strong>
-              <p>대화, 지침, 예시가 컨텍스트 안에 쌓이고 길어지면 요약될 수 있어요.</p>
+            <article>
+              <strong>instruction.md</strong>
+              <pre><code># Instruction(지침)
+
+- "~해요"로 써요.
+- 먼저 결론을 말해요.
+- 모르면 "확인 필요"라고 써요.</code></pre>
             </article>
-            <article class="fragment fade-up">
-              <span>원리 3</span>
-              <strong>기준과 도구가 있어야 일해요</strong>
-              <p>원하는 형식, 제외 조건, 작업 공간을 줘야 답변을 넘어 결과물까지 만들 수 있어요.</p>
+            <article>
+              <strong>memory.md</strong>
+              <pre><code># Memory(기억)
+
+- 나는 교육자료를 자주 만들어요.
+- 표와 체크리스트를 선호해요.</code></pre>
             </article>
           </div>
         </section>
 
-        <section class="problem-slide" data-transition="slide">
-          <p class="kicker">1. AI가 말을 안 들어요</p>
+        <section class="md-example-slide">
+          <p class="eyebrow">파일로 보면</p>
+          <h2>나머지 세 개는<br />작업을 맡길 때 가까워져요.</h2>
+          <div class="md-grid">
+            <article>
+              <strong>context.md</strong>
+              <pre><code># Context(작업 기억)
+
+- 이전 질문: 비개발자도 이해하게
+- 기억된 정보: "~해요" 말투
+- 방금 요청: 8페이지 수정</code></pre>
+            </article>
+            <article>
+              <strong>skill.md</strong>
+              <pre><code># Skill(작업 템플릿)
+
+언제: 회의록 정리할 때
+순서: 핵심 → 결정 → 할 일
+형식: 표로 정리</code></pre>
+            </article>
+            <article>
+              <strong>agent.md</strong>
+              <pre><code># Agent(작업자 AI)
+
+역할: 발표자료 편집자
+도구: 파일 읽기, 수정, 미리보기
+완료: 빌드 후 확인</code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="question-slide">
+          <p class="eyebrow">1. AI가 말을 안 들어요</p>
           <h2>“하지 말라고 했는데<br />자꾸 계속해요.”</h2>
-          <div class="reason-grid">
-            <article class="fragment fade-up">
-              <strong>원인은 이거예요</strong>
-              <p>AI는 “하지 말 것”만 보면 빈자리를 자기 방식으로 채워요. 그래서 금지보다 “대신 어떻게 할지”가 같이 필요해요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <strong>지침이 필요한 이유예요</strong>
-              <p>매번 반복해서 말해야 하는 내 상황, 해야 할 것, 하지 말아야 할 것을 미리 적어두면 답변 품질이 안정돼요.</p>
-            </article>
-          </div>
+          <p class="lead">이건 AI가 반항하는 게 아니라,<br />기준이 충분히 고정되지 않은 경우가 많아요.</p>
         </section>
 
-        <section class="instruction-file-slide" data-transition="zoom">
-          <p class="kicker">1번의 핵심</p>
-          <h2>지침은 AI에게 미리 적어두는<br />작업 기준표예요.</h2>
-          <div class="instruction-file-layout">
-            <div class="request-stack">
-              <article class="fragment fade-right">
-                <span>이번에 부탁할 일</span>
-                <strong>이 내용을 강의자료에 맞게<br />정리해줘</strong>
-                <small>지금 필요한 작업만 짧게 말해요</small>
-              </article>
-              <div class="plus fragment fade-in">+</div>
-              <article class="fragment fade-right">
-                <span>지침서</span>
-                <strong>항상 지킬 기준</strong>
-                <small>매번 반복해서 말하지 않아도 되는 내용</small>
-              </article>
+        <section>
+          <p class="eyebrow">Prompt(요청)</p>
+          <h2>Prompt(요청)는<br />오늘 한 번 부탁하는 말이에요.</h2>
+          <div class="simple-compare">
+            <div>
+              <span>부탁</span>
+              <strong>이 회의 내용을 요약해줘</strong>
             </div>
-            <div class="file-panel fragment fade-left">
-              <div class="file-header">
-                <span></span><span></span><span></span>
-                <strong>CLAUDE.md</strong>
-              </div>
-              <pre><code># 작업 기준
+            <div>
+              <span>한계</span>
+              <strong>매번 새로 말해야 해요</strong>
+            </div>
+          </div>
+          <p class="thin">프롬프트는 즉석 요청이에요. 지금 할 일은 말할 수 있지만, 내 기본 기준까지 계속 기억하게 만들지는 못해요.</p>
+        </section>
 
-## 내 상황
-- 비개발자 대상 0레벨 강의자료를 만들고 있어요.
-- 어려운 용어보다 일상적인 예시를 먼저 보여줘요.
+        <section>
+          <p class="eyebrow">Instruction(지침)</p>
+          <h2>Instruction(지침)은<br />반복해서 지킬 기준이에요.</h2>
+          <div class="example-box">
+            <p>응답은 “~해요”로 써요.</p>
+            <p>먼저 결론을 말하고, 그다음 이유를 붙여요.</p>
+            <p>확실하지 않은 내용은 “확인 필요”라고 표시해요.</p>
+          </div>
+          <p class="thin">매번 같은 잔소리를 하게 된다면, 그건 프롬프트가 아니라 지침에 넣을 내용이에요.</p>
+        </section>
 
-## 해야 할 것
-- "~해요" 톤으로 자연스럽게 써요.
-- 추상 설명 뒤에는 Before/After 예시를 붙여요.
-- 필요하면 표, 코드 블럭, 도식으로 보여줘요.
-
-## 하지 말아야 할 것
-- 어색한 비유나 어려운 전문 용어는 피해주세요.
-- AI가 만든 것처럼 딱딱한 문장은 피해주세요.</code></pre>
+        <section>
+          <p class="eyebrow">한 줄 정리</p>
+          <h2>Prompt(요청)는 오늘의 부탁,<br />Instruction(지침)은 매번의 기준이에요.</h2>
+          <div class="split-line">
+            <div>
+              <span>Prompt(요청)</span>
+              <p>이번 답변에 필요한 요청</p>
+            </div>
+            <div>
+              <span>Instruction(지침)</span>
+              <p>계속 지켜야 하는 답변 방식</p>
             </div>
           </div>
         </section>
 
-        <section class="same-prompt-slide" data-auto-animate>
-          <p class="kicker">Before / After 1</p>
-          <h2>같은 요청도 지침서 유무에 따라<br />결과가 달라져요.</h2>
-          <div class="prompt-banner fragment fade-up">
-            <span>같은 프롬프트</span>
-            <strong>금요일 디자인 리뷰 일정을 팀 공지로 정리해줘</strong>
-          </div>
-          <div class="applied-guideline-code fragment fade-up">
-            <div class="guideline-code-header">
-              <span></span><span></span><span></span>
-              <strong>CLAUDE.md에 추가된 지침</strong>
-            </div>
-            <pre><code>## 팀 공지 작성 기준
-- 말투: "~해요"로 부드럽게 써요.
-- 형식: 해야 할 일은 체크리스트로 보여줘요.
-- 제외: 긴 배경 설명은 빼요.
-- 확인: 참석이 어려울 때의 행동을 적어줘요.</code></pre>
-          </div>
-          <div class="output-compare">
-            <article class="before-output fragment fade-right">
-              <strong>지침 없음</strong>
-              <div class="mini-result muted">
-                <p>공지사항</p>
-                <h3>디자인 리뷰 회의 안내</h3>
-                <ul>
-                  <li>금요일 오후 3시에 회의가 있습니다</li>
-                  <li>발표자료 초안을 준비해 주세요</li>
-                  <li>참석 바랍니다</li>
-                </ul>
-                <div class="missing-points">
-                  <span>말투가 딱딱해요</span>
-                  <span>준비물이 애매해요</span>
-                  <span>불참 시 행동이 없어요</span>
-                </div>
-              </div>
-              <small>공지처럼 보이지만, 팀원이 바로 행동하기에는 정보가 흐려요.</small>
-            </article>
-            <article class="after-output fragment fade-left">
-              <strong><code>CLAUDE.md</code> 있음</strong>
-              <div class="mini-result polished">
-                <p>팀 공지</p>
-                <h3>금요일 디자인 리뷰 안내</h3>
-                <div class="notice-line">금요일 3시에 디자인 리뷰를 진행해요. <em>말투</em></div>
-                <div class="task-list">
-                  <p><b>준비</b> 발표자료 초안 1장을 올려주세요. <em>형식</em></p>
-                  <p><b>공유</b> 좋았던 점과 수정할 점을 1개씩 적어주세요. <em>형식</em></p>
-                  <p><b>확인</b> 참석이 어렵다면 오늘 5시까지 댓글로 알려주세요. <em>확인</em></p>
-                </div>
-                <div class="omit-note">긴 배경 설명은 뺐어요. <em>제외</em></div>
-              </div>
-              <small>지침에 적어둔 말투, 형식, 제외 조건, 확인 방식이 결과물 줄마다 반영돼요.</small>
-            </article>
-          </div>
-        </section>
-
-        <section class="problem-slide" data-transition="slide">
-          <p class="kicker">2. 나와 했던 이야기를 자꾸 까먹어요</p>
+        <section class="question-slide">
+          <p class="eyebrow">2. AI가 자꾸 까먹어요</p>
           <h2>“분명히 말했잖아요.<br />왜 또 물어봐요?”</h2>
-          <div class="reason-grid">
-            <article class="fragment fade-up">
-              <strong>원인은 이거예요</strong>
-              <p>AI는 지금까지의 대화 기억에 기반하여 답해요. 대화가 길어지면 그 기억이 요약되어 이어지고, 그 과정에서 일부 기억이 유실될 수 있어요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <strong>그래서 이렇게 해요</strong>
-              <p>중요한 조건은 새 요청 앞에 다시 적어요. 압축 과정에서 빠졌거나 약해진 기억도, 다시 적으면 이번 답변의 기준으로 다시 올라오기 때문이에요.</p>
-            </article>
-          </div>
+          <p class="lead">AI의 기억은 사람처럼 오래 보관되는 기억과,<br />지금 답변을 위한 작업 기억으로 나뉘어요.</p>
         </section>
 
-        <section class="visual-slide context-detail-slide" data-transition="zoom">
-          <p class="kicker">2번의 원리</p>
-          <h2>컨텍스트는 AI가 지금 참고하는<br />대화의 작업 기억이에요.</h2>
-          <div class="context-definition fragment fade-up">
+        <section class="context-slide">
+          <p class="eyebrow">Context(작업 기억)</p>
+          <h2>Context(작업 기억)는 AI가 지금 보고 있는<br />대화의 묶음이에요.</h2>
+          <div class="context-definition">
             <strong>컨텍스트</strong>
             <p>AI가 이번 답변을 만들 때 참고하는 대화, 지침, 파일, 예시 같은 기억의 묶음이에요.</p>
           </div>
-          <div class="context-bar-diagram">
-            <article class="context-row before fragment fade-up">
-              <div class="context-row-copy">
+          <div class="context-stages">
+            <article>
+              <div class="context-copy">
                 <span>1. 압축 전</span>
-                <strong>거의 가득 찬 상태</strong>
-                <small>이전 대화 기억이 많이 쌓여 남은 여유가 적어요.</small>
+                <strong>대화 기록과 메모리가 같이 들어와요</strong>
+                <p>질문했던 내용과 기억해둔 짧은 문장이 이번 답변의 재료가 돼요.</p>
               </div>
-              <div class="context-capacity-bar">
-                <i class="context-fill goal">목표</i>
-                <i class="context-fill tone">톤</i>
-                <i class="context-fill rule">금지어</i>
-                <i class="context-fill example">예시</i>
-                <i class="context-fill edit">수정</i>
-                <i class="context-free">여유</i>
+              <div class="context-bar before detailed">
+                <div class="context-stack chat-history">
+                  <strong>대화 기록</strong>
+                  <span>“비개발자도 이해하게 설명해줘”</span>
+                  <span>“Before/After 예시를 넣어줘”</span>
+                  <span>“말투는 너무 딱딱하지 않게 해줘”</span>
+                </div>
+                <div class="context-stack saved-memory">
+                  <strong>기억된 정보</strong>
+                  <span>교육자료를 자주 만들어요</span>
+                  <span>“~해요” 말투를 선호해요</span>
+                </div>
+                <em>여유</em>
               </div>
             </article>
-            <article class="context-row compacted fragment fade-up">
-              <div class="context-row-copy">
+            <article>
+              <div class="context-copy">
                 <span>2. 대화 압축 후</span>
-                <strong>요약본만 남아요</strong>
-                <small>일부 기억은 빠지거나 약해지고, 압축된 만큼 여유가 생겨요.</small>
-                <em class="loss-pill">일부 기억(데이터) 유실 가능</em>
+                <strong>요약본만 남고 여유가 생겨요</strong>
+                <p>대화가 길어지면 일부 기억은 빠지거나 약해질 수 있어요.</p>
               </div>
-              <div class="context-capacity-bar">
-                <i class="context-fill compressed">압축된 요약</i>
-                <i class="context-free expanded">여유 컨텍스트</i>
+              <div class="context-bar compacted">
+                <i class="summary">압축된 요약</i>
+                <b>일부 기억 유실 가능</b>
+                <em>여유 컨텍스트</em>
               </div>
             </article>
-            <article class="context-row continued fragment fade-up">
-              <div class="context-row-copy">
+            <article>
+              <div class="context-copy">
                 <span>3. 다음 대화</span>
-                <strong>압축본 뒤에 다시 쌓여요</strong>
-                <small>빠진 기억은 자동으로 돌아오지 않아서 중요한 기준을 다시 올려줘요.</small>
+                <strong>압축본 뒤에 새 요청이 다시 쌓여요</strong>
+                <p>그래서 중요한 기준은 새 요청 앞에 다시 올려주는 편이 좋아요.</p>
               </div>
-              <div class="context-capacity-bar">
-                <i class="context-fill compressed">압축본</i>
-                <i class="context-fill new-chat">새 요청</i>
-                <i class="context-fill new-rule">추가 조건</i>
-                <i class="context-fill new-edit">수정</i>
-                <i class="context-free remaining">여유</i>
+              <div class="context-bar continued">
+                <i class="summary">압축본</i>
+                <i class="new">새 요청</i>
+                <i class="condition">추가 조건</i>
+                <em>여유</em>
               </div>
             </article>
           </div>
         </section>
 
-        <section class="recap-before-after" data-auto-animate>
-          <p class="kicker">Before / After 2</p>
-          <h2>긴 대화 뒤에는<br />사라지면 안 되는 기억을 다시 올려요.</h2>
-          <div class="recap-grid">
-            <article class="before fragment fade-right">
-              <strong>Before</strong>
-              <p class="prompt-chip">아까 말한 기준대로 다시 정리해줘.</p>
-              <div class="result-note weak">압축 과정에서 일부 기억이 빠졌다면, AI는 “아까 기준”을 다르게 이해하거나 빠뜨릴 수 있어요.</div>
-            </article>
-            <article class="after fragment fade-left">
-              <strong>After</strong>
-              <pre><code>이번 기준을 다시 적을게요.
-- 비개발자 대상이에요.
-- 어려운 말은 쉬운 말로 풀어요.
-- 먼저 불편한 상황을 보여줘요.
-- 뒤에 Before/After 예시를 붙여요.</code></pre>
-              <div class="result-note strong">유실되면 안 되는 기억을 다시 올렸기 때문에, 이번 답변이 같은 기준을 보고 시작해요.</div>
-            </article>
+        <section>
+          <p class="eyebrow">Memory(기억)</p>
+          <h2>Memory(기억)는 AI가 나에 대해<br />기억해도 되는 정보예요.</h2>
+          <div class="example-box">
+            <p>나는 비개발자 대상 교육자료를 자주 만들어요.</p>
+            <p>답변은 한국어로, 너무 딱딱하지 않게 받아보고 싶어요.</p>
+            <p>표나 체크리스트를 선호해요.</p>
           </div>
+          <p class="thin">메모리는 “내가 어떤 사람인지”, “내가 자주 원하는 방식이 무엇인지”에 가깝습니다.</p>
         </section>
 
-        <section class="problem-slide" data-transition="slide">
-          <p class="kicker">3. 왜 이렇게 그럴듯하게 틀려요?</p>
-          <h2>“틀렸는데 너무 자신 있게 말해요.”</h2>
-          <div class="reason-grid">
-            <article class="fragment fade-up">
-              <strong>원인은 이거예요</strong>
-              <p>AI는 정답 창고에서 꺼내는 방식보다, 지금 문맥에서 이어질 법한 말을 만드는 방식에 가까워요. 그래서 빈칸이 있으면 근거 있는 답, 그럴듯한 추측, 최신 확인이 필요한 내용이 섞일 수 있어요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <strong>그래서 이렇게 해요</strong>
-              <p>정확해야 할 때는 답을 바로 믿지 말고 검증표로 받게 해요. AI가 그럴듯한 추측을 섞을 수 있어서, 확인 상태를 나누면 오답을 발견하기 쉬워요.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="visual-slide probability-slide" data-transition="zoom">
-          <p class="kicker">3번의 원리</p>
-          <h2>AI는 자연스러운 답을 만들지만,<br />그 답이 항상 사실이라는 뜻은 아니에요.</h2>
-          <div class="probability-board">
-            <article class="prompt-card fragment fade-right">
-              <span>질문</span>
-              <strong>“이 내용 맞아?”</strong>
-              <small>질문이 짧으면 확인 기준도 짧아요.</small>
-            </article>
-            <div class="candidate-stack">
-              <div class="candidate good fragment fade-up"><b>근거가 있는 답</b><span></span></div>
-              <div class="candidate risky fragment fade-up"><b>그럴듯하지만 확인 안 된 답</b><span></span></div>
-              <div class="candidate weak fragment fade-up"><b>최신 확인이 필요한 답</b><span></span></div>
+        <section>
+          <p class="eyebrow">한 줄 정리</p>
+          <h2>Context(작업 기억)는 지금 대화,<br />Memory(기억)는 나에 대한 반복 정보예요.</h2>
+          <div class="split-line">
+            <div>
+              <span>Context(작업 기억)</span>
+              <p>이번 답변을 만들 때 참고하는 작업 기억</p>
             </div>
-            <article class="check-card fragment fade-left">
-              <span>필요한 장치</span>
-              <strong>근거가 없거나 최신 정보면<br />“확인 필요”라고 쓰게 해요.</strong>
-            </article>
-          </div>
-        </section>
-
-        <section class="accuracy-before-after" data-auto-animate>
-          <p class="kicker">Before / After 3</p>
-          <h2>정확해야 할 때는<br />답변보다 검증 방식을 먼저 정해요.</h2>
-          <div class="accuracy-grid">
-            <article class="before fragment fade-right">
-              <strong>Before</strong>
-              <p class="prompt-chip">이 행사 정보 맞아?</p>
-              <div class="loose-answer">네, 맞습니다. 그대로 사용하셔도 됩니다.</div>
-              <small>근거가 없는데도 확신처럼 보일 수 있어요.</small>
-            </article>
-            <article class="after fragment fade-left">
-              <strong>After</strong>
-              <p class="prompt-chip">맞는 내용 / 의심되는 내용 / 최신 확인 필요로 나눠줘.</p>
-              <div class="verification-table">
-                <span>맞는 내용</span><p>문서에 근거가 있는 일정</p>
-                <span>의심되는 내용</span><p>출처가 없는 장소 설명</p>
-                <span>최신 확인 필요</span><p>모집 인원처럼 바뀔 수 있는 정보</p>
-              </div>
-              <small>정답만 요구하지 않고, 근거와 최신 확인 대상을 나누게 해요.</small>
-            </article>
-          </div>
-        </section>
-
-        <section class="problem-slide" data-transition="slide">
-          <p class="kicker">4. 결과가 너무 평범해요</p>
-          <h2>“누구나 할 법한 말만 해줘요.”</h2>
-          <div class="reason-grid">
-            <article class="fragment fade-up">
-              <strong>원인은 이거예요</strong>
-              <p>대상, 목적, 결과물 형식이 없으면 AI는 가장 무난한 평균 답을 줘요. 나쁜 답은 아니지만, 내 일에는 덜 맞아요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <strong>해결은 이쪽이에요</strong>
-              <p>반복 작업이라면 지침서나 스킬처럼 “작업 레시피”를 만들어둬요. 매번 기준을 새로 설명하지 않아도, AI가 같은 순서와 형식으로 시작할 수 있기 때문이에요.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="visual-slide recipe-slide" data-transition="zoom">
-          <p class="kicker">4번의 해결 방식</p>
-          <h2>작업 레시피를 만들면<br />매번 설명하지 않아도 돼요.</h2>
-          <div class="recipe-layout">
-            <div class="recipe-code fragment fade-right">
-              <div class="guideline-code-header">
-                <span></span><span></span><span></span>
-                <strong>lecture-skill.md</strong>
-              </div>
-              <pre><code>## 강의 목차 만들기 기준
-- 대상: AI 초보 비개발자
-- 시작: 흔한 불편함을 먼저 보여줘요.
-- 순서: 경험 → 이유 → 바로 쓸 문장
-- 결과: 45분 강의 흐름으로 정리해요.
-- 제외: 어려운 용어부터 꺼내지 않아요.</code></pre>
-            </div>
-            <article class="recipe-result fragment fade-left">
-              <span>같은 요청</span>
-              <strong>“강의 목차 만들어줘”</strong>
-              <div class="recipe-output">
-                <p>AI가 말을 안 들어요</p>
-                <p>왜 자꾸 까먹을까요?</p>
-                <p>정확한 정보는 어떻게 확인할까요?</p>
-              </div>
-              <small>레시피가 있으면 결과가 내 수업 흐름에 더 가까워져요.</small>
-            </article>
-          </div>
-        </section>
-
-
-        <section class="visual-slide tool-ladder-slide" data-transition="zoom">
-          <p class="kicker">4번의 확장</p>
-          <h2>지침, 스킬, 에이전트는<br />기준을 두는 위치가 달라요.</h2>
-          <div class="tool-ladder">
-            <article class="fragment fade-up">
-              <span>지침</span>
-              <strong>항상 지킬 기준</strong>
-              <p>말투, 금지어, 선호 형식처럼 매번 반복되는 기준을 미리 적어둬요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <span>스킬</span>
-              <strong>반복 작업의 순서</strong>
-              <p>자료 검토, 회의록 정리처럼 자주 하는 일을 같은 순서로 처리하게 해요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <span>에이전트</span>
-              <strong>도구를 써서 수행</strong>
-              <p>파일 읽기, 수정, 확인처럼 여러 단계를 맡길 때 작업 범위와 권한이 필요해요.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="problem-slide" data-transition="slide">
-          <p class="kicker">5~7. 형식과 범위가 흔들려요</p>
-          <h2>“표로 달랬는데 문장으로 줘요.<br />요약만 달랬는데 자꾸 덧붙여요.”</h2>
-          <div class="reason-grid">
-            <article class="fragment fade-up">
-              <strong>원인은 비슷해요</strong>
-              <p>결과물의 틀, 빼야 할 것, 멈춰야 할 기준이 약하면 AI가 자기 방식으로 채워요. “짧게” 같은 말은 사람마다 기준이 달라요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <strong>그래서 하나로 묶어요</strong>
-              <p>형식, 제외 조건, 길이, 확인 방식을 한 번에 줘요. 기준이 비어 있으면 AI가 자기 방식으로 채우기 때문에, 결과물 규칙으로 빈칸을 줄여요.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="visual-slide format-template-slide" data-transition="zoom">
-          <p class="kicker">5~7번의 해결 방식</p>
-          <h2>결과물 규칙은<br />이 네 가지로 잡으면 쉬워요.</h2>
-          <div class="format-layout">
-            <div class="format-code fragment fade-right">
-              <div class="guideline-code-header">
-                <span></span><span></span><span></span>
-                <strong>결과물 규칙 템플릿</strong>
-              </div>
-              <pre><code>## 결과물 규칙
-- 어디에 쓸지: 회의록에 붙여넣을 표
-- 어떤 형식인지: 4열 표
-- 어디까지 할지: 핵심만 5줄 안쪽
-- 무엇을 뺄지: 의견, 추천, 긴 배경 설명
-- 어떻게 확인할지: 근거 부족은 확인 필요</code></pre>
-            </div>
-            <div class="format-cards">
-              <article class="fragment fade-up"><span>형식</span><strong>표 / 체크리스트 / 초안</strong></article>
-              <article class="fragment fade-up"><span>범위</span><strong>5줄 / 3개 / 한 문단</strong></article>
-              <article class="fragment fade-up"><span>제외</span><strong>의견, 추천, 과한 설명 제외</strong></article>
-              <article class="fragment fade-up"><span>확인</span><strong>근거 부족은 확인 필요</strong></article>
+            <div>
+              <span>Memory(기억)</span>
+              <p>대화가 바뀌어도 참고하면 좋은 사용자 정보</p>
             </div>
           </div>
         </section>
 
-        <section class="format-output-slide" data-auto-animate>
-          <p class="kicker">Before / After 5~7</p>
-          <h2>같은 회의 내용도<br />틀을 주면 바로 붙여넣기 쉬워져요.</h2>
-          <div class="format-output-grid">
-            <article class="before fragment fade-right">
-              <strong>Before</strong>
-              <p class="prompt-chip">회의 내용 짧게 정리해줘.</p>
-              <div class="loose-answer">오늘 회의에서는 일정과 담당자를 정했습니다. 다음 주까지 각자 맡은 일을 진행하면 됩니다.</div>
-              <small>짧지만 어디에 붙여야 할지 애매해요.</small>
-            </article>
-            <article class="after fragment fade-left">
-              <strong>After</strong>
-              <p class="prompt-chip">회의록에 붙여넣을 수 있게 표로 정리해줘.</p>
-              <div class="meeting-table">
-                <span>배경</span><p>일정 조율 필요</p>
-                <span>결정사항</span><p>금요일까지 초안 공유</p>
-                <span>다음 할 일</span><p>담당자별 수정안 작성</p>
-                <span>확인 필요</span><p>최종 리뷰 참석자</p>
-              </div>
-              <small>형식, 범위, 제외 조건이 결과물에 바로 반영돼요.</small>
-            </article>
-          </div>
+        <section class="question-slide">
+          <p class="eyebrow">3. AI가 그럴듯하게 틀려요</p>
+          <h2>“틀렸는데<br />너무 자신 있게 말해요.”</h2>
+          <p class="lead">AI는 사실 창고에서 정답을 꺼내기보다,<br />문맥상 자연스러운 답을 만들어내요.</p>
         </section>
 
-
-        <section class="visual-slide ai-mode-slide" data-transition="zoom">
-          <p class="kicker">8번으로 넘어가기 전에</p>
-          <h2>챗봇은 생성형 AI를 쓰는<br />가장 익숙한 화면이에요.</h2>
-          <div class="ai-mode-grid">
-            <article class="fragment fade-up">
-              <span>생성형 AI</span>
-              <strong>새 결과물을 만드는 기술</strong>
-              <p>글, 이미지, 코드처럼 없던 결과물을 만들어내는 큰 기술이에요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <span>챗봇</span>
-              <strong>대화창으로 쓰는 방식</strong>
-              <p>질문을 넣고 답을 받는 화면이에요. 생각 정리와 초안 만들기에 좋아요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <span>작업형 AI</span>
-              <strong>파일과 도구가 연결된 방식</strong>
-              <p>생성형 AI에 작업 공간, 도구, 권한이 붙어서 실제 결과물을 고칠 수 있어요.</p>
-            </article>
+        <section>
+          <p class="eyebrow">정확도가 필요할 때</p>
+          <h2>답을 요구하기 전에<br />확인 방식을 정해요.</h2>
+          <div class="rule-row">
+            <span>모르면 모른다고 말하기</span>
+            <span>근거와 추측을 구분하기</span>
+            <span>확인할 항목을 체크리스트로 만들기</span>
           </div>
+          <p class="thin">정확한 정보가 필요할 때는 “답해줘”보다 “어떻게 확인했는지 보여줘”가 더 중요해요.</p>
         </section>
 
-        <section class="problem-slide" data-transition="slide">
-          <p class="kicker">8. AI가 답은 주는데, 작업은 내가 다 해요</p>
-          <h2>“좋은 말은 해주는데<br />결국 내가 옮겨야 해요.”</h2>
-          <div class="reason-grid">
-            <article class="fragment fade-up">
-              <strong>원인은 이거예요</strong>
-              <p>ChatGPT, Claude, Gemini를 채팅창처럼만 쓰면 답을 받는 데서 끝나요. 문서 반영, 파일 정리, 코드 수정은 사람이 다시 옮겨야 해요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <strong>다음 단계는 이거예요</strong>
-              <p>Codex, Claude Code처럼 작업 공간을 다루는 도구를 쓰면 허용한 폴더나 파일 안에서 읽기, 수정, 미리보기 확인을 맡길 수 있어요. 답변만 받는 채팅창과 달리, 실제 파일을 작업 대상으로 삼기 때문이에요.</p>
-            </article>
-          </div>
+        <section class="question-slide">
+          <p class="eyebrow">4. 결과가 너무 평범해요</p>
+          <h2>“누구나 할 법한 말만<br />나와요.”</h2>
+          <p class="lead">매번 같은 일을 한다면,<br />한 번의 요청보다 작업 방식 자체를 저장하는 편이 좋아요.</p>
         </section>
 
-        <section class="visual-slide work-mode-slide" data-transition="zoom">
-          <p class="kicker">8번의 핵심</p>
-          <h2>챗봇은 답을 주고,<br />작업형 AI는 결과물까지 만져요.</h2>
-          <div class="work-mode-compare">
-            <article class="chatbot-card fragment fade-right">
-              <span>챗봇처럼 쓰기</span>
-              <strong>“어떻게 하면 좋을까?”</strong>
-              <div class="work-steps">
-                <p>답변 받기</p>
-                <p>내가 복사하기</p>
-                <p>내가 문서에 붙이기</p>
-              </div>
-              <small>생각 정리에는 좋지만, 적용은 내가 해요.</small>
-            </article>
-            <article class="workspace-card fragment fade-left">
-              <span>작업형 AI로 쓰기</span>
-              <strong>“이 파일을 읽고 수정해줘.”</strong>
-              <div class="work-steps">
-                <p>파일 읽기</p>
-                <p>수정하기</p>
-                <p>화면 확인 후 다시 고치기</p>
-              </div>
-              <small>허용한 작업 공간 안에서 결과물을 직접 만들어요.</small>
-            </article>
+        <section>
+          <p class="eyebrow">Skill(작업 템플릿)</p>
+          <h2>Skill(작업 템플릿)은 반복 작업을 위한<br />저장된 진행 방식이에요.</h2>
+          <div class="flow-line">
+            <span>언제 쓰는지</span>
+            <span>어떤 순서로 하는지</span>
+            <span>어떤 형식으로 내는지</span>
           </div>
-          <div class="permission-note fragment fade-up">중요한 점은 AI가 컴퓨터 전체를 마음대로 보는 게 아니라, 내가 허용한 작업 공간이 작업 범위가 된다는 거예요.</div>
+          <p class="thin">스킬은 “이 일을 할 때는 항상 이 순서로 해줘”를 저장해두는 개념이에요.</p>
         </section>
 
-        <section class="media-slide" data-transition="zoom">
-          <div class="media-copy">
-            <p class="kicker">가능성 맛보기</p>
-            <h2>대화가 실제 제작으로<br />이어질 수 있어요.</h2>
-            <p>Figma 플러그인을 만드는 방법을 배우지는 않아요. 대신 “방향을 맞춘 대화”가 결과물 제작으로 이어질 수 있다는 장면만 봐요.</p>
-          </div>
-          <div class="media-placeholder large">Figma 플러그인 사진 또는 영상</div>
-        </section>
-
-        <section class="visual-slide setup-role-slide" data-transition="slide">
-          <p class="kicker">이제 직접 설정하기</p>
-          <h2>지침과 메모리는<br />역할이 달라요.</h2>
-          <div class="setup-role-grid">
-            <article class="fragment fade-up">
-              <span>지침</span>
-              <strong>AI가 어떻게 답할지 정해요</strong>
-              <p>말투, 형식, 제외 조건, 확인 방식처럼 답변의 기준을 적어둬요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <span>메모리</span>
-              <strong>AI가 나에 대해 기억할 걸 정해요</strong>
-              <p>내 역할, 자주 하는 일, 선호하는 방식처럼 반복해서 말하기 싫은 정보를 남겨요.</p>
-            </article>
-          </div>
-          <div class="permission-note fragment fade-up">한 번만 필요한 조건은 대화창에 쓰고, 계속 필요한 기준은 지침이나 메모리에 남겨요.</div>
-        </section>
-
-        <section class="visual-slide setup-place-slide" data-transition="zoom">
-          <p class="kicker">어디에 넣을까요?</p>
-          <h2>도구 이름은 달라도<br />보통 세 곳으로 나뉘어요.</h2>
-          <div class="setup-place-grid">
-            <article class="fragment fade-up">
-              <span>계정 전체</span>
-              <strong>매번 적용할 내 정보</strong>
-              <p>ChatGPT 메모리나 맞춤 설정, Claude 프로필 선호처럼 모든 대화에 쓰는 기준이에요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <span>작업 / 프로젝트</span>
-              <strong>특정 일에만 쓰는 기준</strong>
-              <p>Claude 프로젝트 지침이나 프로젝트 자료처럼 한 업무 안에서만 참고하게 해요.</p>
-            </article>
-            <article class="fragment fade-up">
-              <span>이번 대화</span>
-              <strong>오늘만 필요한 조건</strong>
-              <p>기능이 없거나 헷갈리면 첫 요청 앞에 붙여넣어도 충분히 효과가 있어요.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="visual-slide setup-template-slide" data-transition="zoom">
-          <p class="kicker">복사해서 채우기</p>
-          <h2>처음에는 여섯 칸만<br />채워도 충분해요.</h2>
-          <div class="setup-template-layout">
-            <div class="setup-code fragment fade-right">
-              <div class="guideline-code-header">
-                <span></span><span></span><span></span>
-                <strong>내 AI 기본 설정</strong>
-              </div>
-              <pre><code>## 나에 대해 기억할 것
-- 나는 [역할/직무] 일을 해요.
-- 자주 하는 일은 [업무 1], [업무 2]예요.
-
-## 답변 지침
-- 말투는 [원하는 톤]으로 해요.
-- 결과물은 주로 [표/체크리스트/초안]으로 줘요.
-- 정확하지 않으면 추측하지 말고 확인 필요라고 써요.
-- [넣지 말아야 할 표현/내용]은 빼요.</code></pre>
+        <section>
+          <p class="eyebrow">Instruction(지침)과 Skill(작업 템플릿)</p>
+          <h2>지침은 기본 습관,<br />스킬은 특정 작업 방식이에요.</h2>
+          <div class="split-line">
+            <div>
+              <span>Instruction(지침)</span>
+              <p>답변 말투, 금지 조건, 확인 기준</p>
             </div>
-            <article class="setup-tip fragment fade-left">
-              <span>기준</span>
-              <strong>메모리는 나에 대한 정보,<br />지침은 답변 방식이에요.</strong>
-              <p>둘을 섞어도 동작은 하지만, 나눠 적으면 나중에 고치기 쉬워요.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="visual-slide setup-example-slide" data-transition="fade">
-          <p class="kicker">예시로 채워보기</p>
-          <h2>디자인/기획 업무라면<br />이렇게 시작할 수 있어요.</h2>
-          <div class="setup-example-layout">
-            <div class="setup-code fragment fade-right">
-              <div class="guideline-code-header">
-                <span></span><span></span><span></span>
-                <strong>채워진 예시</strong>
-              </div>
-              <pre><code>## 나에 대해 기억할 것
-- 나는 디자인과 기획을 함께 다루는 일을 해요.
-- 자주 하는 일은 아이디어 정리, 공지문 작성,
-  이미지 생성 프롬프트 만들기예요.
-
-## 답변 지침
-- 말투는 부드러운 "~해요"로 해요.
-- 결과물은 표나 체크리스트로 먼저 정리해요.
-- 확실하지 않으면 "확인 필요"라고 표시해요.
-- 긴 배경 설명과 과한 표현은 빼요.</code></pre>
-            </div>
-            <div class="example-effect fragment fade-left">
-              <span>테스트 질문</span>
-              <strong>새 캠페인 이미지 아이디어<br />5개만 표로 정리해줘</strong>
-              <ul>
-                <li>내 업무 기준에 맞춰 아이디어를 정리해요.</li>
-                <li>처음부터 표나 체크리스트로 나와요.</li>
-                <li>모호한 부분은 확인 필요로 표시해요.</li>
-              </ul>
+            <div>
+              <span>Skill(작업 템플릿)</span>
+              <p>회의록 정리, 공지 작성, 리서치 요약 같은 반복 작업</p>
             </div>
           </div>
         </section>
 
-        <section class="visual-slide setup-safety-slide" data-transition="slide">
-          <p class="kicker">메모리에 남길 것과 뺄 것</p>
-          <h2>반복되는 업무 기준은 남기고,<br />민감한 정보는 남기지 않아요.</h2>
-          <div class="safety-grid">
-            <article class="safe fragment fade-right">
-              <strong>남기면 좋은 것</strong>
-              <p>내 역할, 자주 쓰는 문서 형식, 선호하는 말투, 검증 방식, 자주 하는 업무</p>
-            </article>
-            <article class="danger fragment fade-left">
-              <strong>남기지 않을 것</strong>
-              <p>비밀번호, API 키, 고객 개인정보, 계약 금액, 회사 내부 기밀, 민감한 개인 정보</p>
-            </article>
+        <section class="question-slide">
+          <p class="eyebrow">5. AI가 답만 주고 끝나요</p>
+          <h2>“좋은 말은 해주는데<br />작업은 결국 내가 해요.”</h2>
+          <p class="lead">챗봇은 답을 주는 화면이고,<br />Agent(작업자 AI)는 일을 맡길 수 있는 방식에 가까워요.</p>
+        </section>
+
+        <section>
+          <p class="eyebrow">Agent(작업자 AI)</p>
+          <h2>Agent(작업자 AI)는 역할을 맡고<br />도구를 써서 일을 진행하는 AI예요.</h2>
+          <div class="flow-line">
+            <span>역할을 이해해요</span>
+            <span>파일과 도구를 다뤄요</span>
+            <span>결과물을 확인해요</span>
           </div>
-          <div class="setup-checklist fragment fade-up">
-            <span>강의 끝나고 10분</span>
-            <b>1. 내 역할 적기</b>
-            <b>2. 원하는 답변 형식 적기</b>
-            <b>3. 확인 필요 기준 적기</b>
-            <b>4. 테스트 질문 하나 해보기</b>
+          <p class="thin">비유하면 “질문에 답하는 사람”에서 “작업을 맡아 진행하는 사람”으로 넘어가는 거예요.</p>
+        </section>
+
+        <section>
+          <p class="eyebrow">챗봇과 Agent(작업자 AI)</p>
+          <h2>챗봇은 답을 주고,<br />Agent(작업자 AI)는 결과물을 만져요.</h2>
+          <div class="split-line">
+            <div>
+              <span>Chatbot</span>
+              <p>대화창 안에서 답변을 받아요</p>
+            </div>
+            <div>
+              <span>Agent(작업자 AI)</span>
+              <p>허용한 작업 공간 안에서 읽고, 고치고, 확인해요</p>
+            </div>
           </div>
         </section>
 
-        <section class="summary-slide" data-transition="fade">
-          <p class="kicker">오늘의 한 장 요약</p>
-          <h2>AI가 말을 안 듣는 것처럼 보일 때는<br />기준을 다시 세워봐요.</h2>
-          <div class="summary-grid">
-            <span class="fragment fade-up">컨텍스트</span>
-            <span class="fragment fade-up">지침</span>
-            <span class="fragment fade-up">메모리</span>
-            <span class="fragment fade-up">확인</span>
-            <span class="fragment fade-up">작업 도구</span>
+        <section>
+          <p class="eyebrow">서비스 이름은 달라도</p>
+          <h2>개념은 거의<br />같은 자리에 놓여요.</h2>
+          <div class="service-names">
+            <span>Gemini<br /><b>Gem</b></span>
+            <span>ChatGPT<br /><b>Memory(기억) · GPT</b></span>
+            <span>Claude<br /><b>Skill(작업 템플릿) · Project</b></span>
           </div>
-          <p>AI는 문맥을 바탕으로 답을 만들어요. 답변 방식은 지침에, 나에 대한 반복 정보는 메모리에 남기고, 중요한 기준과 확인 방식은 결과물을 만들기 전에 다시 올려요.</p>
+          <p class="thin">상세 설정 화면은 공유자료에 따로 남겨두고, 강의에서는 개념만 기억해요.</p>
+        </section>
+
+        <section>
+          <p class="eyebrow">오늘 바로 해볼 일</p>
+          <h2>반복되는 일을 하나 고르고,<br />저장할 기준을 나눠봐요.</h2>
+          <div class="example-box">
+            <p>이건 오늘 한 번 부탁할 말인가요? → Prompt(요청)</p>
+            <p>매번 지켜야 할 답변 방식인가요? → Instruction(지침)</p>
+            <p>나에 대해 기억해도 되는 정보인가요? → Memory(기억)</p>
+            <p>반복되는 작업 순서인가요? → Skill(작업 템플릿)</p>
+          </div>
+        </section>
+
+        <section>
+          <p class="eyebrow">한 장 요약</p>
+          <h2>AI를 잘 쓰는 건<br />말을 길게 쓰는 게 아니에요.</h2>
+          <p class="lead">오늘의 부탁, 지금의 기억, 반복 기준, 저장된 정보, 작업 템플릿, 일을 맡길 역할을 구분하는 거예요.</p>
+          <div class="word-grid compact">
+            <span>Prompt<br /><small>(요청)</small></span>
+            <span>Context<br /><small>(작업 기억)</small></span>
+            <span>Instruction<br /><small>(지침)</small></span>
+            <span>Memory<br /><small>(기억)</small></span>
+            <span>Skill<br /><small>(작업 템플릿)</small></span>
+            <span>Agent<br /><small>(작업자 AI)</small></span>
+          </div>
         </section>
 
         <section class="qa-slide">
-          <p class="kicker">10~15분</p>
+          <p class="eyebrow">10~15분</p>
           <h2>Q&A</h2>
-          <p>지금 쓰고 있는 AI 대화 중 바꾸고 싶은 장면을 하나만 떠올려봐요.</p>
+          <p class="lead">지금 쓰고 있는 AI 대화 중<br />바꾸고 싶은 장면을 하나만 떠올려봐요.</p>
         </section>
       </div>
     </div>
@@ -681,7 +362,6 @@
       import Reveal from 'reveal.js';
       import Notes from 'reveal.js/plugin/notes/notes.esm.js';
       import 'reveal.js/dist/reveal.css';
-      import 'reveal.js/dist/theme/white.css';
       import './slides.css';
 
       Reveal.initialize({
@@ -689,15 +369,9 @@
         controls: true,
         progress: true,
         center: true,
-        transition: 'slide',
-        backgroundTransition: 'fade',
+        transition: 'none',
+        backgroundTransition: 'none',
         plugins: [Notes]
-      }).then(() => {
-        if (new URLSearchParams(window.location.search).has('showFragments')) {
-          document.querySelectorAll('.fragment').forEach((fragment) => {
-            fragment.classList.add('visible');
-          });
-        }
       });
     </script>
   </body>
