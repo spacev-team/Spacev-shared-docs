@@ -7,35 +7,82 @@
     <link rel="stylesheet" href="./shared/styles/base.css" />
   </head>
   <body class="home-page">
-    <main class="home-shell">
-      <p class="eyebrow">SpaceV Shared Docs</p>
-      <h1>교육자료와 공유자료를<br />한곳에서 봐요.</h1>
-      <p class="lead">
-        외부 공유가 가능한 교육자료, 강의자료, 회사 공용 자료를 카테고리별로 정리하는 공간입니다.
-      </p>
+    <div class="home-layout">
+      <aside class="side-menu" aria-label="자료 메뉴">
+        <a class="side-brand" href="./">
+          <span class="brand-mark">S</span>
+          <span>
+            <strong>SpaceV</strong>
+            <small>Shared Docs</small>
+          </span>
+        </a>
 
-      <section class="link-grid" aria-label="자료 카테고리">
-        <a class="nav-card" href="./education/ai-conversation-level-0/">
-          <span>교육자료</span>
-          <strong>AI와 대화하는 가장 쉬운 기술</strong>
-          <small>비개발자 대상 Level 0 오프라인 강의 자료</small>
-        </a>
-        <a class="nav-card" href="./education/claude-code-n8n-workflow/">
-          <span>교육자료</span>
-          <strong>반복 업무 자동화 워크플로우</strong>
-          <small>Claude Code와 n8n으로 업무 자동화 만들기</small>
-        </a>
-        <a class="nav-card disabled" aria-disabled="true">
-          <span>강의자료</span>
-          <strong>준비 중</strong>
-          <small>발표자용 강의 자료를 추가할 예정입니다.</small>
-        </a>
-        <a class="nav-card disabled" aria-disabled="true">
-          <span>회사 공유자료</span>
-          <strong>준비 중</strong>
-          <small>공개 가능한 공용 자료를 추가할 예정입니다.</small>
-        </a>
-      </section>
-    </main>
+        <nav class="side-nav">
+          <a class="side-link active" href="#education">
+            <span>교육자료</span>
+            <small>2</small>
+          </a>
+          <a class="side-link" href="#lectures">
+            <span>강의자료</span>
+            <small>준비 중</small>
+          </a>
+          <a class="side-link" href="#company">
+            <span>회사 공유자료</span>
+            <small>준비 중</small>
+          </a>
+        </nav>
+      </aside>
+
+      <main class="home-shell">
+        <section class="home-hero" aria-labelledby="page-title">
+          <p class="eyebrow">SpaceV Shared Docs</p>
+          <h1 id="page-title">교육자료와 공유자료를<br />한곳에서 봐요.</h1>
+          <p class="lead">
+            외부 공유가 가능한 교육자료, 강의자료, 회사 공용 자료를 카테고리별로 정리하는 공간입니다.
+          </p>
+        </section>
+
+        <section class="content-section" id="education" aria-labelledby="education-title">
+          <div class="section-heading">
+            <span>Education</span>
+            <h2 id="education-title">교육자료</h2>
+          </div>
+          <div class="link-grid" aria-label="교육자료 목록">
+            <a class="nav-card" href="./education/ai-conversation-level-0/">
+              <span>Level 0</span>
+              <strong>AI와 대화하는 가장 쉬운 기술</strong>
+              <small>비개발자 대상 Level 0 오프라인 강의 자료</small>
+            </a>
+            <a class="nav-card" href="./education/claude-code-n8n-workflow/">
+              <span>Workflow</span>
+              <strong>반복 업무 자동화 워크플로우</strong>
+              <small>Claude Code와 n8n으로 업무 자동화 만들기</small>
+            </a>
+          </div>
+        </section>
+
+        <section class="content-section" id="lectures" aria-labelledby="lectures-title">
+          <div class="section-heading">
+            <span>Lecture</span>
+            <h2 id="lectures-title">강의자료</h2>
+          </div>
+          <div class="empty-panel">
+            <strong>준비 중</strong>
+            <small>발표자용 강의 자료를 추가할 예정입니다.</small>
+          </div>
+        </section>
+
+        <section class="content-section" id="company" aria-labelledby="company-title">
+          <div class="section-heading">
+            <span>Company</span>
+            <h2 id="company-title">회사 공유자료</h2>
+          </div>
+          <div class="empty-panel">
+            <strong>준비 중</strong>
+            <small>공개 가능한 공용 자료를 추가할 예정입니다.</small>
+          </div>
+        </section>
+      </main>
+    </div>
   </body>
 </html>
