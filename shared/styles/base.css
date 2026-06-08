@@ -32,13 +32,21 @@ a {
 }
 
 .home-page {
+  display: grid;
+  place-items: center;
   min-height: 100vh;
+  padding: 48px 24px;
+}
+
+.site-home-page {
+  display: block;
   padding: 0;
 }
 
 .home-layout {
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
+  width: 100%;
   min-height: 100vh;
 }
 
@@ -130,6 +138,10 @@ a {
 }
 
 .home-shell {
+  width: min(980px, 100%);
+}
+
+.site-home-page .home-shell {
   width: min(1080px, 100%);
   padding: 56px 48px 72px;
 }
@@ -148,9 +160,13 @@ a {
 h1 {
   margin: 0;
   max-width: 760px;
-  font-size: clamp(44px, 6vw, 76px);
+  font-size: clamp(44px, 8vw, 86px);
   line-height: 1.02;
   letter-spacing: 0;
+}
+
+.site-home-page h1 {
+  font-size: clamp(44px, 6vw, 76px);
 }
 
 .lead {
@@ -189,6 +205,11 @@ h1 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
+  margin-top: 48px;
+}
+
+.site-home-page .link-grid {
+  margin-top: 0;
 }
 
 .nav-card {
@@ -274,7 +295,7 @@ code {
     min-height: 64px;
   }
 
-  .home-shell {
+  .site-home-page .home-shell {
     padding: 36px 20px 52px;
   }
 
