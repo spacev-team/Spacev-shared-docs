@@ -10,6 +10,9 @@ education/
     index.html
     slides/
     materials/
+  claude-code-n8n-workflow/
+    index.html
+    assets/
 shared/
   styles/
   assets/

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>매일 하는 반복 업무에서 탈출하는 가장 빠른 방법 (Claude Code + n8n)</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<style>
+:root{
+  --blue:#1456f0; --sky:#3daeff; --pink:#ea5ec1;
+  --tintBlue:#eaf1ff; --pLight:#60a5fa; --p500:#3b82f6; --p600:#2563eb; --p700:#1d4ed8; --deep:#17437d;
+  --text:#222222; --headDark:#18181b; --darkSurf:#181e25; --sec:#45515e; --ter:#8e8e93; --helper:#5f5f5f;
+  --white:#ffffff; --container:#f0f0f0; --divider:#f2f3f5; --border:#e5e7eb;
+  --successBG:#e8ffea; --successTx:#16a34a;
+  --grad:linear-gradient(135deg,#1456f0 0%,#3b82f6 50%,#60a5fa 100%);
+  --shadowStd:0 4px 6px rgba(0,0,0,.08);
+  --shadowGlow:0 0 15px rgba(44,30,116,.16);
+  --font:"Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:var(--font);-webkit-font-smoothing:antialiased;}
+html,body{height:100%;background:#0c0e12;overflow:hidden;}
+/* stage keeps fixed 16:9, scales to viewport */
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+#deck{position:relative;width:1280px;height:720px;transform-origin:center center;}
+.slide{position:absolute;inset:0;background:var(--white);overflow:hidden;display:none;}
+.slide.active{display:block;}
+.slide.dark{background:var(--darkSurf);}
+.slide.grad{background:var(--grad);}
+
+/* ---- shared frame ---- */
+.chapter{position:absolute;left:48px;top:38px;font-weight:600;font-size:11.5px;letter-spacing:1px;color:var(--ter);}
+.slide.dark .chapter,.slide.grad .chapter{color:#aeb6c2;}
+.logo{position:absolute;right:48px;top:40px;height:25px;}
+.headline{position:absolute;left:48px;top:96px;font-weight:700;font-size:31px;line-height:1.2;color:var(--text);letter-spacing:-.02em;}
+.subtitle{position:absolute;left:48px;top:165px;font-weight:500;font-size:15.5px;line-height:1.45;color:var(--sec);}
+.pagenum{position:absolute;left:48px;bottom:34px;font-weight:500;font-size:10px;color:var(--ter);}
+.source{position:absolute;right:48px;bottom:34px;font-weight:400;font-size:9px;color:var(--ter);}
+.slide.dark .pagenum,.slide.grad .pagenum{color:#aeb6c2;}
+.slide.dark .source,.slide.grad .source{color:#8a93a0;}
+
+/* ---- building blocks ---- */
+.card{position:absolute;background:var(--white);border-radius:14px;box-shadow:var(--shadowStd);}
+.card.flat{box-shadow:none;}
+.card.bd{border:1px solid var(--border);}
+.card.tint{background:var(--tintBlue);box-shadow:none;}
+.card.div{background:var(--divider);box-shadow:none;}
+.card.dk{background:var(--darkSurf);box-shadow:none;}
+.card.code{background:#0f1620;box-shadow:none;}
+.card.gradcard{background:var(--grad)!important;}
+.card.glow{box-shadow:var(--shadowGlow);}
+.chip{position:absolute;border-radius:14px;display:flex;align-items:center;justify-content:center;}
+.chip img{width:52%;height:52%;object-fit:contain;}
+.pill{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;font-weight:600;white-space:nowrap;}
+.num-circle{position:absolute;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.arrow{position:absolute;display:flex;align-items:center;justify-content:center;color:var(--ter);font-size:22px;}
+.divline{position:absolute;height:1px;background:var(--divider);}
+
+/* text helpers */
+.t{position:absolute;color:var(--text);}
+.w7{font-weight:700;} .w6{font-weight:600;} .w5{font-weight:500;} .w4{font-weight:400;} .w8{font-weight:800;}
+.cBlue{color:var(--blue);} .cSec{color:var(--sec);} .cTer{color:var(--ter);} .cWhite{color:#fff;}
+.cDeep{color:var(--deep);} .cGreen{color:var(--successTx);} .cBorder{color:var(--border);}
+
+/* tables */
+table.cmp{position:absolute;border-collapse:collapse;}
+table.cmp td{border:1px solid var(--border);padding:0 12px;vertical-align:middle;}
+
+/* nav */
+#nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;
+  background:rgba(24,30,37,.82);backdrop-filter:blur(8px);padding:8px 16px;border-radius:999px;z-index:50;}
+#nav button{border:none;background:transparent;color:#fff;font-size:18px;cursor:pointer;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+#nav button:hover{background:rgba(255,255,255,.15);}
+#nav button:disabled{opacity:.3;cursor:default;}
+#counter{color:#fff;font-weight:600;font-size:13px;min-width:54px;text-align:center;letter-spacing:.5px;}
+#bar{position:fixed;top:0;left:0;height:3px;background:var(--blue);z-index:50;transition:width .25s;}
+.edge{position:fixed;top:0;bottom:0;width:14%;z-index:40;cursor:pointer;}
+.edge.l{left:0;} .edge.r{right:0;}
+@media print{ #nav,#bar,.edge{display:none;} }
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="stage"><div id="deck"></div></div>
+<div class="edge l" onclick="prev()"></div>
+<div class="edge r" onclick="next()"></div>
+<div id="nav">
+  <button onclick="prev()" id="pBtn" aria-label="이전">‹</button>
+  <span id="counter">1 / 28</span>
+  <button onclick="next()" id="nBtn" aria-label="다음">›</button>
+</div>
+
+<script>
+const LOGO_D="assets/logo_dark.png", LOGO_W="assets/logo_white.png";
+const ic=(n,c)=>`assets/icons/${n}_${c}.png`;
+
+/* helper builders returning HTML strings */
+function chip(x,y,d,name,color,bg){return `<div class="chip" style="left:${x}px;top:${y}px;width:${d}px;height:${d}px;background:${bg};border-radius:${d*0.28}px;"><img src="${ic(name,color)}"></div>`;}
+function header(chapter,dark){return `${chapter?`<div class="chapter">${chapter}</div>`:""}<img class="logo" src="${dark?LOGO_W:LOGO_D}">`;}
+function foot(page,src,dark){return `<div class="pagenum">${page}</div>${src?`<div class="source">${src}</div>`:""}`;}
+function title(h,s){return `<div class="headline">${h}</div>${s?`<div class="subtitle">${s}</div>`:""}`;}
+
+/* px scale: PPT inch * 96 = px (1280/13.333) */
+const I=96;
+
+const slides=[];
+
+/* ---------- S1 Cover ---------- */
+slides.push(`
+<img class="logo" src="${LOGO_D}" style="top:48px;">
+<span class="pill" style="left:48px;top:130px;background:var(--tintBlue);color:var(--blue);font-size:11.5px;padding:8px 16px;">사내 자동화 워크플로우 · 2시간 속성</span>
+<div class="t w7" style="left:48px;top:185px;font-size:37px;line-height:1.18;letter-spacing:-.02em;">매일 하는 반복 업무에서<br>탈출하는 가장 빠른 방법</div>
+<div class="t w5 cSec" style="left:48px;top:330px;font-size:16px;">Claude Code(두뇌) · n8n-MCP(목) · n8n(몸)으로 코드 한 줄 없이 업무를 자동화합니다</div>
+<div class="card glow gradcard" style="left:48px;top:392px;width:1184px;height:230px;border-radius:22px;">
+  <div class="t w6" style="left:53px;top:36px;font-size:14px;color:#dce9ff;">오늘의 목표</div>
+  ${[["2시간","속성으로 끝내기"],["2개","자동화 워크플로우 완성"],["0줄","코딩 없이 자연어로"]].map((k,i)=>`
+    <div class="t w7 cWhite" style="left:${53+i*378}px;top:84px;font-size:44px;">${k[0]}</div>
+    <div class="t w5" style="left:${53+i*378}px;top:165px;font-size:13.5px;color:#dce9ff;">${k[1]}</div>`).join("")}
+</div>
+<div class="t w6" style="left:48px;top:636px;font-size:13px;">마케팅팀 박현웅</div>
+<div class="t w4 cTer" style="right:48px;top:636px;font-size:11px;">강의 일자 ____________</div>
+`);
+
+/* ---------- S2 Overview ---------- */
+slides.push(`${header("OVERVIEW",false)}${title("오늘, ‘두뇌·목·몸’을 연결해 자동화를 완성합니다","코드 한 줄 없이, 자연어로 업무 자동화 워크플로우를 직접 만들고 배포합니다")}
+${[["mail","실습 1","받은 메일 AI 요약·분류","새 메일을 AI가 요약하고 중요도를 판단해 중요한 것만 구글 챗으로 알림","Gmail → AI → 구글 챗"],
+   ["rss","실습 2","경쟁사 블로그·SNS 모니터링","RSS 새 글을 AI가 요약해 스프레드시트에 한 줄씩 누적 정리","RSS → AI 요약 → 스프레드시트"]]
+  .map((it,i)=>{const x=48+i*(564+38);return `
+  <div class="card" style="left:${x}px;top:240px;width:564px;height:240px;">
+    ${chip(33,33,67,it[0],"blue","var(--tintBlue)")}
+    <span class="pill" style="position:absolute;right:30px;top:44px;background:var(--tintBlue);color:var(--blue);font-size:11px;padding:7px 14px;">${it[1]}</span>
+    <div class="t w7" style="left:33px;top:115px;font-size:19px;">${it[2]}</div>
+    <div class="t w4 cSec" style="left:33px;top:165px;width:498px;font-size:13.5px;line-height:1.45;">${it[3]}</div>
+    <div class="divline" style="left:33px;top:204px;width:498px;"></div>
+    <div class="t w6 cBlue" style="left:33px;top:209px;font-size:12px;">${it[4]}</div>
+  </div>`;}).join("")}
+<div class="card div" style="left:48px;top:500px;width:1184px;height:125px;">
+  ${chip(31,33,59,"check","green","var(--successBG)")}
+  <div class="t w6 cGreen" style="left:111px;top:26px;font-size:13px;">오늘 끝나면</div>
+  <div class="t w6" style="left:111px;top:56px;width:1040px;font-size:16px;line-height:1.35;">내 업무 중 반복되는 일 한 가지를 ‘자동으로 돌아가는 상태’로 만든 채 퇴근합니다.</div>
+</div>
+${foot("02","삼삼엠투 사내 교육 · Claude Code + n8n",false)}`);
+
+/* ---------- divider builder ---------- */
+function divider(num,kor,lead,page){return `<div data-dark="1">${header("",true)}
+<div class="t w8" style="left:48px;top:190px;font-size:86px;color:#2a3340;">${num}</div>
+<div class="t w6" style="left:53px;top:322px;font-size:13px;letter-spacing:2px;color:var(--pLight);">SECTION ${num}</div>
+<div class="t w7 cWhite" style="left:48px;top:352px;font-size:42px;line-height:1.15;">${kor}</div>
+${lead?`<div class="t w5" style="left:50px;top:464px;font-size:18px;color:#9aa4b2;line-height:1.45;">${lead}</div>`:""}
+${foot(page,"",true)}</div>`;}
+
+/* ---------- S3 divider ---------- */
+slides.push(divider("01","Claude Code 준비하기","Windows 데스크탑에 설치하고, 두뇌를 깨웁니다","03"));
+
+/* ---------- S4 Claude Code란 ---------- */
+slides.push(`${header("01 · CLAUDE CODE",false)}${title("Claude Code = 설계하고 만드는 ‘두뇌’","자연어로 말하면 자동화의 구조를 이해하고, 워크플로우를 직접 설계·생성합니다")}
+<div class="card" style="left:48px;top:240px;width:451px;height:384px;">
+  ${chip(34,38,77,"brain","pink","#fbe4f4")}
+  <div class="t w6" style="left:34px;top:139px;font-size:15px;">두뇌의 역할</div>
+  <div class="t w4 cSec" style="left:34px;top:187px;font-size:14.5px;line-height:1.5;">사람의 언어를 이해하고<br>무엇을·어떻게 만들지<br>설계·생성·관리합니다.</div>
+  <span class="pill" style="position:absolute;left:34px;bottom:34px;width:383px;height:44px;background:var(--divider);color:var(--helper);font-weight:500;font-size:12px;">단, 혼자서는 실행하지 못합니다</span>
+</div>
+${[["chat","자연어 이해","‘새 메일 오면 요약해줘’ 한 마디를 작업으로 해석"],
+   ["node","워크플로우 설계","어떤 노드를 어떤 순서로 연결할지 구조를 설계"],
+   ["shield","검증 · 수정","배포 전 설정 오류를 점검하고 자동으로 고침"]]
+  .map((c,i)=>{const y=240+i*(117+16);return `
+  <div class="card bd flat" style="left:538px;top:${y}px;width:694px;height:117px;">
+    ${chip(29,30,58,c[0],"blue","var(--tintBlue)")}
+    <div class="t w7" style="left:106px;top:25px;font-size:16px;">${c[1]}</div>
+    <div class="t w4 cSec" style="left:106px;top:63px;font-size:12.5px;line-height:1.4;">${c[2]}</div>
+  </div>`;}).join("")}
+${foot("04","",false)}`);
+
+/* ---------- process flow builder ---------- */
+function flow(items,topPx,hPx){
+  const n=items.length, aw=48, total=1184, cw=(total-aw*(n-1))/n;
+  return items.map((st,i)=>{const x=48+i*(cw+aw);return `
+  <div class="card" style="left:${x}px;top:${topPx}px;width:${cw}px;height:${hPx}px;">
+    <div class="num-circle" style="left:27px;top:27px;width:44px;height:44px;font-size:15px;">${i+1}</div>
+    ${st.icon?`<img src="${ic(st.icon,'blue')}" style="position:absolute;right:30px;top:31px;width:38px;height:38px;">`:""}
+    <div class="t w7" style="left:27px;top:88px;width:${cw-54}px;font-size:14.5px;">${st.title}</div>
+    <div class="t w4 cSec" style="left:27px;top:${hPx>180?128:118}px;width:${cw-54}px;font-size:11.5px;line-height:1.4;">${st.desc}</div>
+  </div>
+  ${i<n-1?`<div class="arrow" style="left:${x+cw}px;top:${topPx}px;width:${aw}px;height:${hPx}px;">→</div>`:""}`;}).join("");
+}
+
+/* ---------- S5 설치1 ---------- */
+slides.push(`${header("01 · CLAUDE CODE",false)}${title("1단계 · Windows 데스크탑 버전 설치","공식 사이트에서 내려받아 설치합니다 (사전에 받아두면 시간을 아낄 수 있어요)")}
+${flow([
+  {icon:"deploy",title:"공식 사이트 접속",desc:"claude.com/ko/download 로 접속"},
+  {icon:"code",title:"Windows용 내려받기",desc:"데스크탑(.exe) 설치 파일을 다운로드"},
+  {icon:"bolt",title:"설치 실행",desc:"안내에 따라 설치를 완료"},
+  {icon:"robot",title:"로그인 준비",desc:"Claude 계정으로 로그인할 준비"}],245,192)}
+<div class="card tint" style="left:48px;top:480px;width:1184px;height:139px;">
+  ${chip(31,40,59,"check","blue","var(--white)")}
+  <div class="t w6 cBlue" style="left:115px;top:29px;font-size:13px;">사전 준비물</div>
+  <div class="t w5" style="left:115px;top:61px;width:1037px;font-size:15px;line-height:1.4;">설치 파일은 강의 전 미리 다운로드(https://claude.com/ko/download) → 당일에는 ‘로그인 후 실행’부터 바로 시작합니다.</div>
+</div>
+${foot("05","다운로드: https://claude.com/ko/download",false)}`);
+
+/* ---------- S6 설치2 + screenshot ---------- */
+slides.push(`${header("01 · CLAUDE CODE",false)}${title("2단계 · 실행 후 Claude Code 열기","데스크탑 앱에서 로그인하고, Claude Code를 엽니다")}
+${[["설치한 데스크탑 앱 실행","바탕화면/시작메뉴에서 앱을 엽니다"],
+   ["계정으로 로그인","Claude 계정으로 로그인합니다"],
+   ["Claude Code 열기","앱에서 Claude Code 화면으로 진입합니다"]]
+  .map((st,i)=>{const y=245+i*120;return `
+  <div class="num-circle" style="left:48px;top:${y}px;width:48px;height:48px;font-size:16px;">${i+1}</div>
+  ${i<2?`<div style="position:absolute;left:71px;top:${y+48}px;width:1px;height:72px;background:var(--border);"></div>`:""}
+  <div class="t w7" style="left:120px;top:${y-2}px;font-size:16px;">${st[0]}</div>
+  <div class="t w4 cSec" style="left:120px;top:${y+36}px;font-size:12.5px;">${st[1]}</div>`;}).join("")}
+<div class="card bd" style="left:643px;top:250px;width:589px;height:303px;overflow:hidden;">
+  <img src="assets/sshot6.png" style="width:100%;height:100%;object-fit:cover;">
+</div>
+<div class="t w5 cTer" style="left:643px;top:560px;width:589px;font-size:11px;text-align:center;">Claude Code 데스크탑 실행 화면</div>
+${foot("06","",false)}`);
+
+/* ---------- S7 체크포인트 ---------- */
+slides.push(`${header("01 · CLAUDE CODE",false)}${title("체크포인트 · 여기까지 같이 확인합니다","다음 세 가지가 보이면 두뇌 준비 완료입니다")}
+${[["robot","앱이 정상 실행됨","데스크탑 앱이 오류 없이 열림"],
+   ["check","로그인 완료","내 계정으로 로그인된 상태"],
+   ["code","Claude Code 화면 진입","명령을 입력할 수 있는 화면 확인"]]
+  .map((c,i)=>{const x=48+i*(372+29);return `
+  <div class="card" style="left:${x}px;top:250px;width:372px;height:192px;">
+    ${chip(29,33,63,c[0],"green","var(--successBG)")}
+    <div class="t w7" style="left:29px;top:113px;font-size:16px;">${c[1]}</div>
+    <div class="t w4 cSec" style="left:29px;top:150px;font-size:12.5px;">${c[2]}</div>
+  </div>`;}).join("")}
+<div class="card div" style="left:48px;top:485px;width:1184px;height:134px;">
+  <div class="t w6 cHelper" style="left:38px;top:29px;font-size:13px;color:var(--helper);">막히면?</div>
+  <div class="t w5" style="left:38px;top:61px;width:1100px;font-size:15px;line-height:1.4;">한 명이라도 막히면 모두 함께 기다립니다. 이 지점을 넘겨야 다음 실습이 매끄럽게 진행돼요.</div>
+</div>
+${foot("07","",false)}`);
+
+/* ---------- S8 divider ---------- */
+slides.push(divider("02","n8n 이해하기","두뇌·목·몸이 무엇이고, 왜 n8n인지 알아봅니다","08"));
+
+/* ---------- S9 두뇌·목·몸 ---------- */
+slides.push(`${header("02 · n8n",false)}${title("두뇌(Claude Code) · 목(n8n-MCP) · 몸(n8n)","셋이 연결될 때, 자연어 한 마디가 24시간 자동 실행으로 바뀝니다")}
+${[["brain","pink","#fbe4f4","두뇌","Claude Code","자연어를 이해하고<br>워크플로우를 설계·생성"],
+   ["link","blue","var(--tintBlue)","목","n8n-MCP","두뇌의 설계를 n8n 언어로<br>번역·검증하고 서버에 배포"],
+   ["body","deep","#e3ecf7","몸","n8n","배포된 워크플로우를<br>24시간 자동으로 실행"]]
+  .map((pt,i)=>{const cw=(1184-52*2)/3;const x=48+i*(cw+52);return `
+  <div class="card" style="left:${x}px;top:254px;width:${cw}px;height:259px;border-radius:18px;">
+    ${chip((cw-86)/2,34,86,pt[0],pt[1],pt[2])}
+    <div class="t w7" style="left:0;top:134px;width:${cw}px;text-align:center;font-size:20px;">${pt[3]}</div>
+    <div class="t w6 cBlue" style="left:0;top:178px;width:${cw}px;text-align:center;font-size:13px;">${pt[4]}</div>
+    <div class="t w4 cSec" style="left:0;top:209px;width:${cw}px;text-align:center;font-size:12px;line-height:1.35;">${pt[5]}</div>
+  </div>
+  ${i<2?`<div class="arrow" style="left:${x+cw}px;top:254px;width:52px;height:259px;">→</div>`:""}`;}).join("")}
+<div class="card dk" style="left:48px;top:547px;width:1184px;height:72px;display:flex;align-items:center;justify-content:center;">
+  <div class="t w6 cWhite" style="position:static;font-size:16px;">자연어 요청 &nbsp;→&nbsp; 설계(두뇌) &nbsp;→&nbsp; 번역·배포(목) &nbsp;→&nbsp; 24시간 실행(몸)</div>
+</div>
+${foot("09","",false)}`);
+
+/* ---------- S10 왜 n8n ---------- */
+slides.push(`${header("02 · n8n",false)}${title("왜 n8n을 선택할까?","Zapier · Make 대신 n8n이 주목받는 3가지 이유")}
+${[["puzzle","압도적 유연성·확장성",["오픈소스 — 벤더 종속이 없음","워크플로우 안에서 코드 직접 작성","필요하면 커스텀 노드 개발"]],
+   ["stream","강력한 데이터 처리",["여러 건을 리스트로 한 번에 처리","분기 후 다시 병합이 자유로움","복잡한 데이터 흐름도 시각화"]],
+   ["lock","비용 효율 & 데이터 주권",["셀프호스팅 시 제한 없이 무료","민감 데이터를 외부로 안 보냄","통제된 환경에서 안전하게 처리"]]]
+  .map((c,i)=>{const cw=(1184-29*2)/3;const x=48+i*(cw+29);return `
+  <div class="card" style="left:${x}px;top:240px;width:${cw}px;height:257px;">
+    ${chip(29,29,58,c[0],"blue","var(--tintBlue)")}
+    <div class="t w8 cBorder" style="right:29px;top:30px;font-size:22px;">0${i+1}</div>
+    <div class="t w7" style="left:29px;top:100px;font-size:16px;">${c[1]}</div>
+    <div class="t w4 cSec" style="left:29px;top:150px;width:${cw-52}px;font-size:11.5px;line-height:1.2;">
+      ${c[2].map(b=>`<div style="margin-bottom:9px;">• ${b}</div>`).join("")}
+    </div>
+  </div>`;}).join("")}
+<div class="card tint" style="left:48px;top:520px;width:1184px;height:99px;">
+  ${chip(31,27,58,"server","blue","var(--white)")}
+  <div class="t w6 cBlue" style="left:111px;top:21px;font-size:13px;">우리 회사는?</div>
+  <div class="t w6" style="left:111px;top:54px;width:1046px;font-size:15.5px;line-height:1.35;">이미 자체 서버로 n8n을 운영 중 — 비용 절감과 데이터 보안 이점을 실제로 누리고 있습니다.</div>
+</div>
+${foot("10","",false)}`);
+
+/* ---------- S11 비교표 ---------- */
+(()=>{
+  const head=["구분","n8n","Zapier","Make (Integromat)"];
+  const rows=[
+    ["핵심 특징","오픈소스·셀프호스팅·코드 확장","간편함, 가장 많은 앱 연동","시각적 시나리오 빌더"],
+    ["가격 정책","커뮤니티 버전 무료(셀프호스팅)","실행 횟수 기반 유료","Operation 수 기반 유료"],
+    ["데이터 처리","다중 아이템·복잡한 분기/병합 강점","단일 아이템 처리에 최적화","유연하나 n8n보다 다소 복잡"],
+    ["확장성","JS 커스텀 로직·노드 개발 가능","제한적 (Code by Zapier)","제한적 (Custom Apps)"],
+    ["주요 타겟","개발자·엔지니어·데이터 분석가","마케터·비개발 직군","숙련 기획자·자동화 전문가"],
+    ["데이터 주권","완벽 보장 (자체 서버 운영)","외부 서버에 데이터 전송","외부 서버에 데이터 전송"]];
+  const colW=[182,363,305,334];
+  const hcell=(t,i)=>`<td style="height:40px;background:${i===1?'var(--blue)':'#e8ebef'};color:${i===1?'#fff':'var(--text)'};font-weight:${i===1?700:600};font-size:11px;text-align:${i===0?'left':'center'};width:${colW[i]}px;">${t}</td>`;
+  const bcell=(t,i,ri)=>`<td style="height:54px;background:${i===1?'var(--tintBlue)':(ri%2?'#fafbfc':'#fff')};color:${i===0?'var(--text)':(i===1?'var(--deep)':'var(--sec)')};font-weight:${i===0?600:(i===1?600:400)};font-size:11px;text-align:${i===0?'left':'center'};">${t}</td>`;
+  slides.push(`${header("02 · n8n",false)}${title("n8n vs Zapier vs Make","도구별 강점을 한눈에 비교합니다")}
+  <table class="cmp" style="left:48px;top:240px;width:1184px;">
+    <tr>${head.map((h,i)=>hcell(h,i)).join("")}</tr>
+    ${rows.map((r,ri)=>`<tr>${r.map((c,i)=>bcell(c,i,ri)).join("")}</tr>`).join("")}
+  </table>
+  ${foot("11","출처: 사내 자동화 도구 비교 분석",false)}`);
+})();
+
+/* ---------- S12 divider ---------- */
+slides.push(divider("03","두뇌와 몸 연결하기","회사 n8n 접속과 n8n-MCP 설치로 ‘목’을 잇습니다","12"));
+
+/* ---------- S13 n8n 접속·둘러보기 ---------- */
+slides.push(`${header("03 · 환경 연결",false)}${title("n8n 접속과 화면 둘러보기","회사 자체 서버에 접속하고, 핵심 개념 3가지를 익힙니다")}
+<div class="card" style="left:48px;top:245px;width:470px;height:374px;">
+  ${chip(34,34,63,"server","blue","var(--tintBlue)")}
+  <div class="t w7" style="left:110px;top:44px;font-size:16px;">접속 정보</div>
+  ${[["서버 주소","https://n8n.example.company","cTer"],["계정(ID)","현장에서 안내","cTer"],["비밀번호","현장에서 안내","cHelper"]]
+    .map((f,i)=>{const y=120+i*79;return `
+    <div class="t w5 cTer" style="left:34px;top:${y}px;font-size:12px;">${f[0]}</div>
+    <div style="position:absolute;left:34px;top:${y+31}px;width:402px;height:38px;background:var(--divider);border-radius:6px;"></div>
+    <div class="t w5" style="left:48px;top:${y+41}px;font-size:12px;color:${f[2]==='cHelper'?'var(--helper)':'var(--text)'};">${f[1]}</div>`;}).join("")}
+</div>
+${[["bolt","트리거 (Trigger)","워크플로우를 시작시키는 신호 — 새 메일, 정해진 시각 등"],
+   ["node","노드 (Node)","메일 읽기·AI 요약처럼 하나의 작업 단위"],
+   ["link","워크플로우 (Workflow)","노드를 순서대로 연결한 자동화 한 세트"]]
+  .map((c,i)=>{const y=245+i*(113+17);return `
+  <div class="card bd flat" style="left:557px;top:${y}px;width:675px;height:113px;">
+    ${chip(29,29,56,c[0],"blue","var(--tintBlue)")}
+    <div class="t w7" style="left:101px;top:24px;font-size:15.5px;">${c[1]}</div>
+    <div class="t w4 cSec" style="left:101px;top:61px;font-size:12px;line-height:1.4;">${c[2]}</div>
+  </div>`;}).join("")}
+${foot("13","사내 n8n 서버 · 계정은 강의 중 안내",false)}`);
+
+/* ---------- S14 n8n-MCP란 ---------- */
+slides.push(`${header("03 · 환경 연결",false)}${title("n8n-MCP = 두뇌와 몸을 잇는 ‘목’","Claude Code가 n8n을 ‘정확히’ 이해하게 만드는 다리입니다")}
+${[["warn","#fdf1f1","pink","없으면","노드 이름·설정을 ‘추측’ → 잦은 오류와 실패","#c0392b"],
+   ["check","var(--successBG)","green","있으면","정확한 노드·속성 조회 → 검증 후 안전하게 배포","var(--successTx)"]]
+  .map((r,i)=>{const y=245+i*96;return `
+  <div class="card flat" style="left:48px;top:${y}px;width:586px;height:83px;background:${r[1]};">
+    ${chip(23,17,48,r[0],r[2],"var(--white)")}
+    <div class="t w7" style="left:91px;top:13px;font-size:13px;color:${r[5]};">${r[3]}</div>
+    <div class="t w5" style="left:91px;top:40px;width:480px;font-size:12.5px;line-height:1.3;">${r[4]}</div>
+  </div>`;}).join("")}
+<div class="t w4 cSec" style="left:48px;top:447px;width:586px;font-size:12.5px;line-height:1.5;">Claude Code(두뇌)와 n8n(몸) 사이에서 명령을 번역·검증·전달하는 중간 계층</div>
+${[[0,0,"1,396","지원 n8n 노드 수",true],[1,0,"2,709","워크플로우 템플릿",false],[0,1,"~12ms","평균 응답 속도",false],[1,1,"99%","노드 속성 커버리지",false]]
+  .map(t=>{const tw=(569-21)/2;const x=662+t[0]*(tw+21);const y=245+t[1]*(139+21);
+    if(t[4]) return `<div class="card glow gradcard" style="left:${x}px;top:${y}px;width:${tw}px;height:139px;border-radius:16px;">
+      <div class="t w7 cWhite" style="left:24px;top:33px;font-size:34px;">${t[2]}</div>
+      <div class="t w5" style="left:24px;top:94px;font-size:12px;color:#dce9ff;">${t[3]}</div></div>`;
+    return `<div class="card bd" style="left:${x}px;top:${y}px;width:${tw}px;height:139px;border-radius:16px;">
+      <div class="t w7 cBlue" style="left:24px;top:33px;font-size:32px;">${t[2]}</div>
+      <div class="t w5 cSec" style="left:24px;top:94px;font-size:12px;">${t[3]}</div></div>`;}).join("")}
+${foot("14","출처: n8n-MCP (github.com/czlonkowski/n8n-mcp)",false)}`);
+
+/* ---------- S15 n8n-MCP 설치 (GitHub link primary) ---------- */
+slides.push(`${header("03 · 환경 연결",false)}${title("n8n-MCP 설치 · Claude Code에 연결","사전 조건은 Node.js 하나. 가장 쉬운 방법은 깃허브 링크를 주고 부탁하는 것")}
+<div class="card tint" style="left:48px;top:240px;width:1184px;height:197px;">
+  <span class="pill" style="position:absolute;left:34px;top:29px;background:var(--blue);color:#fff;font-size:11px;padding:8px 16px;">추천 · 가장 쉬움</span>
+  <div class="t w7" style="left:202px;top:31px;font-size:15px;">방법 1 · Claude Code에 깃허브 링크를 주고 부탁하기</div>
+  <div class="card code" style="left:34px;top:88px;width:1116px;height:64px;display:flex;align-items:center;">
+    <div class="t w5 cWhite" style="position:static;padding-left:24px;font-size:14px;">“https://github.com/czlonkowski/n8n-mcp&nbsp;&nbsp;이 MCP 서버를 설치해줘”</div>
+  </div>
+  <div class="t w5 cBlue" style="left:34px;top:159px;width:1116px;font-size:12px;line-height:1.3;">→ Claude가 문서를 읽고 설정을 알아서 구성·등록합니다. 재시작 후 도구 인식만 확인하면 끝.</div>
+</div>
+<div class="card code" style="left:48px;top:459px;width:1184px;height:163px;">
+  <span class="pill" style="position:absolute;left:34px;top:25px;background:#1e2a38;color:#9fc2ff;font-size:10.5px;padding:7px 14px;">방법 2 · 수동 설정</span>
+  <div class="t w5" style="left:230px;top:27px;font-size:12px;color:#7fb0ff;">직접 설정을 붙여넣어도 됩니다 (기본 구성)</div>
+  <div class="t w5" style="left:34px;top:75px;width:1116px;font-size:12px;color:#dce9ff;line-height:1.5;font-family:ui-monospace,Menlo,monospace;">{ "mcpServers": { "n8n-mcp": { "command": "npx", "args": ["n8n-mcp"],<br>&nbsp;&nbsp;&nbsp;&nbsp;"env": { "MCP_MODE": "stdio", "LOG_LEVEL": "error" } } } }</div>
+</div>
+${foot("15","출처: n8n-MCP (github.com/czlonkowski/n8n-mcp)",false)}`);
+
+/* ---------- S16 회사 서버 연결 ---------- */
+slides.push(`${header("03 · 환경 연결",false)}${title("회사 n8n 서버와 연결 = 워크플로우 자동 배포","API 주소와 키를 풀 구성에 넣으면, Claude가 직접 만들고 서버에 배포합니다")}
+${flow([
+  {icon:"server",title:"n8n 로그인",desc:"사내 n8n 서버 접속"},
+  {icon:"lock",title:"API Key 발급",desc:"Settings → n8n API"},
+  {icon:"code",title:"풀 구성에 입력",desc:"URL·Key 붙여넣기"},
+  {icon:"check",title:"연결 확인",desc:"재시작 후 인식 확인"}],235,144)}
+<div class="card code" style="left:48px;top:394px;width:1184px;height:225px;">
+  <div class="t w5" style="left:34px;top:22px;font-size:11px;color:#7fb0ff;">풀 구성 (관리 도구 포함) · 회사 n8n 서버 연결</div>
+  <span class="pill" style="position:absolute;left:486px;top:19px;height:34px;padding:0 16px;background:#3a2526;color:#ffb4b4;font-size:10px;">실습용 임시 키 · 강의 후 삭제</span>
+  <span class="pill" style="position:absolute;left:760px;top:19px;height:34px;padding:0 16px;background:#1e2a38;color:#9fc2ff;font-weight:500;font-size:10px;">검증만 쓰려면 API 두 줄은 생략</span>
+  <div class="t w5" style="left:34px;top:66px;width:1116px;font-size:13px;color:#dce9ff;line-height:1.45;font-family:ui-monospace,Menlo,monospace;word-break:break-all;">"env": {<br>&nbsp;&nbsp;"MCP_MODE": "stdio", "LOG_LEVEL": "error",<br>&nbsp;&nbsp;"N8N_API_URL": "https://n8n.example.company/api/v1",<br>&nbsp;&nbsp;"N8N_API_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJleGFtcGxlLXVzZXIiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwianRpIjoiZXhhbXBsZS1qdGkiLCJpYXQiOjE3MDAwMDAwMDAsImV4cCI6MTcwMDA4NjQwMH0.example-signature-placeholder"<br>}</div>
+</div>
+${foot("16","사내 n8n · API Key는 강의 중 발급/입력",false)}`);
+
+/* ---------- S17 안전수칙 ---------- */
+slides.push(`${header("03 · 환경 연결",false)}${title("AI로 자동화할 때 꼭 지킬 안전 수칙","강력한 만큼, 운영 중인 워크플로우는 신중하게 다룹니다")}
+${[["warn","운영 워크플로우 직접 편집 금지","프로덕션 워크플로우를 AI로 바로 수정하지 않습니다","pink","#fbe4f4"],
+   ["shield","복사본·테스트 환경 우선","사본을 만들어 테스트 환경에서 먼저 검증합니다","blue","var(--tintBlue)"],
+   ["check","배포 전 검증 (validate)","변경 사항을 배포 전에 반드시 점검합니다","blue","var(--tintBlue)"],
+   ["deploy","백업 · 버전 관리","중요한 워크플로우는 내보내기로 백업해 둡니다","blue","var(--tintBlue)"]]
+  .map((r,i)=>{const cw=(1184-29)/2;const x=48+(i%2)*(cw+29);const y=250+Math.floor(i/2)*(168+29);return `
+  <div class="card bd" style="left:${x}px;top:${y}px;width:${cw}px;height:168px;">
+    ${chip(29,33,63,r[0],r[3],r[4])}
+    <div class="t w7" style="left:110px;top:33px;width:${cw-140}px;font-size:16px;">${r[1]}</div>
+    <div class="t w4 cSec" style="left:110px;top:85px;width:${cw-140}px;font-size:12.5px;line-height:1.4;">${r[2]}</div>
+  </div>`;}).join("")}
+${foot("17","출처: n8n-MCP 공식 안전 가이드",false)}`);
+
+/* ---------- S18 divider ---------- */
+slides.push(divider("04","같이 만들어보는 자동화","자연어 한 마디로 두 가지 자동화를 직접 완성합니다","18"));
+
+/* ---------- S19 실습 공통 흐름 ---------- */
+slides.push(`${header("04 · 실습",false)}${title("모든 실습은 같은 4단계로 흐릅니다","자연어로 말하면 → 목이 설계·검증 → 몸이 24시간 실행합니다")}
+${flow([
+  {icon:"chat",title:"① 자연어 요청",desc:"두뇌(Claude Code)에게 하고 싶은 일을 말로 설명"},
+  {icon:"node",title:"② 설계 · 검증",desc:"목(n8n-MCP)이 노드를 탐색·연결하고 오류 점검"},
+  {icon:"deploy",title:"③ 서버에 배포",desc:"몸(n8n)에 워크플로우를 자동으로 배포"},
+  {icon:"bolt",title:"④ 자동 실행",desc:"트리거가 작동하면 24시간 알아서 실행"}],240,187)}
+<div class="card dk" style="left:48px;top:465px;width:1184px;height:154px;">
+  <div class="t w6" style="left:38px;top:27px;font-size:12px;color:#7fb0ff;">이렇게 말해보세요</div>
+  <div class="t w6 cWhite" style="left:38px;top:63px;width:1108px;font-size:18px;line-height:1.4;">“새 메일이 오면 내용을 요약하고 중요도를 매겨서, 중요한 것만 구글 챗으로 보내줘.”</div>
+</div>
+${foot("19","",false)}`);
+
+/* ---------- practice builders ---------- */
+function pOverview(page,idx,h,sub,fl,prep){
+  return `${header("04 · 실습 · "+idx,false)}${title(h,sub)}
+  ${fl.map((st,i)=>{const cw=(1184-48*2)/3;const x=48+i*(cw+48);const pal=[["#e3ecf7","deep","var(--deep)"],["var(--tintBlue)","blue","var(--blue)"],["#fbe4f4","pink","#b23a8e"]][i];return `
+    <div class="card" style="left:${x}px;top:240px;width:${cw}px;height:163px;">
+      ${chip(27,25,54,st.icon,pal[1],pal[0])}
+      <span class="pill" style="position:absolute;right:27px;top:35px;background:${pal[0]};color:${pal[2]};font-size:9.5px;padding:6px 12px;">${st.role}</span>
+      <div class="t w7" style="left:27px;top:92px;font-size:15px;">${st.title}</div>
+      <div class="t w4 cSec" style="left:27px;top:127px;font-size:11px;">${st.desc}</div>
+    </div>
+    ${i<2?`<div class="arrow" style="left:${x+cw}px;top:240px;width:48px;height:163px;">→</div>`:""}`;}).join("")}
+  <div class="card div" style="left:48px;top:432px;width:1184px;height:187px;">
+    <div class="t w7" style="left:38px;top:25px;font-size:14px;">준비물 체크리스트</div>
+    ${prep.map((t,i)=>{const pw=(1184-76)/3;const x=38+i*pw;return `
+      ${chip(x,77,48,"check","green","var(--white)")}
+      <div class="t w5" style="left:${x+63}px;top:80px;width:${pw-90}px;font-size:12.5px;line-height:1.35;">${t}</div>`;}).join("")}
+  </div>
+  ${foot(page,"준비물·계정 권한은 강의 전 강사가 함께 점검",false)}`;
+}
+function pBuild(page,idx,prompt,tip,design,deploy){
+  return `${header("04 · 실습 · "+idx,false)}${title(idx+" · 이렇게 만듭니다 (STEP 1–3)","말로 요청하면 Claude가 설계·검증해 회사 n8n에 배포합니다")}
+  <div class="t w7 cBlue" style="left:48px;top:240px;font-size:14px;">STEP 1 · Claude Code에 이렇게 요청하세요</div>
+  <div class="card dk" style="left:48px;top:280px;width:672px;height:245px;">
+    <div class="t w6" style="left:34px;top:23px;font-size:11px;color:#7fb0ff;">프롬프트 예시</div>
+    <div class="t w5 cWhite" style="left:34px;top:56px;width:604px;font-size:15px;line-height:1.45;">${prompt}</div>
+  </div>
+  <div class="card tint" style="left:48px;top:539px;width:672px;height:83px;">
+    ${chip(21,17,48,"idea","blue","var(--white)")}
+    <div class="t w5" style="left:84px;top:0;width:560px;height:83px;display:flex;align-items:center;font-size:12.5px;line-height:1.3;">${tip}</div>
+  </div>
+  <div class="card bd" style="left:749px;top:280px;width:483px;height:149px;">
+    ${chip(27,25,50,"node","blue","var(--tintBlue)")}
+    <div class="t w7" style="left:91px;top:27px;font-size:13.5px;">STEP 2 · Claude가 설계·검증</div>
+    <div class="t w4 cSec" style="left:29px;top:79px;width:425px;font-size:11.5px;line-height:1.4;">${design}</div>
+  </div>
+  <div class="card bd" style="left:749px;top:443px;width:483px;height:179px;">
+    ${chip(27,25,50,"deploy","blue","var(--tintBlue)")}
+    <div class="t w7" style="left:91px;top:27px;font-size:13.5px;">STEP 3 · 배포 & 계정 연결</div>
+    <div class="t w4 cSec" style="left:29px;top:79px;width:425px;font-size:11.5px;line-height:1.4;">${deploy}</div>
+    <span class="pill" style="position:absolute;left:29px;bottom:24px;width:425px;height:32px;background:#fdf1f1;color:#c0392b;font-size:10.5px;">계정 연결은 본인이 직접</span>
+  </div>
+  ${foot(page,"",false)}`;
+}
+function pRun(page,idx,activate,test,result,realcase,apply){
+  return `${header("04 · 실습 · "+idx,false)}${title(idx+" · 실행하고 확인합니다 (STEP 4–5)","활성화 → 테스트 → 결과 확인. 실제 실습에서 막혔던 부분도 함께 정리했습니다")}
+  <div class="card" style="left:48px;top:240px;width:577px;height:178px;">
+    ${chip(29,25,54,"bolt","blue","var(--tintBlue)")}
+    <div class="t w7" style="left:96px;top:29px;font-size:14.5px;">STEP 4 · 활성화 & 테스트</div>
+    ${[activate,test].map((t,i)=>{const y=88+i*42;return `
+      <div style="position:absolute;left:35px;top:${y+6}px;width:10px;height:10px;border-radius:50%;background:var(--blue);"></div>
+      <div class="t w4 cSec" style="left:60px;top:${y}px;width:490px;font-size:12px;line-height:1.3;">${t}</div>`;}).join("")}
+  </div>
+  <div class="card" style="left:654px;top:240px;width:578px;height:178px;">
+    ${chip(29,25,54,"check","green","var(--successBG)")}
+    <div class="t w7" style="left:96px;top:29px;font-size:14.5px;">STEP 5 · 결과 확인</div>
+    <div class="t w5" style="left:33px;top:88px;width:512px;font-size:13px;line-height:1.45;">${result}</div>
+  </div>
+  <div class="card div" style="left:48px;top:434px;width:1184px;height:185px;">
+    ${chip(31,19,48,"warn","pink","var(--white)")}
+    <div class="t w7" style="left:96px;top:24px;font-size:13px;">실제로 막혔던 지점 → 이렇게 해결</div>
+    ${realcase.map((rc,i)=>{const y=70+i*48;return `
+      <div style="position:absolute;left:38px;top:${y}px;width:499px;height:42px;background:#fdf1f1;border-radius:6px;display:flex;align-items:center;"><div class="t w5" style="position:static;padding:0 14px;font-size:11px;color:#c0392b;line-height:1.25;">${rc[0]}</div></div>
+      <div class="arrow" style="left:545px;top:${y}px;width:40px;height:42px;font-size:15px;">→</div>
+      <div style="position:absolute;left:593px;top:${y}px;width:553px;height:42px;background:var(--successBG);border-radius:6px;display:flex;align-items:center;"><div class="t w5" style="position:static;padding:0 14px;font-size:11px;color:var(--successTx);line-height:1.25;">${rc[1]}</div></div>`;}).join("")}
+    <div class="t w5 cBlue" style="left:38px;top:166px;width:1104px;font-size:11.5px;">응용: ${apply}</div>
+  </div>
+  ${foot(page,"",false)}`;
+}
+
+/* S20-22 실습1 */
+slides.push(pOverview("20","실습 1","실습 1 · 받은 메일 AI 요약·중요도 분류","새 메일이 오면 AI가 요약·중요도를 판단해, 중요한 것만 구글 챗으로 알립니다",
+  [{icon:"mail",role:"트리거",title:"Gmail",desc:"새 메일 수신을 감지"},
+   {icon:"robot",role:"AI 가공",title:"Gemini 요약·분류",desc:"요약 + 중요도(상·중·하)"},
+   {icon:"chat",role:"액션",title:"구글 챗",desc:"중요도 ‘상’만 알림"}],
+  ["Gmail 계정 — n8n에 연결할 권한","Gemini API 키 (HTTP Request 호출)","구글 챗 스페이스 + Webhook 주소"]));
+slides.push(pBuild("21","실습 1",
+  "“내 Gmail에 새 메일이 오면 본문을 3줄로 요약하고 중요도를 상·중·하로 분류해줘. 중요도가 ‘상’인 메일만 제목·요약·발신자를 구글 챗 스페이스로 보내줘.”",
+  "좋은 요청 = 트리거 + 가공 규칙 + 조건 + 도착지를 구체적으로",
+  "실제 구성: Gmail 트리거 → Gemini 요약·분류 → 응답 파싱 → 중요도 ‘상’ 필터 → Google Chat. 5개 노드를 자동 생성·검증합니다.",
+  "회사 n8n에 배포(워크플로우 ID 자동 생성). Gemini는 HTTP Request로 호출, 기존 구글 챗 Webhook을 재활용했습니다."));
+slides.push(pRun("22","실습 1",
+  "워크플로우를 Active(활성화)로 켜 트리거 시작",
+  "테스트 메일 발송 → Execute workflow로 확인",
+  "필터를 통과한 ‘상’ 중요도 메일이 제목·요약·발신자와 함께 구글 챗에 도착(1건 전송 확인).",
+  [["Google Chat 노드 JSON Body 개행 문자 오류","updateNode로 jsonBody 수정 → 전송 성공"]],
+  "특정 발신자만 / 라벨 자동 분류 / 우선순위 점수 매기기"));
+
+/* S23-25 실습2 */
+slides.push(pOverview("23","실습 2","실습 2 · 경쟁사 블로그·SNS 모니터링","1시간마다 RSS를 확인해 AI가 요약하고, 스프레드시트에 누적 정리합니다",
+  [{icon:"rss",role:"트리거",title:"RSS (1시간마다)",desc:"에어비앤비 뉴스 피드"},
+   {icon:"robot",role:"AI 가공",title:"정제 → Gemini 요약",desc:"HTML 제거 후 3줄 요약"},
+   {icon:"sheet",role:"액션",title:"스프레드시트",desc:"행으로 누적 기록"}],
+  ["RSS 주소 (news.airbnb.com/ko/feed)","Gemini API 키 (HTTP Request 호출)","구글 시트 + 서비스 계정 편집자 권한"]));
+slides.push(pBuild("24","실습 2",
+  "“에어비앤비 뉴스 RSS(news.airbnb.com/ko/feed)를 1시간마다 확인해서 새 글을 3줄로 요약하고, 날짜·제목·요약·링크를 구글 스프레드시트 ‘에어비앤비 최신 뉴스 백업’에 한 행씩 추가해줘.”",
+  "주기(예: 1시간)·요약 형식·저장할 항목을 분명히 적어주세요",
+  "실제 구성: 스케줄(1시간) → RSS 읽기 → 내용 정제 → Gemini 요약 → 요약 추출 → Google Sheets 기록.",
+  "회사 n8n에 배포. 구글 시트는 서비스 계정 자격 증명을 n8n에 수동 연결해야 합니다."));
+slides.push(pRun("25","실습 2",
+  "워크플로우를 Active로 켜 1시간 주기로 자동 실행",
+  "Execute workflow로 즉시 한 번 실행",
+  "‘에어비앤비 최신 뉴스 백업’ 시트에 날짜·제목·요약·링크 새 행이 누적되면 성공(Published).",
+  [["RSS의 HTML·특수문자가 JSON Body를 깨뜨림","‘내용 정제’ 노드로 HTML 제거 + JSON.stringify (raw 전송)"],
+   ["서비스 계정이 시트에 접근 불가","서비스 계정을 시트 ‘편집자’로 공유 (핵심)"]],
+  "여러 경쟁사 동시 모니터링 / 키워드 필터 / 챗 동시 알림"));
+
+/* ---------- S26 공통 패턴 ---------- */
+(()=>{
+  const head=["실습","트리거","AI 가공","액션"];
+  const hc=[["#e8ebef","var(--text)"],["#e3ecf7","var(--deep)"],["var(--tintBlue)","var(--blue)"],["#fbe4f4","#b23a8e"]];
+  const rows=[["1 · 메일 요약·분류","Gmail 새 메일","요약 + 중요도 판단","구글 챗 알림"],
+              ["2 · 경쟁사 모니터링","RSS 새 글(주기)","핵심 3줄 요약","스프레드시트 누적"]];
+  const colW=[320,288,288,288];
+  slides.push(`${header("04 · 실습",false)}${title("두 자동화의 공통 패턴","트리거 → AI 가공 → 액션. 이 골격만 알면 무엇이든 만듭니다")}
+  <table class="cmp" style="left:48px;top:250px;width:1184px;">
+    <tr>${head.map((h,i)=>`<td style="height:53px;background:${hc[i][0]};color:${hc[i][1]};font-weight:600;font-size:13px;text-align:${i===0?'left':'center'};width:${colW[i]}px;">${h}</td>`).join("")}</tr>
+    ${rows.map(r=>`<tr>${r.map((c,i)=>`<td style="height:82px;background:#fff;color:${i===0?'var(--text)':'var(--sec)'};font-weight:${i===0?600:400};font-size:13px;text-align:${i===0?'left':'center'};">${c}</td>`).join("")}</tr>`).join("")}
+  </table>
+  <div class="card dk" style="left:48px;top:533px;width:1184px;height:86px;display:flex;align-items:center;justify-content:center;">
+    <div class="t w6 cWhite" style="position:static;font-size:16px;">트리거 · 가공 · 액션만 바꾸면, 우리 팀 업무 어디에나 그대로 적용됩니다.</div>
+  </div>
+  ${foot("26","",false)}`);
+})();
+
+/* ---------- S27 응용 아이디어 ---------- */
+slides.push(`${header("04 · 실습",false)}${title("마케팅팀, 이렇게 더 써보세요","오늘 배운 골격으로 바로 시도해볼 수 있는 자동화 아이디어")}
+${[["sheet","주간 성과 자동 요약","광고·트래픽 데이터를 매주 월요일 요약 리포트로"],
+   ["chat","신규 리드 즉시 알림","폼 제출 → AI 분류 → 담당자 슬랙/챗 알림"],
+   ["rss","콘텐츠 아이디어 큐레이션","업계 RSS를 AI가 큐레이션해 아이디어 보드에"],
+   ["mail","문의 메일 1차 분류","들어온 문의를 유형별로 자동 라벨링·배분"],
+   ["cal","캠페인 일정 리마인드","캠페인 마감 전날 자동 리마인드 발송"],
+   ["coins","경쟁사 가격·프로모 추적","변동 감지 시 요약해 시트에 누적 기록"]]
+  .map((it,i)=>{const cw=(1184-27*2)/3;const x=48+(i%3)*(cw+27);const y=240+Math.floor(i/3)*(171+27);return `
+  <div class="card bd" style="left:${x}px;top:${y}px;width:${cw}px;height:171px;">
+    ${chip(27,29,56,it[0],"blue","var(--tintBlue)")}
+    <div class="t w7" style="left:27px;top:96px;width:${cw-54}px;font-size:14.5px;">${it[1]}</div>
+    <div class="t w4 cSec" style="left:27px;top:131px;width:${cw-54}px;font-size:11.5px;line-height:1.35;">${it[2]}</div>
+  </div>`;}).join("")}
+${foot("27","",false)}`);
+
+/* ---------- S28 Closing ---------- */
+slides.push(`<div data-grad="1"><img class="logo" src="${LOGO_W}" style="top:48px;">
+<div class="t w7 cWhite" style="left:58px;top:245px;width:1100px;font-size:42px;line-height:1.25;">오늘 만든 자동화 1개가,<br>내일의 1시간을 돌려줍니다</div>
+<div class="t w5" style="left:60px;top:418px;font-size:20px;color:#eaf1ff;line-height:1.4;">반복은 기계에게. 우리는 더 중요한 일에 집중합니다.</div>
+<span class="pill" style="position:absolute;left:58px;top:500px;background:#fff;color:var(--darkSurf);font-size:13px;padding:13px 26px;">사내 자동화 채널에서 계속 공유해요</span>
+<div class="t w6 cWhite" style="left:60px;top:629px;font-size:14px;">마케팅팀 박현웅</div>
+<div class="t w4" style="right:48px;top:629px;font-size:11px;color:#c9d6ee;">매일 하는 반복 업무에서 탈출하는 가장 빠른 방법</div></div>`);
+
+/* ================= runtime ================= */
+const deck=document.getElementById("deck");
+slides.forEach((html,i)=>{
+  const div=document.createElement("div");
+  let cls="slide";
+  if(html.includes('data-dark="1"')) cls+=" dark";
+  if(html.includes('data-grad="1"')) cls+=" grad";
+  div.className=cls;
+  div.innerHTML=html;
+  deck.appendChild(div);
+});
+const els=[...document.querySelectorAll(".slide")];
+let cur=0;
+const counter=document.getElementById("counter");
+const bar=document.getElementById("bar");
+function render(){
+  els.forEach((e,i)=>e.classList.toggle("active",i===cur));
+  counter.textContent=`${cur+1} / ${els.length}`;
+  bar.style.width=`${((cur+1)/els.length)*100}%`;
+  document.getElementById("pBtn").disabled=cur===0;
+  document.getElementById("nBtn").disabled=cur===els.length-1;
+  location.hash=cur+1;
+}
+function next(){if(cur<els.length-1){cur++;render();}}
+function prev(){if(cur>0){cur--;render();}}
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" ")next();
+  else if(e.key==="ArrowLeft"||e.key==="PageUp")prev();
+  else if(e.key==="Home"){cur=0;render();}
+  else if(e.key==="End"){cur=els.length-1;render();}
+});
+// scale to fit viewport, keep 16:9
+function fit(){
+  const sw=window.innerWidth, sh=window.innerHeight;
+  const scale=Math.min(sw/1280, sh/720);
+  deck.style.transform=`scale(${scale})`;
+}
+window.addEventListener("resize",fit);
+// init from hash
+const h=parseInt(location.hash.replace("#",""));
+if(h>=1&&h<=els.length)cur=h-1;
+fit();render();
+</script>
+</body>
+</html>
