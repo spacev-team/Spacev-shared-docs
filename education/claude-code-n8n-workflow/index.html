@@ -75,7 +75,33 @@ table.cmp td{border:1px solid var(--border);padding:0 12px;vertical-align:middle
 #bar{position:fixed;top:0;left:0;height:3px;background:var(--blue);z-index:50;transition:width .25s;}
 .edge{position:fixed;top:0;bottom:0;width:14%;z-index:40;cursor:pointer;}
 .edge.l{left:0;} .edge.r{right:0;}
-@media print{ #nav,#bar,.edge{display:none;} }
+#hint{position:fixed;right:16px;bottom:20px;z-index:50;color:#cfd6e0;font-size:11px;font-weight:500;background:rgba(24,30,37,.7);padding:6px 12px;border-radius:999px;backdrop-filter:blur(8px);}
+/* overview grid */
+#overview{position:fixed;inset:0;z-index:60;background:#0c0e12;display:none;overflow:auto;padding:28px;}
+#overview.show{display:block;}
+#ovTitle{color:#fff;font-weight:700;font-size:18px;margin-bottom:18px;text-align:center;}
+#ovGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1200px;margin:0 auto;}
+.ovCell{position:relative;cursor:pointer;border-radius:8px;overflow:hidden;border:2px solid transparent;transition:border-color .12s,transform .12s;background:#fff;}
+.ovCell:hover{border-color:var(--blue);transform:translateY(-2px);}
+.ovCell.cur{border-color:var(--blue);}
+.ovNum{position:absolute;left:6px;top:4px;z-index:2;color:#fff;font-size:11px;font-weight:700;background:rgba(0,0,0,.45);border-radius:4px;padding:1px 6px;}
+.ovThumb{width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;}
+.ovThumb>.slide{position:absolute;top:0;left:0;display:block!important;transform-origin:top left;}
+/* presenter */
+body.presenter{background:#15181d;overflow:auto;}
+body.presenter #stage,body.presenter #nav,body.presenter #bar,body.presenter .edge,body.presenter #hint,body.presenter #overview{display:none!important;}
+#pres{display:none;color:#e7ebf0;padding:26px;min-height:100vh;box-sizing:border-box;}
+body.presenter #pres{display:flex;gap:26px;align-items:flex-start;}
+#pres .col{display:flex;flex-direction:column;gap:10px;}
+#pres .lab{font-size:12px;font-weight:600;color:#9aa4b2;letter-spacing:.5px;}
+#pres .frame{border-radius:10px;overflow:hidden;border:1px solid #2a2f37;background:#fff;position:relative;}
+#pres .frame>.slide{position:absolute;top:0;left:0;display:block!important;transform-origin:top left;}
+#pres .timer{font-size:46px;font-weight:700;color:#fff;letter-spacing:1px;}
+#pres .pgind{font-size:15px;color:#9aa4b2;font-weight:600;}
+#pres .ctrl{display:flex;gap:10px;margin-top:6px;}
+#pres .ctrl button{background:#222a33;color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:15px;cursor:pointer;font-weight:600;}
+#pres .ctrl button:hover{background:#2d3742;}
+@media print{ #nav,#bar,.edge,#hint{display:none;} }
 </style>
 </head>
 <body>
@@ -88,6 +114,9 @@ table.cmp td{border:1px solid var(--border);padding:0 12px;vertical-align:middle
   <span id="counter">1 / 28</span>
   <button onclick="next()" id="nBtn" aria-label="다음">›</button>
 </div>
+<div id="hint">F 전체화면 · O 개요 · P 발표자보기 · ←/→ 이동</div>
+<div id="overview"><div id="ovTitle">전체 슬라이드 (클릭하면 이동 · ESC 닫기)</div><div id="ovGrid"></div></div>
+<div id="pres"></div>
 
 <script>
 const LOGO_D="assets/logo_dark.png", LOGO_W="assets/logo_white.png";
@@ -107,7 +136,7 @@ const slides=[];
 /* ---------- S1 Cover ---------- */
 slides.push(`
 <img class="logo" src="${LOGO_D}" style="top:48px;">
-<span class="pill" style="left:48px;top:130px;background:var(--tintBlue);color:var(--blue);font-size:11.5px;padding:8px 16px;">사내 자동화 워크플로우 · 2시간 속성</span>
+<span class="pill" style="left:48px;top:130px;background:var(--tintBlue);color:var(--blue);font-size:11.5px;padding:8px 16px;">사내 실습 워크숍 · 2시간 속성</span>
 <div class="t w7" style="left:48px;top:185px;font-size:37px;line-height:1.18;letter-spacing:-.02em;">매일 하는 반복 업무에서<br>탈출하는 가장 빠른 방법</div>
 <div class="t w5 cSec" style="left:48px;top:330px;font-size:16px;">Claude Code(두뇌) · n8n-MCP(목) · n8n(몸)으로 코드 한 줄 없이 업무를 자동화합니다</div>
 <div class="card glow gradcard" style="left:48px;top:392px;width:1184px;height:230px;border-radius:22px;">
@@ -301,7 +330,7 @@ slides.push(`${header("03 · 환경 연결",false)}${title("n8n 접속과 화면
 <div class="card" style="left:48px;top:245px;width:470px;height:374px;">
   ${chip(34,34,63,"server","blue","var(--tintBlue)")}
   <div class="t w7" style="left:110px;top:44px;font-size:16px;">접속 정보</div>
-  ${[["서버 주소","https://n8n.example.company","cTer"],["계정(ID)","현장에서 안내","cTer"],["비밀번호","현장에서 안내","cHelper"]]
+  ${[["서버 주소","https://n8n-internal.33m2.co.kr","cTer"],["계정(ID)","test@spacev.kr","cTer"],["비밀번호","현장에서 안내","cHelper"]]
     .map((f,i)=>{const y=120+i*79;return `
     <div class="t w5 cTer" style="left:34px;top:${y}px;font-size:12px;">${f[0]}</div>
     <div style="position:absolute;left:34px;top:${y+31}px;width:402px;height:38px;background:var(--divider);border-radius:6px;"></div>
@@ -367,7 +396,7 @@ ${flow([
   <div class="t w5" style="left:34px;top:22px;font-size:11px;color:#7fb0ff;">풀 구성 (관리 도구 포함) · 회사 n8n 서버 연결</div>
   <span class="pill" style="position:absolute;left:486px;top:19px;height:34px;padding:0 16px;background:#3a2526;color:#ffb4b4;font-size:10px;">실습용 임시 키 · 강의 후 삭제</span>
   <span class="pill" style="position:absolute;left:760px;top:19px;height:34px;padding:0 16px;background:#1e2a38;color:#9fc2ff;font-weight:500;font-size:10px;">검증만 쓰려면 API 두 줄은 생략</span>
-  <div class="t w5" style="left:34px;top:66px;width:1116px;font-size:13px;color:#dce9ff;line-height:1.45;font-family:ui-monospace,Menlo,monospace;word-break:break-all;">"env": {<br>&nbsp;&nbsp;"MCP_MODE": "stdio", "LOG_LEVEL": "error",<br>&nbsp;&nbsp;"N8N_API_URL": "https://n8n.example.company/api/v1",<br>&nbsp;&nbsp;"N8N_API_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJleGFtcGxlLXVzZXIiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwianRpIjoiZXhhbXBsZS1qdGkiLCJpYXQiOjE3MDAwMDAwMDAsImV4cCI6MTcwMDA4NjQwMH0.example-signature-placeholder"<br>}</div>
+  <div class="t w5" style="left:34px;top:66px;width:1116px;font-size:13px;color:#dce9ff;line-height:1.45;font-family:ui-monospace,Menlo,monospace;word-break:break-all;">"env": {<br>&nbsp;&nbsp;"MCP_MODE": "stdio", "LOG_LEVEL": "error",<br>&nbsp;&nbsp;"N8N_API_URL": "https://n8n-internal.33m2.co.kr/api/v1",<br>&nbsp;&nbsp;"N8N_API_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5MGUzMDg5My01MjAyLTQzZTEtOGUyYS05ZjE1OTJmMDNkOTYiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwianRpIjoiNmVlNWMwZWMtYWRkMi00ZDdlLTlkZjctZjJkOTI5MTQ2MzE4IiwiaWF0IjoxNzgwNjQwMDY4LCJleHAiOjE3ODMxNzcyMDB9.pVeFzK2cPnlftlfOopaKu4XJj2eV1KtlfoLgRmRuZLo"<br>}</div>
 </div>
 ${foot("16","사내 n8n · API Key는 강의 중 발급/입력",false)}`);
 
@@ -551,46 +580,120 @@ slides.push(`<div data-grad="1"><img class="logo" src="${LOGO_W}" style="top:48p
 
 /* ================= runtime ================= */
 const deck=document.getElementById("deck");
+function slideClass(i){let c="slide";if(slides[i].includes('data-dark="1"'))c+=" dark";if(slides[i].includes('data-grad="1"'))c+=" grad";return c;}
 slides.forEach((html,i)=>{
   const div=document.createElement("div");
-  let cls="slide";
-  if(html.includes('data-dark="1"')) cls+=" dark";
-  if(html.includes('data-grad="1"')) cls+=" grad";
-  div.className=cls;
+  div.className=slideClass(i);
   div.innerHTML=html;
   deck.appendChild(div);
 });
-const els=[...document.querySelectorAll(".slide")];
+const els=[...deck.querySelectorAll(".slide")];
 let cur=0;
 const counter=document.getElementById("counter");
 const bar=document.getElementById("bar");
-function render(){
+const params=new URLSearchParams(location.search);
+const PRESENTER=params.get("presenter")==="1";
+const bc=("BroadcastChannel" in window)?new BroadcastChannel("deck33m2"):null;
+
+function render(broadcast){
   els.forEach((e,i)=>e.classList.toggle("active",i===cur));
   counter.textContent=`${cur+1} / ${els.length}`;
   bar.style.width=`${((cur+1)/els.length)*100}%`;
   document.getElementById("pBtn").disabled=cur===0;
   document.getElementById("nBtn").disabled=cur===els.length-1;
-  location.hash=cur+1;
+  if(!PRESENTER) location.hash=cur+1;
+  if(ovEl.classList.contains("show")) markOverview();
+  if(broadcast!==false&&bc) bc.postMessage({type:"idx",cur});
 }
-function next(){if(cur<els.length-1){cur++;render();}}
-function prev(){if(cur>0){cur--;render();}}
+function go(n,broadcast){cur=Math.max(0,Math.min(els.length-1,n));render(broadcast);if(PRESENTER)renderPres();}
+function next(){go(cur+1);}
+function prev(){go(cur-1);}
+
+if(bc) bc.onmessage=(e)=>{
+  const d=e.data||{};
+  if(d.type==="idx"&&d.cur!==cur){cur=d.cur;render(false);if(PRESENTER)renderPres();}
+  if(d.type==="hello"&&!PRESENTER&&bc) bc.postMessage({type:"idx",cur});
+};
+
+/* fullscreen */
+function toggleFull(){
+  if(!document.fullscreenElement){(document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen());}
+  else{document.exitFullscreen&&document.exitFullscreen();}
+}
+/* overview grid */
+const ovEl=document.getElementById("overview"), ovGrid=document.getElementById("ovGrid");
+let ovBuilt=false;
+function buildOverview(){
+  slides.forEach((html,i)=>{
+    const cell=document.createElement("div"); cell.className="ovCell"; cell.dataset.i=i;
+    const num=document.createElement("div"); num.className="ovNum"; num.textContent=i+1;
+    const th=document.createElement("div"); th.className="ovThumb";
+    const sl=document.createElement("div"); sl.className=slideClass(i);
+    sl.innerHTML=html;
+    th.appendChild(sl); cell.appendChild(num); cell.appendChild(th);
+    cell.onclick=()=>{go(i);toggleOverview(false);};
+    ovGrid.appendChild(cell);
+    // scale inner slide to thumb width
+    requestAnimationFrame(()=>{const w=th.clientWidth;sl.style.transform=`scale(${w/1280})`;sl.style.width="1280px";sl.style.height="720px";});
+  });
+  ovBuilt=true;
+}
+function markOverview(){[...ovGrid.children].forEach((c,i)=>c.classList.toggle("cur",i===cur));}
+function toggleOverview(show){
+  if(!ovBuilt) buildOverview();
+  const willShow = show===undefined ? !ovEl.classList.contains("show") : show;
+  ovEl.classList.toggle("show",willShow);
+  if(willShow){requestAnimationFrame(()=>{[...ovGrid.querySelectorAll(".ovThumb>.slide")].forEach(sl=>{const w=sl.parentElement.clientWidth;sl.style.transform=`scale(${w/1280})`;});markOverview();});}
+}
+/* presenter window */
+function openPresenter(){ window.open(location.pathname+"?presenter=1","presenter33m2","width=1180,height=680"); if(bc) setTimeout(()=>bc.postMessage({type:"idx",cur}),300); }
+const presEl=document.getElementById("pres");
+let startT=null;
+function renderPres(){
+  const nextI=Math.min(cur+1,els.length-1);
+  const cw=600, nw=380;
+  presEl.innerHTML=`
+    <div class="col">
+      <div class="lab">현재 슬라이드</div>
+      <div class="frame" style="width:${cw}px;height:${cw*9/16}px;"><div class="${slideClass(cur)}" style="transform:scale(${cw/1280});width:1280px;height:720px;">${slides[cur]}</div></div>
+      <div class="ctrl"><button onclick="prev()">‹ 이전</button><button onclick="next()">다음 ›</button></div>
+    </div>
+    <div class="col">
+      <div class="lab">경과 시간</div><div class="timer" id="pTimer">00:00</div>
+      <div class="pgind">${cur+1} / ${els.length}</div>
+      <div class="lab" style="margin-top:8px;">다음 슬라이드</div>
+      <div class="frame" style="width:${nw}px;height:${nw*9/16}px;">${cur<els.length-1?`<div class="${slideClass(nextI)}" style="transform:scale(${nw/1280});width:1280px;height:720px;">${slides[nextI]}</div>`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#9aa4b2;">마지막 슬라이드</div>`}</div>
+    </div>`;
+}
+if(PRESENTER){
+  document.body.classList.add("presenter");
+  startT=Date.now();
+  setInterval(()=>{const t=document.getElementById("pTimer");if(t){const s=Math.floor((Date.now()-startT)/1000);t.textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}},500);
+  if(bc) bc.postMessage({type:"hello"});
+  renderPres();
+}
+
 document.addEventListener("keydown",e=>{
   if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" ")next();
   else if(e.key==="ArrowLeft"||e.key==="PageUp")prev();
-  else if(e.key==="Home"){cur=0;render();}
-  else if(e.key==="End"){cur=els.length-1;render();}
+  else if(e.key==="Home")go(0);
+  else if(e.key==="End")go(els.length-1);
+  else if(e.key==="f"||e.key==="F")toggleFull();
+  else if(e.key==="o"||e.key==="O")toggleOverview();
+  else if(e.key==="Escape"){if(ovEl.classList.contains("show"))toggleOverview(false);}
+  else if((e.key==="p"||e.key==="P")&&!PRESENTER)openPresenter();
 });
-// scale to fit viewport, keep 16:9
+/* scale to fit viewport, keep 16:9 */
 function fit(){
-  const sw=window.innerWidth, sh=window.innerHeight;
-  const scale=Math.min(sw/1280, sh/720);
+  if(PRESENTER) return;
+  const scale=Math.min(window.innerWidth/1280, window.innerHeight/720);
   deck.style.transform=`scale(${scale})`;
 }
 window.addEventListener("resize",fit);
-// init from hash
-const h=parseInt(location.hash.replace("#",""));
+const h=parseInt((location.hash||"").replace("#",""));
 if(h>=1&&h<=els.length)cur=h-1;
-fit();render();
+fit();render(false);
+if(PRESENTER) renderPres();
 </script>
 </body>
 </html>
