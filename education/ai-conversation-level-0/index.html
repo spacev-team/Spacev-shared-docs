@@ -2191,6 +2191,7 @@ description: 해야 할 것과 하지 말아야 할 것을 지켜 토마토 파�
   const LS = "prompt-agent-training-state";
   const bc = "BroadcastChannel" in window ? new BroadcastChannel(CH) : null;
   let seq = 0;
+  const FORCE_FIRST_SLIDE = MODE === "slides";
 
   slides.forEach((slide, index) => {
     const logo = document.createElement("div");
@@ -2226,11 +2227,13 @@ description: 해야 할 것과 하지 말아야 할 것을 지켜 토마토 파�
     try { history.replaceState(null, "", `#${current + 1}`); } catch (e) {}
   }
   function send(type, extra) {
+    if (FORCE_FIRST_SLIDE) return;
     const message = Object.assign({ type, current, seq: ++seq }, extra || {});
     if (bc) bc.postMessage(message);
     try { localStorage.setItem(LS, JSON.stringify(message)); } catch (e) {}
   }
   function onMessage(message) {
+    if (FORCE_FIRST_SLIDE) return;
     if (!message) return;
     if (message.type === "goto") applyGoto(message.current);
     if (message.type === "request-state") send("goto");
@@ -2394,7 +2397,8 @@ description: 해야 할 것과 하지 말아야 할 것을 지켜 토마토 파�
   }
 
   const hash = parseInt(location.hash.replace("#", ""), 10);
-  if (hash && hash >= 1 && hash <= total) current = hash - 1;
+  if (FORCE_FIRST_SLIDE) current = 0;
+  else if (hash && hash >= 1 && hash <= total) current = hash - 1;
   else {
     try {
       const saved = JSON.parse(localStorage.getItem(LS) || "null");
