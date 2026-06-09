@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 360" role="img" aria-labelledby="title desc">
+  <title id="title">Main Agent가 Sub Agent에게 위임하고 결과를 사용자에게 전달하는 흐름</title>
+  <desc id="desc">Main Agent가 명령 카드와 Skill을 Sub Agent에게 전달하고, Sub Agent가 작업한 결과물을 Main Agent가 정제해 사용자에게 전달하는 장면</desc>
+  <defs>
+    <style>
+      .bg{fill:#fff}.ink{fill:#252525}.muted{fill:#696969}.purple{fill:#895ffc}.purple2{fill:#f5f1ff}.blue{fill:#4e90f9}.blue2{fill:#edf4ff}.amber{fill:#ffd857}.amber2{fill:#fff8e2}.red{fill:#f04459}.red2{fill:#ffedef}.box{fill:#fff;stroke:#d7d7d7;stroke-width:2.5}.line{stroke:#252525;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}.arrow{stroke:#895ffc;stroke-width:5;fill:none;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}.txt{font-family:Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif}.h{font-size:26px;font-weight:900}.s{font-size:20px;font-weight:900}.p{font-size:16px}.mini{font-size:14px;font-weight:850}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#895ffc"/></marker>
+  </defs>
+  <rect class="bg" width="1180" height="360"/>
+  <text class="txt h ink" x="36" y="46">4-5단계: 위임한 작업을 받고, 결과를 정제해서 사용자에게 전달합니다</text>
+
+  <g transform="translate(48 94)">
+    <rect x="0" y="84" width="104" height="106" rx="24" fill="#fff" stroke="#252525" stroke-width="4"/>
+    <rect x="17" y="110" width="70" height="40" rx="12" fill="#252525"/>
+    <circle cx="38" cy="130" r="7" fill="#895ffc"/><circle cx="66" cy="130" r="7" fill="#895ffc"/>
+    <text class="txt mini purple" x="5" y="224">Main Agent</text>
+    <rect class="red2" x="128" y="24" width="178" height="66" rx="12" stroke="#f04459" stroke-width="3"/>
+    <text class="txt mini ink" x="148" y="51">명령 카드</text>
+    <text class="txt p muted" x="148" y="74">“이 기준으로 작업”</text>
+    <rect class="purple2" x="128" y="110" width="178" height="58" rx="12" stroke="#895ffc" stroke-width="3"/>
+    <text class="txt mini ink" x="148" y="146">Skill: 교육자료 생성</text>
+  </g>
+
+  <path class="arrow" d="M370 196 H468"/>
+  <g transform="translate(468 84)">
+    <rect class="box" width="250" height="226" rx="18"/>
+    <text class="txt s red" x="28" y="38">Sub Agent 작업</text>
+    <text class="txt p muted" x="28" y="66">전달받은 명령 + Skill로 실행</text>
+    <rect class="amber2" x="30" y="92" width="190" height="34" rx="9" stroke="#ffd857" stroke-width="2"/>
+    <text class="txt mini ink" x="52" y="115">1. 초안 작성</text>
+    <rect class="amber2" x="30" y="138" width="190" height="34" rx="9" stroke="#ffd857" stroke-width="2"/>
+    <text class="txt mini ink" x="52" y="161">2. 조건 검토</text>
+    <rect class="amber2" x="30" y="184" width="190" height="34" rx="9" stroke="#ffd857" stroke-width="2"/>
+    <text class="txt mini ink" x="52" y="207">3. 결과물 생성</text>
+  </g>
+
+  <path class="arrow" d="M724 196 H806"/>
+  <g transform="translate(806 92)">
+    <rect class="box" width="148" height="96" rx="14"/>
+    <text class="txt s blue" x="30" y="36">결과물</text>
+    <text class="txt mini muted" x="28" y="64">초안 + 검토</text>
+    <text class="txt mini muted" x="28" y="84">+ 수정 제안</text>
+    <rect class="purple2" x="-20" y="130" width="188" height="72" rx="14" stroke="#895ffc" stroke-width="3"/>
+    <text class="txt s purple" x="16" y="161">Main Agent 정제</text>
+    <text class="txt mini muted" x="18" y="185">누락 확인 · 톤 정리</text>
+  </g>
+
+  <path class="arrow" d="M974 228 H1052"/>
+  <g transform="translate(1052 118)">
+    <circle cx="50" cy="30" r="28" fill="#ffedef" stroke="#252525" stroke-width="3"/>
+    <rect x="18" y="60" width="64" height="74" rx="18" fill="#ffedef" stroke="#252525" stroke-width="3"/>
+    <rect x="-28" y="154" width="158" height="54" rx="12" fill="#edf4ff" stroke="#4e90f9" stroke-width="3"/>
+    <text class="txt mini ink" x="-5" y="187">사용자에게 전달</text>
+  </g>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 390" role="img" aria-labelledby="title desc">
+  <title id="title">Instruction, Memory, 요청이 Context Window에 들어가는 흐름</title>
+  <desc id="desc">유저 요청과 Instruction, Memory, 첨부파일, 대화 기록이 Main Agent의 머리에서 Context Window로 펼쳐지는 그림</desc>
+  <defs>
+    <style>
+      .bg{fill:#fff}.ink{fill:#252525}.muted{fill:#696969}.purple{fill:#895ffc}.purple2{fill:#f5f1ff}.blue{fill:#4e90f9}.blue2{fill:#edf4ff}.amber{fill:#ffd857}.amber2{fill:#fff8e2}.line{stroke:#252525;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}.box{fill:#fff;stroke:#d7d7d7;stroke-width:2.5}.window{fill:#f5f1ff;stroke:#895ffc;stroke-width:4}.arrow{stroke:#895ffc;stroke-width:5;fill:none;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}.txt{font-family:Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif}.h{font-size:26px;font-weight:900}.s{font-size:20px;font-weight:900}.p{font-size:16px}.mini{font-size:14px;font-weight:850}.whiteText{fill:#fff}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#895ffc"/></marker>
+  </defs>
+  <rect class="bg" width="1180" height="390"/>
+  <text class="txt h ink" x="36" y="46">1-2단계: Main Agent가 자료와 조건을 Context Window에 모읍니다</text>
+
+  <g transform="translate(42 88)">
+    <rect class="box" x="0" y="0" width="226" height="62" rx="14"/>
+    <text class="txt s ink" x="22" y="29">User 요청</text>
+    <text class="txt p muted" x="22" y="51">“교육자료 만들어줘”</text>
+    <rect class="box" x="0" y="76" width="226" height="62" rx="14"/>
+    <text class="txt s purple" x="22" y="105">Instruction</text>
+    <text class="txt p muted" x="22" y="127">매번 지킬 기준</text>
+    <rect class="box" x="0" y="152" width="226" height="62" rx="14"/>
+    <text class="txt s ink" x="22" y="181">Memory</text>
+    <text class="txt p muted" x="22" y="203">반복 참고 정보</text>
+    <rect class="box" x="0" y="228" width="226" height="62" rx="14"/>
+    <text class="txt s blue" x="22" y="257">파일/대화</text>
+    <text class="txt p muted" x="22" y="279">첨부자료·이전 맥락</text>
+  </g>
+
+  <g transform="translate(376 116)">
+    <rect x="0" y="74" width="118" height="120" rx="26" fill="#fff" stroke="#252525" stroke-width="4"/>
+    <rect x="20" y="104" width="78" height="44" rx="12" fill="#252525"/>
+    <circle cx="44" cy="126" r="8" fill="#895ffc"/><circle cx="74" cy="126" r="8" fill="#895ffc"/>
+    <path class="line" d="M44 162 Q60 176 78 162"/>
+    <circle cx="59" cy="38" r="30" fill="#fff" stroke="#252525" stroke-width="4"/>
+    <line class="line" x1="59" y1="38" x2="59" y2="8"/>
+    <circle cx="59" cy="0" r="10" fill="#895ffc" stroke="#252525" stroke-width="3"/>
+    <text class="txt mini purple" x="14" y="228">Main Agent</text>
+  </g>
+
+  <path class="arrow" d="M286 119 H350"/>
+  <path class="arrow" d="M286 195 H350"/>
+  <path class="arrow" d="M286 271 H350"/>
+  <path class="arrow" d="M286 347 C324 347 338 278 376 248"/>
+  <path class="arrow" d="M508 188 C580 120 646 112 718 132"/>
+
+  <g transform="translate(718 70)">
+    <rect class="window" x="0" y="0" width="420" height="270" rx="30"/>
+    <text class="txt h purple" x="36" y="48">Context Window</text>
+    <text class="txt p muted" x="38" y="77">이번 답변을 만들 때 실제로 펼쳐진 작업 기억</text>
+    <g transform="translate(38 110)">
+      <rect class="box" x="0" y="0" width="150" height="44" rx="12"/>
+      <text class="txt mini ink" x="38" y="28">이번 요청</text>
+      <rect class="box" x="178" y="0" width="166" height="44" rx="12"/>
+      <text class="txt mini ink" x="214" y="28">Instruction</text>
+      <rect class="box" x="0" y="66" width="150" height="44" rx="12"/>
+      <text class="txt mini ink" x="48" y="94">Memory</text>
+      <rect class="box" x="178" y="66" width="166" height="44" rx="12"/>
+      <text class="txt mini ink" x="226" y="94">첨부 파일</text>
+      <rect class="box" x="88" y="132" width="174" height="44" rx="12"/>
+      <text class="txt mini ink" x="136" y="160">대화 기록</text>
+    </g>
+  </g>
+</svg>
