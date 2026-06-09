@@ -19,6 +19,8 @@ education/
   claude-code-n8n-workflow/
     index.html
     assets/
+  claude-code-playwright-crawling/
+    index.html
 shared/
   styles/
   assets/
