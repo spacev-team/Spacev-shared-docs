@@ -2,14 +2,19 @@
 
 SpaceV에서 공개 가능한 교육자료, 강의자료, 회사 공유자료를 정적 웹사이트로 제공하는 저장소입니다.
 
+## 바로가기
+
+- [SpaceV Shared Docs](https://spacev-team.github.io/Spacev-shared-docs/)
+
 ## 구조
 
 ```text
 education/
   ai-conversation-level-0/
     index.html
-    slides/
-    materials/
+    slides/     # 기존 공유 링크 유지용
+    materials/  # 기존 공유 링크 유지용
+    assets/
   claude-code-n8n-workflow/
     index.html
     assets/
