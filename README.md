@@ -12,6 +12,7 @@ SpaceV에서 공개 가능한 교육자료, 강의자료, 회사 공유자료를
 education/
   ai-conversation-level-0/
     index.html
+    workshop/
     slides/     # 기존 공유 링크 유지용
     materials/  # 기존 공유 링크 유지용
     assets/
