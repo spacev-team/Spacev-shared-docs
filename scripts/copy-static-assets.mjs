@@ -8,6 +8,7 @@ const staticAssetDirs = [
   'education/ai-conversation-level-0/assets',
   'education/claude-code-n8n-workflow/assets',
   'education/ai-data-training/assets',
+  'company/codex-plugin-guide/assets',
 ];
 
 for (const assetDir of staticAssetDirs) {

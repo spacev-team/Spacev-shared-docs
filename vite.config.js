@@ -14,7 +14,8 @@ export default defineConfig({
         aiConversationMaterials: resolve(__dirname, 'education/ai-conversation-level-0/materials/index.html'),
         claudeCodeN8nWorkflow: resolve(__dirname, 'education/claude-code-n8n-workflow/index.html'),
         claudeCodePlaywrightCrawling: resolve(__dirname, 'education/claude-code-playwright-crawling/index.html'),
-        aiDataTraining: resolve(__dirname, 'education/ai-data-training/index.html')
+        aiDataTraining: resolve(__dirname, 'education/ai-data-training/index.html'),
+        codexPluginGuide: resolve(__dirname, 'company/codex-plugin-guide/index.html')
       }
     }
   }

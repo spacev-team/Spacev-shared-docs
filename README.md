@@ -26,6 +26,10 @@ education/
 shared/
   styles/
   assets/
+company/
+  codex-plugin-guide/
+    index.html
+    assets/
 ```
 
 ## 로컬 실행
