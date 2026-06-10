@@ -20,6 +20,9 @@ education/
     assets/
   claude-code-playwright-crawling/
     index.html
+  ai-data-training/
+    index.html
+    assets/
 shared/
   styles/
   assets/

@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>좋은 데이터의 정의부터 실무 활용까지 — 사내 AI 데이터 교육</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+
+    :root{ --accent:#8b6ff5; --accent2:#a98bff; --g:linear-gradient(135deg,#9a86f0,#c2aaff);
+      --tint:#f1ecff; --tint-border:#e6dcfb; --ink:#3b352f; --ink-soft:#6b6258; --muted:#a89e90;
+      --line:#ece5dd; --good:#1aa05c; --bad:#e0667a; --warn:#e0667a; }
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    html,body{ width:100vw; height:100vh; overflow:hidden; font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif; background:#f3eee6; color:var(--ink); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    .viewport{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#efe9df; overflow:hidden; }
+    .deck{ width:960px; height:540px; transform-origin:center center; transform:scale(var(--scale,1)); position:relative; overflow:hidden; background:#fdfbf7; box-shadow:0 22px 60px rgba(120,90,200,.15); }
+    body.fullscreen-mode .deck{ box-shadow:none; }
+    .slides{ display:flex; width:100%; height:100%; transition:transform .6s cubic-bezier(.65,0,.35,1); will-change:transform; }
+    .slide{ flex:0 0 960px; width:960px; height:540px; padding:30px 42px; position:relative; overflow:hidden; background:#fdfbf7; display:flex; flex-direction:column; }
+    .slide-num{ position:absolute; bottom:22px; right:30px; font-size:12px; color:#cdc4b6; font-weight:600; letter-spacing:1px; }
+    .body{ flex:1; display:flex; flex-direction:column; min-height:0; }
+    .t-icon{ width:42px; height:42px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:19px; font-weight:800; color:#fff; background:var(--g); flex-shrink:0; box-shadow:0 6px 16px rgba(139,111,245,.28); }
+    .slide-header{ display:flex; align-items:center; gap:13px; margin-bottom:4px; }
+    .slide-header h2{ font-size:23px; font-weight:800; letter-spacing:-0.5px; color:var(--ink); }
+    .slide-header-sub{ font-size:13px; color:var(--muted); margin-bottom:8px; padding-left:55px; }
+    .divider{ border:none; border-top:1px solid var(--line); margin-bottom:10px; }
+    .accent{ color:var(--accent); }
+    .hl{ background:linear-gradient(180deg,transparent 55%,#e8deff 55%); padding:0 3px; font-weight:700; border-radius:3px; }
+    .dark{ background:linear-gradient(150deg,#efe7ff 0%,#f6f1ff 55%,#fdfbf7 100%); color:var(--ink); justify-content:center; align-items:center; text-align:center; }
+    .deco-a,.deco-b{ position:absolute; border-radius:50%; pointer-events:none; background:radial-gradient(circle,rgba(168,139,255,.18) 0%,transparent 70%); }
+    .deco-a{ width:460px; height:460px; top:-220px; right:-200px; }
+    .deco-b{ width:360px; height:360px; bottom:-180px; left:-160px; background:radial-gradient(circle,rgba(194,170,255,.16) 0%,transparent 70%); }
+    .badge{ display:inline-flex; align-items:center; gap:7px; background:#fff; border:1px solid var(--tint-border); border-radius:100px; padding:7px 20px; font-size:12px; font-weight:700; letter-spacing:3px; margin-bottom:26px; color:var(--accent); box-shadow:0 4px 12px rgba(139,111,245,.12); position:relative; z-index:1; }
+    .badge .dot{ width:6px; height:6px; background:var(--accent); border-radius:50%; }
+    .title-slide h1{ font-size:46px; font-weight:900; margin-bottom:18px; letter-spacing:-1.5px; line-height:1.12; color:var(--ink); position:relative; z-index:1; }
+    .title-slide .title-sub{ font-size:17px; color:var(--ink-soft); font-weight:500; line-height:1.6; max-width:710px; position:relative; z-index:1; }
+    .title-footer{ position:absolute; bottom:30px; left:54px; right:54px; display:flex; justify-content:space-between; align-items:center; font-size:12px; letter-spacing:1px; color:var(--muted); z-index:1; }
+    .title-footer .left{ font-weight:700; letter-spacing:2px; color:var(--accent); }
+    .section-eyebrow{ font-size:12px; letter-spacing:4px; font-weight:800; color:var(--accent); margin-bottom:16px; position:relative; z-index:1; }
+    .section-ic{ font-size:62px; margin-bottom:16px; position:relative; z-index:1; }
+    .section-slide h1{ font-size:40px; font-weight:900; letter-spacing:-1px; margin-bottom:14px; color:var(--ink); position:relative; z-index:1; }
+    .section-slide p{ font-size:15px; color:var(--ink-soft); line-height:1.6; max-width:640px; position:relative; z-index:1; }
+    .closing-slide h1{ font-size:50px; font-weight:900; letter-spacing:-1.5px; margin-bottom:18px; color:var(--ink); position:relative; z-index:1; }
+    .closing-slide .msg{ font-size:16px; color:var(--ink-soft); margin-bottom:32px; line-height:1.6; max-width:620px; position:relative; z-index:1; }
+    .closing-slide .qa{ font-size:13px; color:var(--accent); letter-spacing:5px; font-weight:800; position:relative; z-index:1; }
+    .question-slide{ justify-content:center; align-items:center; text-align:center; }
+    .q-eyebrow{ font-size:11px; color:#fff; font-weight:800; letter-spacing:2px; margin-bottom:24px; background:var(--g); padding:6px 18px; border-radius:20px; display:inline-block; box-shadow:0 5px 14px rgba(139,111,245,.25); }
+    .q-main{ font-size:34px; font-weight:800; color:var(--ink); line-height:1.38; letter-spacing:-1px; margin-bottom:22px; max-width:760px; }
+    .q-sub-items{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+    .q-sub-item{ background:#fff; border:1px solid var(--tint-border); border-radius:14px; padding:11px 24px; font-size:15px; color:var(--accent); font-weight:600; box-shadow:0 4px 12px rgba(120,90,200,.08); }
+    .peer{ display:inline-flex; align-items:center; gap:7px; background:var(--tint); border:1px solid var(--tint-border); color:var(--accent); font-weight:700; font-size:13px; padding:10px 20px; border-radius:22px; }
+    .peer .pp{ font-size:11px; color:var(--muted); font-weight:600; }
+    .dtable{ width:100%; border-collapse:separate; border-spacing:0; font-size:13px; border-radius:12px; overflow:hidden; box-shadow:0 4px 14px rgba(120,90,200,.07); }
+    .dtable th{ background:var(--tint); color:var(--accent); font-weight:800; padding:10px 13px; text-align:left; }
+    .dtable td{ padding:10px 13px; border-top:1px solid var(--line); color:var(--ink-soft); line-height:1.5; vertical-align:top; background:#fff; }
+    .dtable td strong{ color:var(--ink); }
+    .dtable tr.hot td{ background:#f9f6ff; }
+    .dtable tr.dim td{ color:#c2b8aa; }
+    .cond-grid{ display:flex; flex-direction:row; gap:12px; flex:1; }
+    .cond-card{ flex:1; border:none; border-radius:16px; overflow:hidden; display:flex; flex-direction:column; background:#fff; box-shadow:0 6px 18px rgba(120,90,200,.08); }
+    .cond-head{ background:var(--g); color:#fff; padding:12px 15px; font-size:13.5px; font-weight:800; }
+    .cond-body{ padding:13px 15px; display:flex; flex-direction:column; gap:8px; }
+    .cond-body .item{ font-size:12px; color:var(--ink-soft); line-height:1.5; padding-left:14px; position:relative; }
+    .cond-body .item::before{ content:''; position:absolute; left:0; top:7px; width:5px; height:5px; border-radius:50%; background:var(--accent); }
+    .cond-body .item b{ color:var(--ink); }
+    .two-col{ display:flex; flex-direction:row; gap:12px; }
+    .col-box{ flex:1; border-radius:16px; padding:15px 17px; }
+    .col-box h5{ font-size:11px; font-weight:800; letter-spacing:1px; margin-bottom:8px; }
+    .col-box p{ font-size:13px; line-height:1.55; }
+    .col-box.us{ background:var(--g); color:#fff; box-shadow:0 6px 18px rgba(139,111,245,.25); }
+    .col-box.us h5{ color:rgba(255,255,255,.85); }
+    .col-box.eng{ background:#fff; color:var(--ink-soft); border:1px solid var(--line); box-shadow:0 4px 12px rgba(0,0,0,.04); }
+    .col-box.eng h5{ color:var(--muted); }
+    .callout{ border-radius:14px; padding:12px 17px; font-size:13px; line-height:1.55; }
+    .callout.tip{ background:var(--tint); color:#6b4ee6; font-weight:600; }
+    .callout.warn{ background:#fdeef1; color:#c63f55; font-weight:600; }
+    .callout.dark{ background:linear-gradient(135deg,#6b4ee6,#9a86f0); color:#fff; border:none; font-weight:600; box-shadow:0 6px 18px rgba(139,111,245,.3); }
+    .kw{ font-size:11px; color:var(--muted); line-height:1.6; } .kw b{ color:var(--accent); }
+    .img-area{ flex:1; display:flex; align-items:center; justify-content:center; min-height:0; gap:12px; }
+    .img-area img{ width:100%; height:100%; max-width:100%; max-height:100%; object-fit:contain; border-radius:12px; border:1px solid var(--line); box-shadow:0 6px 18px rgba(0,0,0,.06); }
+    .gb-list{ list-style:none; }
+    .gb-list li{ font-size:12.5px; color:var(--ink-soft); line-height:1.7; padding-left:18px; position:relative; }
+    .gb-list.good li::before{ content:'✓'; position:absolute; left:0; color:var(--good); font-weight:800; font-size:11px; }
+    .gb-list.bad li::before{ content:'✗'; position:absolute; left:0; color:var(--bad); font-weight:800; font-size:11px; }
+    .doc-mock{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:15px 19px; font-size:12.5px; line-height:1.7; color:#6b6258; white-space:pre-wrap; flex:1; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.04); }
+    .doc-mock .bk{ background:#fdeef1; color:#c63f55; border-radius:4px; padding:0 3px; }
+    .phase-row{ display:flex; gap:10px; align-items:stretch; }
+    .phase-card{ flex:1; border:none; border-radius:14px; overflow:hidden; display:flex; flex-direction:column; background:#fff; box-shadow:0 5px 16px rgba(120,90,200,.08); }
+    .phase-card.now{ box-shadow:0 6px 20px rgba(139,111,245,.22); }
+    .phase-h{ padding:10px 14px; font-size:12px; font-weight:800; color:#fff; background:#c7bdb0; }
+    .phase-card.now .phase-h{ background:var(--g); }
+    .phase-b{ padding:12px 14px; font-size:11.5px; color:var(--ink-soft); line-height:1.55; flex:1; }
+    .phase-tag{ display:inline-block; margin-top:8px; font-size:10px; font-weight:700; padding:3px 9px; border-radius:999px; background:#f0ece4; color:#a89e90; }
+    .phase-tag.on{ background:var(--accent); color:#fff; }
+    .phase-arrow{ display:flex; align-items:center; color:var(--accent); font-size:18px; font-weight:700; }
+    .out-row{ display:flex; gap:10px; margin-top:12px; }
+    .out-card{ flex:1; border-radius:12px; padding:10px 13px; font-size:11.5px; line-height:1.5; }
+    .out-card .ol{ font-weight:800; font-size:12px; margin-bottom:3px; }
+    .out-card.a{ background:#f4f0ea; color:#6b6258; } .out-card.a .ol{ color:#6b6258; }
+    .out-card.b{ background:var(--tint); color:#6b4ee6; } .out-card.b .ol{ color:#6b4ee6; }
+    .out-card.c{ background:#fdeef1; color:#c63f55; } .out-card.c .ol{ color:#c63f55; }
+    .check-row{ display:flex; flex-direction:column; gap:11px; }
+    .check-item{ display:flex; align-items:center; gap:14px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:15px 20px; box-shadow:0 4px 12px rgba(120,90,200,.06); }
+    .check-item .ci{ font-size:23px; flex-shrink:0; }
+    .check-item .ct{ font-size:14px; color:var(--ink); font-weight:700; }
+    .check-item .ct b{ color:var(--accent); }
+    .check-item .ct small{ display:block; font-size:11.5px; color:var(--muted); font-weight:500; margin-top:2px; }
+    .core3{ display:flex; flex-direction:column; gap:14px; justify-content:center; flex:1; }
+    .core-line{ display:flex; align-items:center; gap:18px; padding:16px 22px; background:var(--tint); border-radius:16px; }
+    .core-line .n{ font-size:30px; font-weight:900; color:var(--accent); line-height:1; flex-shrink:0; width:34px; }
+    .core-line .tx{ font-size:15px; color:var(--ink); font-weight:600; line-height:1.5; } .core-line .tx b{ color:#6b4ee6; font-weight:800; }
+    .ui-progress{ position:fixed; top:0; left:0; right:0; height:3px; background:rgba(0,0,0,.06); z-index:100; }
+    .ui-progress-bar{ height:100%; background:var(--g); width:0%; transition:width .6s cubic-bezier(.65,0,.35,1); }
+    .ui-counter{ position:fixed; bottom:18px; left:24px; font-size:12px; font-weight:700; color:rgba(0,0,0,.38); z-index:100; letter-spacing:2px; font-feature-settings:'tnum'; }
+    .ui-controls{ position:fixed; bottom:14px; right:18px; display:flex; gap:8px; z-index:100; }
+    .ui-btn{ width:36px; height:36px; border-radius:50%; background:#fff; border:1px solid var(--tint-border); color:var(--accent); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; box-shadow:0 4px 12px rgba(120,90,200,.12); }
+    .ui-btn svg{ width:16px; height:16px; fill:currentColor; }
+    .ui-btn:hover{ background:var(--accent); color:#fff; border-color:var(--accent); transform:translateY(-2px); }
+    .ui-hint{ position:fixed; bottom:24px; left:50%; transform:translateX(-50%); font-size:11px; color:rgba(0,0,0,.4); z-index:100; display:flex; gap:16px; align-items:center; opacity:.7; transition:opacity .4s; pointer-events:none; }
+    .ui-hint span{ display:flex; align-items:center; gap:4px; }
+    .ui-hint kbd{ background:rgba(0,0,0,.05); border:1px solid rgba(0,0,0,.12); border-radius:4px; padding:2px 6px; font-family:inherit; font-size:10px; font-weight:700; color:rgba(0,0,0,.6); min-width:16px; text-align:center; }
+    body.hide-hint .ui-hint{ opacity:0; }
+    #presenter{ display:none; }
+    body[data-mode="presenter"] .viewport, body[data-mode="presenter"] .ui-progress, body[data-mode="presenter"] .ui-counter, body[data-mode="presenter"] .ui-controls, body[data-mode="presenter"] .ui-hint{ display:none; }
+    body[data-mode="presenter"] #presenter{ display:grid; position:fixed; inset:0; grid-template-columns:1.7fr 1fr; grid-template-rows:1fr auto; gap:16px; padding:16px; background:#f2f2f4; color:#111; }
+    .pv-box{ background:#fff; border:1px solid #ddd; border-radius:12px; padding:13px; overflow:hidden; }
+    .pv-label{ font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); font-weight:800; margin-bottom:9px; }
+    .pv-current{ grid-row:1; grid-column:1; display:flex; flex-direction:column; }
+    .pv-current .frame{ flex:1; border-radius:8px; overflow:hidden; position:relative; background:#fff; border:1px solid #ddd; }
+    .pv-side{ grid-row:1; grid-column:2; display:flex; flex-direction:column; gap:16px; min-height:0; }
+    .pv-next{ flex:1; display:flex; flex-direction:column; }
+    .pv-next .frame{ flex:1; border-radius:8px; overflow:hidden; position:relative; background:#fff; border:1px solid #ddd; }
+    .pv-next.empty .frame{ display:flex; align-items:center; justify-content:center; color:#aaa; font-size:13px; }
+    .pv-clock{ background:#fff; border:1px solid #ddd; border-radius:12px; padding:13px 16px; display:flex; align-items:center; justify-content:space-between; }
+    .pv-clock .time{ font-size:30px; font-weight:800; font-feature-settings:'tnum'; line-height:1; }
+    .pv-clock .wall{ font-size:12px; color:#888; margin-top:5px; }
+    .pv-clock .tbtns{ display:flex; gap:6px; }
+    .pv-clock button{ background:#f2f2f4; border:1px solid #ddd; color:#111; border-radius:8px; padding:7px 11px; cursor:pointer; font-size:12px; font-family:inherit; }
+    .pv-clock button:hover{ border-color:var(--accent); }
+    .pv-notes{ grid-row:2; grid-column:1 / -1; background:#fff; border:1px solid #ddd; border-radius:12px; padding:15px 18px; }
+    .pv-notes .note-text{ font-size:16px; line-height:1.6; color:#222; max-height:20vh; overflow-y:auto; white-space:pre-wrap; }
+    .pv-notes .note-text.empty{ color:#aaa; font-style:italic; }
+    .pv-controls{ display:flex; align-items:center; gap:12px; margin-top:13px; }
+    .pv-controls button{ background:#f2f2f4; border:1px solid #ddd; color:#111; border-radius:10px; padding:10px 18px; cursor:pointer; font-size:14px; font-weight:700; font-family:inherit; }
+    .pv-controls button:hover{ border-color:var(--accent); }
+    .pv-controls .pg{ flex:1; height:6px; background:#e6e6e6; border-radius:999px; overflow:hidden; }
+    .pv-controls .pg>i{ display:block; height:100%; background:var(--accent); transition:width .3s; }
+    .pv-controls .cnt{ font-size:14px; color:#888; font-feature-settings:'tnum'; min-width:64px; text-align:right; }
+    .pv-scaler{ position:absolute; top:0; left:0; transform-origin:top left; }
+    .pv-disc{ position:fixed; top:12px; right:12px; background:#c81e3a; color:#fff; padding:8px 14px; border-radius:8px; font-size:12px; display:none; z-index:200; font-weight:600; }
+    body[data-mode="presenter"] .pv-disc.show{ display:block; }
+  </style>
+</head>
+<body>
+
+<div class="viewport">
+  <div class="deck">
+    <div class="slides">
+
+      <!-- 1. 표지 -->
+      <div class="slide dark title-slide">
+        <div class="deco-a"></div><div class="deco-b"></div>
+        <div class="badge"><span class="dot"></span>SPACEV · AX · DATA</div>
+        <h1>좋은 데이터의 정의부터<br>실무 활용까지</h1>
+        <div class="title-sub">지식베이스(Knowledge Base) 데이터 vs 모델 학습(Fine-tuning) 데이터<br>— 실전으로 이해하는 AI 데이터</div>
+        <div class="title-footer"><div class="left">2026 · 06</div><div class="right">사내 AI 실무 교육</div></div>
+      </div>
+
+      <!-- 2. 오늘의 흐름 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">📌</div><h2>오늘의 흐름</h2></div>
+        <div class="slide-header-sub">퀴즈로 진단 → 개선 → 조건 정리. 두 가지 데이터 형식에 집중합니다</div>
+        <hr class="divider">
+        <div class="body" style="gap:9px; justify-content:center;">
+          <div class="check-item"><span class="ci">🙋</span><span class="ct">도입 <small>노하우 두 갈래 · 아마존 채용 AI 사례 · AI = 유능한 신입사원</small></span></div>
+          <div class="check-item"><span class="ci">🔎</span><span class="ct">챕터 A — 지식베이스 데이터 <small>회사 문서를 '참고자료'로 쥐여주기</small></span></div>
+          <div class="check-item"><span class="ci">🎭</span><span class="ct">챕터 B — 모델 학습 데이터 <small>좋은 사례로 '교육'시키기</small></span></div>
+          <div class="check-item"><span class="ci">📊</span><span class="ct">우리 회사의 좋은 사례 + 마무리 <small>전화상담 데이터 · 주의사항 · 체크리스트</small></span></div>
+        </div>
+      </div>
+
+      <!-- 3. 오프닝 질문 -->
+      <div class="slide question-slide">
+        <div class="q-eyebrow">OPENING</div>
+        <div class="q-main">AI한테 더 정확한 답을 받기 위한,<br>나만의 <span class="accent">노하우</span> 하나쯤 있지 않나요?</div>
+      </div>
+
+      <!-- 4. 노하우 두 갈래 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🧭</div><h2>여러분 답, 두 갈래로 나뉩니다</h2></div>
+        <div class="slide-header-sub">방법은 많지만 — 결국 ‘어떻게 묻느냐’ vs ‘무엇을 쥐여주느냐’</div>
+        <hr class="divider">
+        <div class="body" style="gap:11px; justify-content:center;">
+          <div class="q-sub-items" style="gap:8px;">
+            <div class="q-sub-item" style="padding:6px 15px; font-size:12.5px;">자세히 묻기</div>
+            <div class="q-sub-item" style="padding:6px 15px; font-size:12.5px;">자료 첨부</div>
+            <div class="q-sub-item" style="padding:6px 15px; font-size:12.5px;">되묻게 하기</div>
+            <div class="q-sub-item" style="padding:6px 15px; font-size:12.5px;">검증시키기</div>
+            <div class="q-sub-item" style="padding:6px 15px; font-size:12.5px;">상황 설명</div>
+            <div class="q-sub-item" style="padding:6px 15px; font-size:12.5px;">예시 주기</div>
+            <div class="q-sub-item" style="padding:6px 15px; font-size:12.5px;">역할 지정</div>
+          </div>
+          <div style="text-align:center; font-size:12px; color:var(--muted); font-weight:700; letter-spacing:1px;">↓ 두 갈래로 나눠보면</div>
+          <div class="two-col" style="gap:12px;">
+            <div class="col-box eng" style="display:flex; flex-direction:column;">
+              <div style="font-size:11px; font-weight:800; letter-spacing:1px; color:var(--muted); margin-bottom:5px;">PROMPT · 휘발성</div>
+              <div style="font-size:16px; font-weight:800; color:var(--ink); margin-bottom:9px;">① 어떻게 묻느냐</div>
+              <div style="font-size:12.5px; line-height:1.6; flex:1;">질문 다듬기 · 되묻게 하기 · 검증시키기</div>
+              <span class="phase-tag" style="align-self:flex-start; margin-top:10px;">오늘은 제외</span>
+            </div>
+            <div class="col-box us" style="display:flex; flex-direction:column;">
+              <div style="font-size:11px; font-weight:800; letter-spacing:1px; color:rgba(255,255,255,.85); margin-bottom:5px;">데이터</div>
+              <div style="font-size:16px; font-weight:800; color:#fff; margin-bottom:9px;">② 무엇을 쥐여주느냐</div>
+              <div style="font-size:12.5px; line-height:1.6; flex:1; color:rgba(255,255,255,.95);">참고 자료 · 상황·맥락 · 근거 문서를 <b>준다</b></div>
+              <span class="phase-tag" style="align-self:flex-start; margin-top:10px; background:#fff; color:var(--accent);">오늘의 주제 ▶</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 아마존 질문 -->
+      <div class="slide question-slide">
+        <div class="q-eyebrow">CASE · 2018년 아마존 사례</div>
+        <div class="q-main"><span class="accent">10년치의 모든 합격/불합격 이력서</span>로<br>채용 AI를 학습시켜<br>서류 전형을 <span class="accent">AI가 직접</span> 하도록 했습니다.</div>
+        <div class="peer" style="background:#ffedef; border-color:#fe8d9b; color:#d21f35;">좋은 접근 같나요? 🤔</div>
+      </div>
+
+      <!-- 6. 아마존 결론 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">⚠️</div><h2>아마존 채용 AI — 잘못된 데이터 사례</h2></div>
+        <div class="slide-header-sub">데이터 편향(bias)의 대표 사례 (2018, 실화)</div>
+        <hr class="divider">
+        <div class="body" style="gap:13px;">
+          <div style="display:flex; gap:16px; flex:1; min-height:0;">
+            <div class="img-area" style="flex:0 0 34%;"><img src="assets/amazon.png" alt="아마존 채용 AI 사건"></div>
+            <div style="flex:1; display:flex; flex-direction:column; gap:10px; min-height:0;">
+              <div class="callout warn">데이터가 <b>남성 위주</b> → AI가 <b>여성 지원자를 감점</b> ("여성 동아리"란 단어만 있어도) → 결국 <b>폐기</b></div>
+              <div style="font-size:13.5px; font-weight:800; color:var(--ink);">왜 실패했을까? <span style="color:var(--muted); font-weight:600;">— 데이터 양도, 모델도 아니었다.</span></div>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="font-size:12px; color:var(--ink-soft); line-height:1.5;"><b style="color:var(--bad);">❌ 데이터가 적어서?</b> 10년치 이력서를 <b style="color:var(--ink);">전부</b> 줬는데도.</div>
+                <div style="font-size:12px; color:var(--ink-soft); line-height:1.5;"><b style="color:var(--bad);">❌ 모델이 멍청해서?</b> <b style="color:var(--ink);">똑똑한</b> AI였는데도.</div>
+                <div style="font-size:12px; color:var(--ink-soft); line-height:1.5;"><b style="color:var(--good);">✅ 진짜 원인</b> — <b style="color:var(--ink);">"과거에 뽑은 사람"을 '정답'으로</b> 줘서, 과거 차별을 그대로 학습. <span style="color:var(--muted);">(고르게 + 사람이 검증했어야)</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="callout dark" style="text-align:center;">💡 모델이 차별주의자라서가 아니라 — <b>잘못 쌓은 데이터로 배워서.</b> 양·모델이 아니라 <b>'무엇을 정답으로 줬나'</b>가 중요하다 → <b>쓰레기를 넣으면 쓰레기가 나온다 (GIGO).</b></div>
+        </div>
+      </div>
+
+      <!-- 7. 큰 그림: AI = 유능한 신입사원 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🧑‍💼</div><h2>오늘의 큰 그림: AI = "유능한 신입사원"</h2></div>
+        <div class="slide-header-sub">"좋은 데이터"엔 사실 정답이 없다 — <b>쓰임이 정한다.</b></div>
+        <hr class="divider">
+        <div class="body" style="gap:12px; justify-content:center;">
+          <div class="callout tip">AI 모델(LLM)은 <b>유능한 신입사원</b> — 똑똑하지만(언어·상식 뛰어남) <b>우리 회사에 대한 지식은 아직 없다.</b> 그래서 데이터를 <i>어떻게 주느냐</i>가 일의 성패를 가른다.</div>
+          <table class="dtable">
+            <thead><tr><th style="width:42%;">신입사원에게…</th><th style="width:38%;">= 데이터 형식</th><th>모델이 바뀌나?</th></tr></thead>
+            <tbody>
+              <tr class="hot"><td>📒 <strong>회사 매뉴얼을 쥐여준다</strong></td><td>🔎 지식베이스 (RAG)</td><td>❌</td></tr>
+              <tr class="hot"><td>🎓 <strong>교육시켜 베테랑으로 키운다</strong></td><td>🎭 모델 학습 (파인튜닝)</td><td>⭕</td></tr>
+              <tr class="dim"><td>📋 수습 평가로 점검한다</td><td>✅ 평가 (보너스)</td><td>❌</td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:11px; color:var(--muted); line-height:1.55;">※ <b style="color:var(--ink-soft);">프롬프트</b>(그때그때 시키는 지시)는 휘발성이라 데이터가 아님 → 오늘 제외.</div>
+        </div>
+      </div>
+
+      <!-- 8. 챕터 A 구분 -->
+      <div class="slide dark section-slide">
+        <div class="deco-a"></div><div class="deco-b"></div>
+        <div class="section-eyebrow">CHAPTER A</div>
+        <div class="section-ic">🔎</div>
+        <h1>지식베이스 데이터</h1>
+        <p>📒 <b>신입사원(AI)에게 회사 매뉴얼을 쥐여주기</b></p>
+      </div>
+
+      <!-- 9. 지식베이스란 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🔎</div><h2>지식베이스 데이터란?</h2></div>
+        <div class="slide-header-sub">AI에게 회사 문서를 '참고자료'로 쥐여주는 것 — 신입 책상에 사내 위키를 올려두는 셈</div>
+        <hr class="divider">
+        <div class="body" style="gap:12px;">
+          <div class="callout tip">🧑‍💼 <b>유능한 신입사원(AI)에게 회사 매뉴얼을 쥐여주는 것.</b> 신입 자체는 그대로지만(<b>모델 안 바뀜</b>), 질문이 오면 매뉴얼에서 <b>찾아서</b> 답한다 — 외워서가 아니라 <i>보고</i>.</div>
+          <div class="two-col">
+            <div class="col-box us"><h5>🗂️ 우리(현업)가 할 일</h5><p>문서를 <b>깔끔하게 정리</b><br>(최신 · 완성 · 명확)</p></div>
+            <div class="col-box eng"><h5>⚙️ 엔지니어가 할 일 (오늘 안 다룸)</h5><p>AI가 찾아 쓰게 연결하기<br>(RAG 구축)</p></div>
+          </div>
+          <div class="callout tip" style="text-align:center;">💡 <b>데이터만 깔끔하면 → 나머지는 시스템이 알아서.</b> 우리는 <i>정리</i>만 잘하면 된다.</div>
+          <div class="kw">🔑 관련 키워드 — <b>RAG</b>(검색증강생성) · LLM Wiki · 청킹 · 임베딩 · 인덱싱 <span style="color:#bbb;">(오늘은 깊이 안 들어감)</span></div>
+        </div>
+      </div>
+
+      <!-- 10. Q1 폴더 퀴즈 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">❓</div><h2>Q1. 이 폴더, 뭐가 문제일까요?</h2></div>
+        <div class="slide-header-sub">구글 드라이브 'CS자료' 폴더 — 이걸 AI한테 통째로 주면?</div>
+        <hr class="divider">
+        <div class="body"><div class="img-area"><img src="assets/drive_messy.png" alt="CS자료 폴더 — 정리 전"></div></div>
+        <div style="display:flex; justify-content:center; margin-top:10px;"><div class="peer">문제를 몇 개나 찾았나요?</div></div>
+      </div>
+
+      <!-- 11. Q1 개선 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🟢</div><h2>Q1 개선 · 이렇게 정리하면</h2></div>
+        <div class="slide-header-sub">같은 폴더, 깔끔하게 (옛 버전·빈 파일·잡음 정리, 스캔 → 문서)</div>
+        <hr class="divider">
+        <div class="body" style="gap:14px;">
+          <div class="img-area" style="flex:2;"><img src="assets/drive_clean.png" alt="CS자료 폴더 — 정리 후"></div>
+          <div style="flex:0.8; display:flex; align-items:center;">
+            <ul class="gb-list good" style="display:flex; flex-direction:column; gap:6px;">
+              <li>최신본 <b>하나만 + 날짜</b> → 옛 정책 오인용 ✗</li>
+              <li><b>한 주제 = 한 파일</b>, 제목만 봐도 내용 파악</li>
+              <li>빈 파일·잡음 제거 → AI가 헷갈릴 거리 없음</li>
+              <li>스캔 이미지 → <b>글자(텍스트)</b>로</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12. Q2 문서 퀴즈 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">❓</div><h2>Q2. 이 문서들, 뭐가 문제일까요?</h2></div>
+        <div class="slide-header-sub">둘 다 「비대면 계약」 문서 — 그런데 망가진 방식이 서로 다릅니다</div>
+        <hr class="divider">
+        <div class="body two-col" style="gap:14px; min-height:0;">
+          <div style="flex:1; display:flex; flex-direction:column; gap:6px; min-height:0;">
+            <div class="doc-mock" style="font-size:11px; line-height:1.65;"><b>비대면 계약 안내</b>
+
+■ 내용
+ 계약은 보통 비대면. 상황에 따라 대면도 가능.
+ 외부 직거래는 되도록 ✗
+ 연락처는 적절한 시점에 공개.
+
+■ 기타
+ 카톡 영상 공유? → 확인 필요 (TODO)
+ 방문 예외는 케이스 바이 케이스.</div>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; gap:6px; min-height:0;">
+            <div class="doc-mock" style="font-size:11px; line-height:1.65;"><b>비대면 계약 관련 정리</b>
+
+저희가 보통 비대면으로 진행하고 있고 그동안 여러 케이스가 있었는데, 대체로는 비대면이 원칙이지만 고객 상황이나 매물 특성, 담당자 판단에 따라 대면으로 진행한 적도 있었고 예전에는 대면이 더 많던 시기도 있었습니다. 외부에서 따로 거래하시는 부분은 회사 입장에서 권장하지 않는 편이고 가급적 정식 절차를 통해 진행하시는 게 좋습니다만 경우에 따라 달라서… 연락처 공개 시점은 계약 의사가 어느 정도 확인된 이후가 일반적이었던 것 같고 다만 케이스마다 조금씩 달라 일률적으로 말하긴 어렵습니다. 카톡 영상 공유나 방문 관련해서도 그동안 논의가 많았는데 결론적으로는 담당자와 협의하여 처리하는 편이며…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 13. Q2 정답 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🟢</div><h2>Q2 정답 · 잘 만든 문서는 이렇게</h2></div>
+        <div class="slide-header-sub">정책 예시 — 「4.4 비대면 계약 원칙」</div>
+        <hr class="divider">
+        <div class="body two-col" style="gap:18px;">
+          <div class="img-area" style="flex:1;"><img src="assets/doc_good_notion2.png" alt="잘 만든 정책 문서"></div>
+          <div style="flex:1.8; display:flex; flex-direction:column; justify-content:center; gap:9px;">
+            <ul class="gb-list good" style="display:flex; flex-direction:column; gap:6px;">
+              <li><b>적용 대상·시점·범위</b>(메타 3필드) 명확</li>
+              <li><b>명확한 원칙 + 예외 규정</b> (외부 직거래 차단 등)</li>
+              <li><b>시스템 동작·UI 문구까지</b> 명시</li>
+              <li>FAQ 고객용/내부용 분리 → 응대 문장 그대로 활용</li>
+              <li><b>관련 정책 연결</b>(4.5·4.22 참조) + <b>변경 이력(날짜·사유)</b></li>
+            </ul>
+            <div class="callout tip">💡 한마디로 — <b>"AI가 그대로 갖다 써도 되는 문서."</b></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 14. 지식베이스 조건 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🔎</div><h2>정리: 좋은 지식베이스 데이터의 조건</h2></div>
+        <div class="slide-header-sub">한마디로 — "사람이 봐도 좋은, 잘 정리된 문서"</div>
+        <hr class="divider">
+        <div class="body cond-grid" style="gap:16px;">
+          <div class="cond-card" style="padding:18px 18px 16px;">
+            <div style="display:flex; align-items:center; gap:10px; padding-bottom:11px; margin-bottom:13px; border-bottom:1px solid var(--line);">
+              <span style="width:27px; height:27px; border-radius:50%; background:var(--g); color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">1</span>
+              <span style="font-size:13.5px; font-weight:800; color:var(--ink); line-height:1.25;">내용이 믿을 만한가</span>
+            </div>
+            <div class="cond-body" style="padding:0; gap:12px;">
+              <div class="item"><b>최신이다</b> — 최신본 하나만</div>
+              <div class="item"><b>완성됐다</b> — TODO·빈칸 없음</div>
+              <div class="item"><b>구체적이다</b> — "보통·되도록" ✗</div>
+            </div>
+          </div>
+          <div class="cond-card" style="padding:18px 18px 16px;">
+            <div style="display:flex; align-items:center; gap:10px; padding-bottom:11px; margin-bottom:13px; border-bottom:1px solid var(--line);">
+              <span style="width:27px; height:27px; border-radius:50%; background:var(--g); color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">2</span>
+              <span style="font-size:13.5px; font-weight:800; color:var(--ink); line-height:1.25;">그것만 봐도 이어지는가</span>
+            </div>
+            <div class="cond-body" style="padding:0; gap:12px;">
+              <div class="item"><b>자기완결이다</b> — "담당자 문의" ✗</div>
+              <div class="item"><b>연결돼 있다</b> — 관련 정책은 링크로</div>
+            </div>
+          </div>
+          <div class="cond-card" style="padding:18px 18px 16px;">
+            <div style="display:flex; align-items:center; gap:10px; padding-bottom:11px; margin-bottom:13px; border-bottom:1px solid var(--line);">
+              <span style="width:27px; height:27px; border-radius:50%; background:var(--g); color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">3</span>
+              <span style="font-size:13.5px; font-weight:800; color:var(--ink); line-height:1.25;">찾고 읽을 수 있는가</span>
+            </div>
+            <div class="cond-body" style="padding:0; gap:12px;">
+              <div class="item"><b>메타가 있다</b> — 대상·날짜·작성자</div>
+              <div class="item"><b>제목·구조가 명확하다</b> — 한 주제=한 파일</div>
+              <div class="item"><b>글자로 돼 있다</b> — 스캔 이미지 ✗</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15. 직접 써먹기 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🚀</div><h2>직접 써먹기 (코딩·세팅 없이, 누구나)</h2></div>
+        <div class="slide-header-sub">문서 올리고, 그냥 물어보면 된다 · 만든 건 팀과 공유 가능</div>
+        <hr class="divider">
+        <div class="body" style="gap:12px; justify-content:center;">
+          <div class="check-item"><span class="ci">🟢</span><span class="ct"><b>NotebookLM</b> (Google)<small>올린 문서 안에서만 답하고 출처까지 짚어줌 — 문서 Q&A 특화</small></span></div>
+          <div class="check-item"><span class="ci">🔵</span><span class="ct">ChatGPT <b>Custom GPT</b> · Gemini <b>Gem</b> · <b>Claude Projects</b><small>문서에 지침까지 넣어 반복해 쓰는 봇으로 구성</small></span></div>
+          <div class="callout tip" style="text-align:center;">💡 <b>좋은 문서 = 좋은 답.</b> 도구는 거들 뿐, 결국 데이터가 좌우 <span style="color:#aaa; font-weight:500;">(일부 기능은 유료 플랜 필요)</span></div>
+        </div>
+      </div>
+
+      <!-- 16. 챕터 B 구분 -->
+      <div class="slide dark section-slide">
+        <div class="deco-a"></div><div class="deco-b"></div>
+        <div class="section-eyebrow">CHAPTER B</div>
+        <div class="section-ic">🎭</div>
+        <h1>모델 학습 데이터</h1>
+        <p>🎓 <b>신입사원을 가르쳐 베테랑으로 키우기</b></p>
+      </div>
+
+      <!-- 17. 모델 학습이란 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🎭</div><h2>모델 학습 데이터란?</h2></div>
+        <div class="slide-header-sub">좋은 사례를 모아 AI를 '교육'시키는 것 — 신입을 가르쳐 우리 회사의 베테랑으로</div>
+        <hr class="divider">
+        <div class="body" style="gap:12px;">
+          <div class="callout tip">🧑‍💼 <b>신입사원을 옆에 두고 좋은 사례로 가르치는 것.</b> 매뉴얼을 쥐여주는 지식베이스(모델 안 바뀜)와 달리 → <b>신입(모델) 자체가 바뀐다.</b></div>
+          <div class="two-col">
+            <div class="col-box us"><h5>🗂️ 우리(현업)가 할 일</h5><p>좋은 사례를 <b>잘 쌓기</b><br>(정확 · 맥락 · 최신)</p></div>
+            <div class="col-box eng"><h5>⚙️ 엔지니어가 할 일 (오늘 안 다룸)</h5><p>학습(파인튜닝) 돌리기<br>(쌓인 데이터로)</p></div>
+          </div>
+          <div class="callout tip" style="text-align:center;">💡 <b>재료(데이터)를 쌓는 건 현업이 가장 잘 할 수 있다.</b> 실제 활용·개발은 개발팀이.</div>
+          <div class="kw">🔑 관련 키워드 — <b>파인튜닝</b> · 학습셋(Dataset) · 데이터 라벨링 · 허깅페이스(Hugging Face) <span style="color:#bbb;">(오늘은 깊이 안 들어감)</span></div>
+        </div>
+      </div>
+
+      <!-- 18. Q 1:1 문의 퀴즈 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">❓</div><h2>Q. 이 1:1 문의, 그대로 학습시키면?</h2></div>
+        <div class="slide-header-sub">2019년부터 쌓인 데이터 135,866개 (2026.06.08 기준) — Q&A가 다 있으니 좋은 학습 데이터일까요?</div>
+        <hr class="divider">
+        <div class="body" style="min-height:0;">
+          <div style="flex:1; display:flex; gap:14px; min-height:0; align-items:center; justify-content:center;">
+            <img src="assets/fine_tuning_bad.png" alt="1:1 문의 목록" style="max-width:60%; max-height:100%; object-fit:contain; border-radius:12px; border:1px solid var(--line); box-shadow:0 6px 18px rgba(0,0,0,.06);">
+            <img src="assets/fine_tuning_bad_2.png" alt="문의 상세 — 보증금 차감" style="max-width:38%; max-height:100%; object-fit:contain; border-radius:12px; border:1px solid var(--line); box-shadow:0 6px 18px rgba(0,0,0,.06);">
+          </div>
+        </div>
+        <div style="display:flex; justify-content:center; margin-top:10px;"><div class="peer">Q&A가 다 있는데, 뭐가 부족할까요?</div></div>
+      </div>
+
+      <!-- 19. A 개선 — 문제 → 좋은 데이터 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🟢</div><h2>A. 이렇게 쌓으면 — '좋은' 학습 데이터</h2></div>
+        <div class="slide-header-sub">Q&A만으론 부족했던 이유 → 상황·근거·메타를 붙이면 (보증금 차감 문의)</div>
+        <hr class="divider">
+        <div class="body" style="gap:12px;">
+          <div class="two-col" style="gap:14px; flex:1; min-height:0; align-items:stretch;">
+            <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:11px; background:#fff6f7; border:1.5px solid #fe8d9b; border-radius:14px; padding:16px 18px;">
+              <div style="font-size:13px; font-weight:800; color:#d21f35;">❌ 좋은 데이터가 아닌 이유</div>
+              <div style="font-size:12px; color:var(--ink-soft); line-height:1.5;"><b style="color:var(--ink);">맥락 없음</b> → 같은 질문이어도 맥락에 따라 답변이 달라지는데 AI는 해당 정보를 알 수 없음</div>
+              <div style="font-size:12px; color:var(--ink-soft); line-height:1.5;"><b style="color:var(--ink);">근거 없음</b> → AI는 정확한 이해 없이 암기함 → 다른 케이스서 지어냄(환각)</div>
+              <div style="font-size:12px; color:var(--ink-soft); line-height:1.5;"><b style="color:var(--ink);">옛 정책 포함</b> → 옛 정책으로 답변한 데이터도 포함되어 있음 -> 틀린 걸 학습</div>
+            </div>
+            <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:7px; background:#f5f1ff; border:1.5px solid var(--tint-border); border-radius:14px; padding:16px 18px;">
+              <div style="font-size:13px; font-weight:800; color:var(--accent); margin-bottom:1px;">✅ 이렇게 쌓으면 (보증금 문의 재구성)</div>
+              <div style="display:flex; gap:8px; font-size:11.5px; line-height:1.5;"><span style="color:var(--accent); font-weight:800; width:40px; flex-shrink:0;">유형</span><span style="color:var(--ink-soft);">보증금 &gt; 공제 분쟁 · 1:1 문의</span></div>
+              <div style="display:flex; gap:8px; font-size:11.5px; line-height:1.5;"><span style="color:var(--accent); font-weight:800; width:40px; flex-shrink:0;">상황</span><span style="color:var(--ink-soft);">진행중인 계약 있음(이용중) · 임차인(홍길동) · 카드 결제 · 계약 이력 3건 · 분쟁이력 없음</span></div>
+              <div style="display:flex; gap:8px; font-size:11.5px; line-height:1.5;"><span style="color:var(--accent); font-weight:800; width:40px; flex-shrink:0;">문의</span><span style="color:var(--ink-soft);">"보증금은 언제 돌려받나요?"</span></div>
+              <div style="display:flex; gap:8px; font-size:11.5px; line-height:1.5;"><span style="color:var(--accent); font-weight:800; width:40px; flex-shrink:0;">답변</span><span style="color:var(--ink-soft);">계약이 종료되고 보증금 반환 신청 버튼을 누르면 됩니다.</span></div>
+              <div style="display:flex; gap:8px; font-size:11.5px; line-height:1.5;"><span style="color:var(--accent); font-weight:800; width:40px; flex-shrink:0;">근거</span><span style="color:var(--ink-soft);">사전 동의 없는 차감 불가 — 「보증금 공제 절차」 기준 </span></div>
+              <div style="display:flex; gap:8px; font-size:11.5px; line-height:1.5;"><span style="color:var(--accent); font-weight:800; width:40px; flex-shrink:0;">메타</span><span style="color:var(--ink-soft);">2026-06-07 · 정책 v2026.6 (현행 ✔) · 개인정보 마스킹</span></div>
+            </div>
+          </div>
+          <div class="callout dark" style="text-align:center;">💡 답만이 아니라 <b>상황·근거·메타</b>까지 → <b>좋은 학습 데이터</b></div>
+        </div>
+      </div>
+
+      <!-- 20. 모델 학습 조건 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🎭</div><h2>정리: 좋은 모델 학습 데이터의 조건</h2></div>
+        <div class="slide-header-sub">한마디로 — "답만이 아니라, 상황·근거까지 잘 쌓은 사례"</div>
+        <hr class="divider">
+        <div class="body cond-grid" style="gap:16px;">
+          <div class="cond-card" style="padding:18px 18px 16px;">
+            <div style="display:flex; align-items:center; gap:10px; padding-bottom:11px; margin-bottom:13px; border-bottom:1px solid var(--line);">
+              <span style="width:27px; height:27px; border-radius:50%; background:var(--g); color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">1</span>
+              <span style="font-size:13.5px; font-weight:800; color:var(--ink); line-height:1.25;">가르칠 만한가</span>
+            </div>
+            <div class="cond-body" style="padding:0; gap:12px;">
+              <div class="item"><b>정확하다</b> — 틀린 답은 뺀다 (AI는 준 대로 다 배움)</div>
+              <div class="item"><b>최신이다</b> — 바뀐 과거 답은 고치거나 제외</div>
+            </div>
+          </div>
+          <div class="cond-card" style="padding:18px 18px 16px;">
+            <div style="display:flex; align-items:center; gap:10px; padding-bottom:11px; margin-bottom:13px; border-bottom:1px solid var(--line);">
+              <span style="width:27px; height:27px; border-radius:50%; background:var(--g); color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">2</span>
+              <span style="font-size:13.5px; font-weight:800; color:var(--ink); line-height:1.25;">맥락이 있는가</span>
+            </div>
+            <div class="cond-body" style="padding:0; gap:12px;">
+              <div class="item"><b>상황이 있다</b> — 계약·사용자 맥락 함께 저장</div>
+              <div class="item"><b>근거가 있다</b> — 출처 규정을 연결</div>
+            </div>
+          </div>
+          <div class="cond-card" style="padding:18px 18px 16px;">
+            <div style="display:flex; align-items:center; gap:10px; padding-bottom:11px; margin-bottom:13px; border-bottom:1px solid var(--line);">
+              <span style="width:27px; height:27px; border-radius:50%; background:var(--g); color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">3</span>
+              <span style="font-size:13.5px; font-weight:800; color:var(--ink); line-height:1.25;">고르고 깔끔한가</span>
+            </div>
+            <div class="cond-body" style="padding:0; gap:12px;">
+              <div class="item"><b>편식 없다</b> — 골고루 (🔁 아마존 채용 AI)</div>
+              <div class="item"><b>깔끔한 쌍이다</b> — 질문·답 구분 명확 · 톤 일관</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 22. 우리 회사의 좋은 사례 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">📊</div><h2>우리 회사의 좋은 사례</h2></div>
+        <div class="slide-header-sub">전화상담을 '학습 데이터'로 쌓는 중 — 방금 배운 '좋은 데이터 조건'을 실제로</div>
+        <hr class="divider">
+        <div class="body">
+          <div class="phase-row">
+            <div class="phase-card now">
+              <div class="phase-h">① 데이터 쌓기</div>
+              <div class="phase-b">상담전화 → <b>STT 텍스트화</b> → AI가 유형 분류·요약·처리결과 자동 분석 → <b>실무자가 확인·수정</b><span class="phase-tag on">✅ 진행 중</span></div>
+            </div>
+            <div class="phase-arrow">→</div>
+            <div class="phase-card">
+              <div class="phase-h">② 모델 만들기</div>
+              <div class="phase-b">①에서 쌓인 데이터로 <b>학습(파인튜닝)</b> → 분류·응대 정확도 ↑<span class="phase-tag">⬜ 예정 (개발팀)</span></div>
+            </div>
+            <div class="phase-arrow">→</div>
+            <div class="phase-card">
+              <div class="phase-h">③ 고객용 챗봇</div>
+              <div class="phase-b"><b>목표 정확도에 도달하면</b> 실제 고객에게 노출<span class="phase-tag">⬜ 목표</span></div>
+            </div>
+          </div>
+          <div class="callout tip" style="margin-top:12px;">💡 핵심은 ①의 <b>"실무자가 확인·수정"</b> — AI 자동분석은 <i>유능한 신입의 초안.</i> 사람이 한 번 걸러주면:</div>
+          <div class="out-row">
+            <div class="out-card a"><div class="ol">🤖 분석 데이터</div>AI가 자동으로 단 유형·요약 (초안)</div>
+            <div class="out-card b"><div class="ol">✔️ 정답 데이터</div>실무자가 맞다고 확인 = 좋은 예시</div>
+            <div class="out-card c"><div class="ol">✏️ 오답 데이터</div>실무자가 고침 = 귀한 재료</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 23. 왜 이렇게 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🤔</div><h2>왜 이렇게 쌓을까? (챕터 B 조건 그대로)</h2></div>
+        <div class="slide-header-sub">특별한 방식이 아니다 — "좋은 학습 데이터의 3조건"을 채우려는 설계</div>
+        <hr class="divider">
+        <div class="body" style="gap:11px;">
+          <table class="dtable">
+            <thead><tr><th style="width:38%;">챕터 B 조건</th><th>우리 전화상담 방식이 푸는 법</th></tr></thead>
+            <tbody>
+              <tr><td><strong>① 정확·최신</strong></td><td><strong>실무자가 확인·수정</strong> → 틀린 답 걸러내고 최신 정책으로 검증</td></tr>
+              <tr><td><strong>② 상황·근거</strong></td><td>통화엔 <strong>고객 상황·문의 배경</strong>이 통째로 담김 → "Q&A만" 한계를 메움</td></tr>
+              <tr><td><strong>③ 고르고 깔끔</strong></td><td>AI <strong>유형 분류</strong>로 편식 확인·보정 + 형식 통일 → 바로 학습셋</td></tr>
+            </tbody>
+          </table>
+          <div class="callout tip" style="text-align:center;">💡 <b>"좋은 데이터 → 좋은 모델 → 안전한 노출"</b> — 잘 모으는 게 곧 리스크 관리.</div>
+        </div>
+      </div>
+
+      <!-- 24. 평가 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">✅</div><h2>(보너스) 평가 데이터 — AI를 '채점'하는 시험지</h2></div>
+        <div class="slide-header-sub">모델을 만들었으면, 고객에게 내보내기 전에 — 잘하는지 '시험'을 봐야 한다</div>
+        <hr class="divider">
+        <div class="body" style="gap:12px;">
+          <div class="callout tip">신입 비유로: 교육시킨 신입을 바로 실전 투입? ❌ → <b>수습 평가</b>로 점검하고 통과해야 고객 앞에 선다.</div>
+          <div class="two-col">
+            <div class="col-box us"><h5>🗂️ 우리(현업)가 할 일</h5><p><b>정답이 있는 문제</b><br>(질문 + 모범답) 모으기</p></div>
+            <div class="col-box eng"><h5>⚙️ 엔지니어가 할 일 (오늘 안 다룸)</h5><p>채점·정확도 측정<br>자동화하기</p></div>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <div class="out-card b" style="flex:1;"><div class="ol">🔁 ✔️ 정답 데이터</div>실무자가 확인한 것 → 그대로 시험지 후보</div>
+            <div class="out-card c" style="flex:1;"><div class="ol">🔁 ✏️ 오답 데이터</div>실무자가 고친 것 → 함정 문제로 특히 귀함</div>
+          </div>
+          <div class="callout warn">🔢 이 시험 점수가 <b>목표를 넘어야 ③ 고객 노출.</b> 못 넘으면? → 에어캐나다 사고(다음).</div>
+          <div class="kw">🔑 관련 키워드 — <b>벤치마크</b>(Benchmark) · 평가셋(Test Set) · 정답셋(Ground Truth) · LLM-as-a-Judge · A/B 테스트 <span style="color:#bbb;">(오늘은 깊이 안 들어감)</span></div>
+        </div>
+      </div>
+
+      <!-- 25. 보안 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🔒</div><h2>주의 ① 정보보안 — 넣기 전에 (두 형식 공통)</h2></div>
+        <div class="slide-header-sub">지식베이스든 학습이든, 개인정보·기밀은 넣기 전에 마스킹/제거</div>
+        <hr class="divider">
+        <div class="body" style="gap:12px; justify-content:center;">
+          <div class="two-col">
+            <div class="col-box eng" style="border-color:#fe8d9b; background:#ffedef;"><h5 style="color:#d21f35;">🔎 지식베이스</h5><p style="color:#c12338;">개인정보·기밀 문서를 올리면 → 봇이 그대로 <b>인용·노출</b> 가능</p></div>
+            <div class="col-box eng" style="border-color:#fe8d9b; background:#ffedef;"><h5 style="color:#d21f35;">🎭 모델 학습</h5><p style="color:#c12338;">개인정보가 <b>가중치에 박히면 사실상 회수 불가</b> (한 번 배우면 못 지움)</p></div>
+          </div>
+          <div class="callout dark" style="text-align:center;">💡 규칙: 이름·연락처·주민번호·카드번호 → <b>[마스킹]</b>, 기밀 문서 → <b>제외.</b></div>
+        </div>
+      </div>
+
+      <!-- 26. 에어캐나다 -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">⚠️</div><h2>주의 ② AI는 늘 의심하자</h2></div>
+        <div class="slide-header-sub">에어캐나다 챗봇 사건 (2024, 캐나다 법원 실제 판결)</div>
+        <hr class="divider">
+        <div class="body two-col" style="gap:18px;">
+          <div class="img-area" style="flex:1;"><img src="assets/aircanada_yna.png" alt="에어캐나다 챗봇 판결 — 연합뉴스"></div>
+          <div style="flex:1.6; display:flex; flex-direction:column; gap:10px; justify-content:center;">
+            <div class="callout warn">고객이 챗봇에게 "유족 할인 환불 되나요?" → 챗봇이 <b>실제 정책엔 없는</b> 환불을 "된다"고 답변. 그 말 믿고 구매 → 환불 거부 → 소송 → 법원: <b>"챗봇이 한 말도 회사 책임"</b> → 항공사 패소·배상.</div>
+            <div class="callout tip">💡 챗봇이 틀린 이유 = <b>옛·모순된 정책 데이터.</b></div>
+            <div class="callout dark" style="text-align:center;">결론: AI가 틀려도 책임은 회사 몫.<br><b>데이터를 잘 관리하고 모아야 한다.</b></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 27. 오늘 가져갈 것 (핵심 3줄 + 체크카드) -->
+      <div class="slide">
+        <div class="slide-header"><div class="t-icon">🎯</div><h2>오늘 가져갈 것</h2></div>
+        <div class="slide-header-sub">핵심 3줄 + 책상에 붙일 체크카드</div>
+        <hr class="divider">
+        <div class="body two-col" style="gap:16px; flex:1; min-height:0; align-items:stretch;">
+          <div style="flex:1.05; min-width:0; display:flex; flex-direction:column; gap:10px; justify-content:center;">
+            <div class="core-line" style="padding:13px 18px; gap:14px;"><div class="n" style="font-size:26px; width:28px;">1</div><div class="tx" style="font-size:13px;">AI는 의심하지 않는다 — 내가 준 데이터가 곧 답의 한계</div></div>
+            <div class="core-line" style="padding:13px 18px; gap:14px;"><div class="n" style="font-size:26px; width:28px;">2</div><div class="tx" style="font-size:13px;"><b>데이터의 두 형식</b> — 지식베이스(정리) vs 모델 학습(쌓기).</div></div>
+            <div class="core-line" style="padding:13px 18px; gap:14px;"><div class="n" style="font-size:26px; width:28px;">3</div><div class="tx" style="font-size:13px;">오늘 남긴 한 줄이 <b>내일 회사 AI의 재료</b>.</div></div>
+          </div>
+          <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:8px; justify-content:center;">
+            <div class="check-item" style="padding:10px 15px; gap:11px;"><span class="ci" style="font-size:18px;">🔎</span><span class="ct" style="font-size:12.5px;">지식베이스<small>최신본 하나 · 명확한 제목 · 완성 · 자기완결</small></span></div>
+            <div class="check-item" style="padding:10px 15px; gap:11px;"><span class="ci" style="font-size:18px;">🎭</span><span class="ct" style="font-size:12.5px;">모델 학습<small>가르칠 만해? · 고루? · 깔끔? + 버리지 말고 쌓기</small></span></div>
+            <div class="check-item" style="padding:10px 15px; gap:11px;"><span class="ci" style="font-size:18px;">⚠️</span><span class="ct" style="font-size:12.5px;">어느 쪽이든<small>개인정보·기밀은 마스킹/제외</small></span></div>
+            <div class="check-item" style="padding:10px 15px; gap:11px;"><span class="ci" style="font-size:18px;">🖊️</span><span class="ct" style="font-size:12.5px;">기록할 땐<small>유형·이유·결과 한 줄</small></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 29. 클로징 -->
+      <div class="slide dark closing-slide">
+        <div class="deco-a"></div><div class="deco-b"></div>
+        <h1>감사합니다</h1>
+        <div class="msg">지금 이 시간에도 귀중한 데이터들은 사라지고 있습니다.</div>
+        <div class="qa">Q &amp; A</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== 발표자 보기 화면 (?view=presenter 일 때만 표시) ===== -->
+<div id="presenter">
+  <div class="pv-box pv-current">
+    <div class="pv-label">현재 슬라이드</div>
+    <div class="frame" id="pvCur"></div>
+  </div>
+  <div class="pv-side">
+    <div class="pv-box pv-next" id="pvNextWrap">
+      <div class="pv-label">다음 슬라이드</div>
+      <div class="frame" id="pvNext"></div>
+    </div>
+    <div class="pv-clock">
+      <div>
+        <div class="time" id="pvElapsed">00:00</div>
+        <div class="wall" id="pvWall">--:--</div>
+      </div>
+      <div class="tbtns">
+        <button id="pvTimerToggle">일시정지</button>
+        <button id="pvTimerReset">리셋</button>
+      </div>
+    </div>
+  </div>
+  <div class="pv-box pv-notes">
+    <div class="pv-label">발표 노트</div>
+    <div class="note-text" id="pvNote"></div>
+    <div class="pv-controls">
+      <button id="pvPrev">◀ 이전</button>
+      <button id="pvNextBtn">다음 ▶</button>
+      <div class="pg"><i id="pvProg"></i></div>
+      <div class="cnt" id="pvCnt">01 / 27</div>
+    </div>
+  </div>
+</div>
+<div class="pv-disc" id="pvDisc">발표 화면 창이 닫혔습니다 — 연결 끊김</div>
+
+<!-- UI -->
+<div class="ui-progress"><div class="ui-progress-bar"></div></div>
+<div class="ui-counter">01 / 27</div>
+<div class="ui-controls">
+  <button class="ui-btn" id="btn-prev" title="이전 (←)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+  <button class="ui-btn" id="btn-fs" title="전체화면 (F)"><svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg></button>
+  <button class="ui-btn" id="btn-next" title="다음 (→ / Space)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+  <button class="ui-btn" id="btn-presenter" title="발표자 보기 열기 (P)"><svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zm-5-7l-4-4-4 4h3v4h2v-4h3z"/></svg></button>
+</div>
+<div class="ui-hint">
+  <span><kbd>←</kbd><kbd>→</kbd> 이동</span>
+  <span><kbd>Space</kbd> 다음</span>
+  <span><kbd>F</kbd> 전체화면</span>
+  <span><kbd>P</kbd> 발표자 보기</span>
+  <span><kbd>Home</kbd>/<kbd>End</kbd> 처음/끝</span>
+</div>
+
+<script>
+(function() {
+  /* ===== 모드 판별: ?view=presenter 면 발표자 화면 ===== */
+  const params = new URLSearchParams(location.search);
+  const MODE = params.get('view') === 'presenter' ? 'presenter' : 'main';
+  document.body.dataset.mode = MODE;
+
+  const deck = document.querySelector('.deck');
+  const slidesEl = document.querySelector('.slides');
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const counter = document.querySelector('.ui-counter');
+  const progressBar = document.querySelector('.ui-progress-bar');
+  const total = slides.length;
+  let current = 0, hideHintTimer = null;
+  const BASE_W = 960, BASE_H = 540;
+
+  /* ===== 발표 노트 (슬라이드별, 발표자 화면에만 표시) ===== */
+  const NOTES = [
+    "[표지] 인사 + 한 줄: AI 답의 질은 결국 '데이터'가 좌우한다. 오늘은 데이터를 '어떻게 주고 쌓을지' 얘기.",
+
+    "[흐름] 목차 안내: 데이터 두 가지를 배운다 — 지식베이스(참고자료) · 모델 학습(교육). 그다음 우리 회사는 어떻게 쓰는지 + 주의사항 → 마무리. 중간에 퀴즈도 있음.",
+
+    "[오프닝 질문] AI한테 더 정확히 답 받으려고 쓰는 '나만의 노하우' 있나요?",
+
+    "[노하우 두 갈래] 받은 답을 두 갈래로 분류 → ①어떻게 묻나(프롬프트, 오늘 제외) ②무엇을 쥐여주나(데이터, 오늘 주제). 오늘은 'AI한테 뭘 어떻게 전달'하는지.",
+
+    "[아마존 질문] 결과 예상되시나요? 문제점 얘기할 수 있는 분?",
+
+    "[아마존 결론] 편향된 데이터 오류의 대표적인 사례.\n합격자는 남성이 많았음 → 여성 감점('여성 동아리'만 있어도) → 폐기. 진짜 원인은 양·모델 아님(10년치 다 줬고 똑똑한 AI). '과거에 뽑은 사람'을 정답으로 줘서 = 차별을 그대로 학습.\n한마디: 모델 탓 아니라 데이터 탓 — '쓰레기 넣으면 쓰레기 나온다(GIGO)'. ★GIGO 여기서 처음 심기(끝 '핵심 3줄'에서 회수).",
+
+    "[큰 그림] 오늘 발표는 쉽게 이해할 수 있도록 비유 — AI = 이제 갓 입사한 유능한 신입사원\n신입사원에게 매뉴얼 쥐여주기=지식베이스 / 신입사원 교육하기=모델 학습. 결과적으로 신입사원 평가하기.",
+
+    "[챕터 A 표지] 첫 번째로 지식 베이스 데이터",
+
+    "[지식베이스란] RAG 쉽게 설명: 신입 사원에게 사내 위키 — '외워서가 아니라 보고 답함'. 현업=정리만, 찾아오게 만드는 건 엔지니어.\n아래 관련 키워드는 더 궁금하시면 찾아보라고 준비\n⚠️다음 슬라이드는 첫 번째 퀴즈",
+
+    "[Q1 폴더 퀴즈] 폴더 보여주고 '문제 몇 개 찾았나?' 30초~1분 관찰. ⚠️정답 미리 말하지 말기(다음 장).",
+
+    "[Q1 개선] 정리 후 + 4원칙: 최신본 하나+날짜 / 한 주제=한 파일 / 빈 파일·잡음 제거 / 스캔→텍스트. ('최신본 하나'는 뒤 에어캐나다 복선)",
+
+    "[Q2 문서 퀴즈] 같은 「비대면 계약」, 망가진 방식 다른 두 문서. 각각 '어디가 위험?'\n①짧지만 모호·미완성(보통/상황에 따라 · TODO · 시점 불명 · 메타 없음)\n②길지만 무구조·메타 없음(줄글 한 덩어리 → 핵심·근거·인용 못 찾음)\n대조: 부실 vs 과잉 — 둘 다 부적합. 다음 장이 둘 다 해결.",
+
+    "[Q2 정답] 잘 만든 문서 = 'AI가 그대로 갖다 써도 되는 문서'. 메타 3필드(대상·시점·범위) / 원칙+예외 / UI 문구까지 / FAQ 고객·내부 분리 / 정책 링크 / 변경 이력.",
+
+    "[지식베이스 조건] 3묶음: ①믿을 만한가(최신·완성·구체) ②그것만 봐도 이어지나(자기완결·연결) ③찾고 읽을 수 있나(메타·구조·텍스트)\n⚠️어떠셨나요? 그냥 잘 만든 문서 아닌가요? -> 지식베이스 데이터에서 좋은 데이터는 사람 입장에서도 보기 쉬운 데이터\n",
+
+    "[직접 써먹기] 이론만 하고 넘어가기엔 아쉬워서 쉽게 활용하는 방법 공유.\nNotebookLM 추천(올린 문서 안에서만 + 출처 인용).\n🖥️시연",
+
+    "[챕터 B 표지] 전환. '이번엔 가르쳐 베테랑으로 — 모델 자체가 바뀐다. 우리 임무 = 잘 쌓기'.",
+
+    "[모델 학습이란] 결정적 차이 = 이전에는 신입사원한테 메뉴얼만 쥐어줬을 뿐 신입사원은 계속 회사에 대해 아는게 없는 상태. 하지만 모델학습 데이터는 신입사원을 바꿔주는 방식.\n재료 쌓기=현업, 학습(파인튜닝)=개발팀. → 우리 1:1 문의로 진단 예고.",
+
+    "[Q 1:1 문의 퀴즈] '13만 건이나 쌓였으니 좋은 학습 데이터?' 함정. 'Q&A는 다 있는데 뭐가 부족?' 던지고 기다리기.\n예상답: 맥락 없음(어떤 계약·사용자?) / 근거 없음(→환각) / 옛 정책 섞임(낡은 답 그대로 가르치는 셈).",
+
+    "[A 개선] 왼쪽=그대로 학습하면 안 되는 3이유(맥락·근거·옛정책) ↔ 오른쪽=같은 보증금 문의 재구성(상황·답·근거·메타). 1:1로 짚기.\n· 상황: '계약 3건·분쟁이력 없음'처럼 맥락 따라 응대가 달라짐 · 근거: '어떤 규정'인지만 가리켜도 충분",
+
+    "[모델 학습 조건] 3조건: ①가르칠 만한가(정확·최신, 틀린 답 뺀다) ②맥락(상황·근거) ③고르고 깔끔. '편식 없다'=아마존 콜백. 보안은 공통이라 뒤에서.",
+
+    "[우리 회사의 좋은 사례] 우리 사례: 상담전화 STT → AI 자동분석(유형·요약·결과) → 실무자 확인·수정. 이 확인·수정이 정답/오답 데이터.\n⚠️사전 확인해 채울 것: 실제 수집량 · 검증 인력 · 태깅 기준 · 마스킹 단계 · 목표 정확도 수치.",
+
+    "[왜 이렇게] 우리 방식 = 챕터 B 3조건을 그대로 푸는 설계(표로 연결). 순서(데이터→모델→챗봇) 이유: 정확도 없이 노출 = 에어캐나다 사고. ③ 전에 '평가로 채점' → 목표 넘어야 노출.",
+
+    "[평가] 수습 평가 비유: 교육시킨 신입 바로 투입 ❌ → 시험 통과해야 고객 앞에. 평가셋 = '질문+정답'(실무자 확인 정답/고친 오답이 곧 시험지). 목표 점수 넘어야 노출.",
+
+    "[보안] 두 형식 공통. 지식베이스: 올리면 봇이 그대로 인용·노출. 모델 학습: 가중치에 박히면 회수 불가(한 번 배우면 못 지움).\n규칙: 이름·연락처·주민·카드 → 마스킹, 기밀 → 제외.",
+
+    "[에어캐나다] 2024 캐나다 실제 판결. 챗봇이 정책에 없는 환불 '된다' → 고객 구매 → 거부 → 소송 → 회사 패소·배상('챗봇은 별개' 항변도 기각). 원인 = 옛·모순 정책 데이터.\n💬 'AI 핑계 안 통함 — 챗봇이 한 말도 회사 책임'.",
+
+    "[오늘 가져갈 것] 핵심 3줄 천천히: ①AI는 의심 안 함 — 데이터가 답의 한계(GIGO ← 여기서 회수) ②두 형식(정리 vs 쌓기), 쓰임이 정함 ③오늘 남긴 한 줄 = 내일 회사 AI 재료. 체크카드: '사진 찍어 가세요'.",
+
+    "[클로징] 감사 인사 → Q&A. 시간 남으면 직군별 '우리 데이터' 진단(기획=회의록, QA=버그리포트, CS=상담기록, 마케팅=캠페인 태그)."
+  ];
+
+  /* ===== 창 간 동기화 (BroadcastChannel + localStorage) ===== */
+  const CH = 'data-deck-sync', LS = 'data-deck-sync-state';
+  const bc = ('BroadcastChannel' in window) ? new BroadcastChannel(CH) : null;
+  let lsSeq = 0;
+  function send(type, extra){
+    const m = Object.assign({ type, current, seq: ++lsSeq }, extra || {});
+    if(bc) bc.postMessage(m);
+    try{ localStorage.setItem(LS, JSON.stringify(m)); }catch(e){}
+  }
+  function onMsg(m){
+    if(!m) return;
+    if(m.type === 'goto'){ applyGoto(m.current); }
+    else if(m.type === 'request-state'){ send('goto'); }       // 새 창의 상태 요청 → 응답
+    else if(m.type === 'closing' && MODE === 'presenter'){ document.getElementById('pvDisc').classList.add('show'); }
+    else if(m.type === 'alive' && MODE === 'presenter'){ document.getElementById('pvDisc').classList.remove('show'); }
+  }
+  if(bc) bc.onmessage = (e)=>onMsg(e.data);
+  window.addEventListener('storage',(e)=>{ if(e.key === LS && e.newValue) onMsg(JSON.parse(e.newValue)); });
+
+  /* ===== 공통 유틸 & 네비게이션 ===== */
+  function clamp(n){ return Math.max(0, Math.min(total-1, n)); }
+  function pad(n){ return n.toString().padStart(2,'0'); }
+  function fitDeck(){ const scale = Math.min(window.innerWidth/BASE_W, window.innerHeight/BASE_H); deck.style.transform = `scale(${scale})`; }
+  function updateUI(){ counter.textContent = `${pad(current+1)} / ${pad(total)}`; progressBar.style.width = `${((current+1)/total)*100}%`; try{ history.replaceState(null,'',`#${current+1}`); }catch(e){} }
+  function showHint(){ if(MODE!=='main') return; document.body.classList.remove('hide-hint'); clearTimeout(hideHintTimer); hideHintTimer=setTimeout(()=>document.body.classList.add('hide-hint'),4000); }
+  function toggleFullscreen(){ if(!document.fullscreenElement){ document.documentElement.requestFullscreen().catch(()=>{}); } else { document.exitFullscreen(); } }
+  function openPresenter(){ window.open(location.pathname + '?view=presenter', 'deckPresenter', 'width=1280,height=860'); }
+
+  /* applyGoto: 화면만 갱신(전파 X) / go: 사용자 조작(전파 O) */
+  function applyGoto(n){
+    current = clamp(n);
+    if(MODE === 'main'){ slidesEl.style.transform = `translateX(-${current*BASE_W}px)`; updateUI(); showHint(); }
+    else { renderPresenter(); }
+  }
+  function go(n){ applyGoto(n); send('goto'); }
+
+  /* ===== 발표자 화면: 슬라이드 복제 → 프레임에 맞춰 축소 ===== */
+  function renderPreview(frameEl, index){
+    frameEl.innerHTML = '';
+    if(index < 0 || index >= total) return false;
+    const box = document.createElement('div');
+    box.className = 'pv-scaler';
+    box.style.width = BASE_W + 'px'; box.style.height = BASE_H + 'px';
+    box.appendChild(slides[index].cloneNode(true));
+    frameEl.appendChild(box);
+    const fit = ()=>{
+      const r = frameEl.getBoundingClientRect();
+      const s = Math.min(r.width/BASE_W, r.height/BASE_H);
+      box.style.transform = `scale(${s})`;
+      box.style.left = ((r.width - BASE_W*s)/2) + 'px';
+      box.style.top  = ((r.height - BASE_H*s)/2) + 'px';
+    };
+    fit(); requestAnimationFrame(fit);
+    return true;
+  }
+  function renderPresenter(){
+    renderPreview(document.getElementById('pvCur'), current);
+    const wrap = document.getElementById('pvNextWrap');
+    const has = renderPreview(document.getElementById('pvNext'), current+1);
+    if(has){ wrap.classList.remove('empty'); }
+    else { wrap.classList.add('empty'); document.getElementById('pvNext').textContent = '— 마지막 슬라이드 —'; }
+    const note = (NOTES[current] || '').trim();
+    const ne = document.getElementById('pvNote');
+    ne.textContent = note || '(이 슬라이드에는 노트가 없습니다)';
+    ne.classList.toggle('empty', !note);
+    document.getElementById('pvCnt').textContent = `${pad(current+1)} / ${pad(total)}`;
+    document.getElementById('pvProg').style.width = `${((current+1)/total)*100}%`;
+  }
+
+  /* ===== 공통 키보드 ===== */
+  document.addEventListener('keydown',(e)=>{
+    if(e.ctrlKey||e.metaKey||e.altKey) return;
+    switch(e.key){
+      case 'ArrowRight': case 'PageDown': case ' ': e.preventDefault(); go(current+1); break;
+      case 'ArrowLeft': case 'PageUp': e.preventDefault(); go(current-1); break;
+      case 'Home': e.preventDefault(); go(0); break;
+      case 'End': e.preventDefault(); go(total-1); break;
+      case 'f': case 'F': case 'ㄹ': e.preventDefault(); toggleFullscreen(); break;
+      case 'p': case 'P': case 'ㅔ': if(MODE==='main'){ e.preventDefault(); openPresenter(); } break;
+    }
+  });
+
+  /* ===== 메인 화면 전용 ===== */
+  if(MODE === 'main'){
+    document.getElementById('btn-prev').addEventListener('click',()=>go(current-1));
+    document.getElementById('btn-next').addEventListener('click',()=>go(current+1));
+    document.getElementById('btn-fs').addEventListener('click',toggleFullscreen);
+    document.getElementById('btn-presenter').addEventListener('click',openPresenter);
+    document.addEventListener('mousemove',showHint);
+
+    let wheelLock=false;
+    document.addEventListener('wheel',(e)=>{ if(wheelLock) return; if(Math.abs(e.deltaY)<30) return; wheelLock=true; setTimeout(()=>wheelLock=false,700); if(e.deltaY>0) go(current+1); else go(current-1); },{passive:true});
+
+    let touchStartX=null;
+    document.addEventListener('touchstart',(e)=>{ touchStartX=e.touches[0].clientX; },{passive:true});
+    document.addEventListener('touchend',(e)=>{ if(touchStartX===null) return; const dx=e.changedTouches[0].clientX-touchStartX; if(Math.abs(dx)>50) go(current+(dx<0?1:-1)); touchStartX=null; },{passive:true});
+
+    document.addEventListener('fullscreenchange',()=>{ document.body.classList.toggle('fullscreen-mode', !!document.fullscreenElement); });
+    window.addEventListener('resize',fitDeck);
+    window.addEventListener('beforeunload',()=>send('closing'));     // 닫힐 때 발표자에게 알림
+    setInterval(()=>send('alive'), 1500);                            // 살아있음 신호
+    fitDeck();
+  }
+
+  /* ===== 발표자 화면 전용: 버튼 + 타이머 ===== */
+  if(MODE === 'presenter'){
+    document.getElementById('pvPrev').addEventListener('click',()=>go(current-1));
+    document.getElementById('pvNextBtn').addEventListener('click',()=>go(current+1));
+    window.addEventListener('resize', renderPresenter);
+
+    let sec = 0, running = true;
+    const elEl = document.getElementById('pvElapsed'), wlEl = document.getElementById('pvWall');
+    const fmt = (s)=>`${pad(Math.floor(s/60))}:${pad(s%60)}`;
+    setInterval(()=>{
+      if(running){ sec++; elEl.textContent = fmt(sec); }
+      const now = new Date();
+      wlEl.textContent = now.toLocaleTimeString('ko-KR',{hour:'2-digit', minute:'2-digit'});
+    }, 1000);
+    document.getElementById('pvTimerToggle').addEventListener('click',(e)=>{ running=!running; e.target.textContent = running ? '일시정지' : '재생'; });
+    document.getElementById('pvTimerReset').addEventListener('click',()=>{ sec=0; elEl.textContent = fmt(0); });
+
+    send('request-state');   // 메인의 현재 위치 요청
+  }
+
+  /* ===== 초기 위치 복원 ===== */
+  const hash = parseInt(location.hash.replace('#',''),10);
+  if(hash && hash>=1 && hash<=total){ current = hash-1; }
+  else { try{ const s = JSON.parse(localStorage.getItem(LS)||'null'); if(s && typeof s.current==='number') current = clamp(s.current); }catch(e){} }
+  applyGoto(current);
+})();
+</script>
+
+</body>
+</html>
