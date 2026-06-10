@@ -3,7 +3,7 @@
   <desc id="desc">Main Agent가 명령 카드와 Skill을 Sub Agent에게 전달하고, Sub Agent가 작업한 결과물을 Main Agent가 정제해 사용자에게 전달하는 장면</desc>
   <defs>
     <style>
-      .bg{fill:#fff}.ink{fill:#252525}.muted{fill:#696969}.purple{fill:#895ffc}.purple2{fill:#f5f1ff}.blue{fill:#4e90f9}.blue2{fill:#edf4ff}.amber{fill:#ffd857}.amber2{fill:#fff8e2}.red{fill:#f04459}.red2{fill:#ffedef}.box{fill:#fff;stroke:#d7d7d7;stroke-width:2.5}.line{stroke:#252525;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}.arrow{stroke:#895ffc;stroke-width:5;fill:none;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}.txt{font-family:Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif}.h{font-size:26px;font-weight:900}.s{font-size:20px;font-weight:900}.p{font-size:16px}.mini{font-size:14px;font-weight:850}
+      .bg{fill:#fff}.ink{fill:#252525}.muted{fill:#252525}.purple{fill:#895ffc}.purple2{fill:#f5f1ff}.blue{fill:#4e90f9}.blue2{fill:#edf4ff}.amber{fill:#ffd857}.amber2{fill:#fff8e2}.red{fill:#f04459}.red2{fill:#ffedef}.box{fill:#fff;stroke:#d7d7d7;stroke-width:2.5}.line{stroke:#252525;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}.arrow{stroke:#895ffc;stroke-width:5;fill:none;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}.txt{font-family:Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif}.h{font-size:26px;font-weight:900}.s{font-size:20px;font-weight:900}.p{font-size:16px}.mini{font-size:14px;font-weight:850}
     </style>
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#895ffc"/></marker>
   </defs>

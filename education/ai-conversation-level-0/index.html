@@ -476,106 +476,10 @@
     .agent-card .md-sample { flex: 1; font-size: 9.6px; line-height: 1.38; padding: 9px 10px; }
     .agent-chief-sample { font-size: 9.5px; line-height: 1.3; padding: 9px 11px; }
     .possibility-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; flex: 1; min-height: 0; }
-    .possibility-grid.tool-examples { grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .possibility-card { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 8px; min-height: 0; box-shadow: 0 6px 18px rgba(68,59,49,.05); }
-    .possibility-card.rich { padding: 12px; overflow: hidden; }
     .possibility-card .mark { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; color: #fff; background: var(--teal); font-weight: 900; }
     .possibility-card h3 { font-size: 13.5px; line-height: 1.35; font-weight: 900; }
     .possibility-card p { color: var(--soft); font-size: 11.5px; line-height: 1.45; }
-    .deck-thumb {
-      margin-top: auto;
-      min-height: 104px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background:
-        radial-gradient(circle at 82% 24%, rgba(137,95,252,.16), transparent 34%),
-        linear-gradient(135deg, #f8f4ea 0%, #ffffff 58%, #eef7f5 100%);
-      padding: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-    .deck-thumb::after {
-      content: "";
-      position: absolute;
-      right: -18px;
-      bottom: -26px;
-      width: 95px;
-      height: 95px;
-      border-radius: 50%;
-      background: var(--teal-soft);
-      border: 1px solid #e7e2f4;
-    }
-    .deck-thumb .brand { position: absolute; top: 11px; right: 12px; font-size: 10px; font-weight: 950; color: var(--brand-dark); }
-    .deck-thumb .label { font-size: 8.8px; letter-spacing: .12em; color: var(--teal); font-weight: 950; margin-bottom: 8px; }
-    .deck-thumb strong { display: block; max-width: 175px; font-size: 18px; line-height: 1.18; letter-spacing: -.03em; color: var(--ink); }
-    .deck-thumb span { display: block; margin-top: 7px; max-width: 165px; color: var(--soft); font-size: 9.5px; line-height: 1.35; }
-    .workflow-mini {
-      margin-top: auto;
-      min-height: 104px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #f7fbf9;
-      padding: 12px 9px;
-      display: grid;
-      grid-template-columns: 1fr 16px 1fr 16px 1fr 16px 1fr;
-      align-items: center;
-      gap: 0;
-    }
-    .workflow-node {
-      min-height: 58px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      display: grid;
-      grid-template-rows: 24px auto;
-      place-items: center;
-      text-align: center;
-      color: var(--ink);
-      font-size: 8.9px;
-      line-height: 1.25;
-      font-weight: 900;
-      box-shadow: 0 5px 12px rgba(68,59,49,.06);
-    }
-    .workflow-node svg {
-      width: 21px;
-      height: 21px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .workflow-node.sheet { border-color: #b8e2c3; background: #f0fbf3; color: #138a36; }
-    .workflow-node.slides { border-color: #f4d58e; background: #fff8e3; color: #c27803; }
-    .workflow-node.file { border-color: #ffd1da; background: var(--coral-soft); color: #c2001a; }
-    .workflow-node.blue { border-color: #d2e2fc; background: var(--blue-soft); color: var(--blue); }
-    .workflow-node.amber { border-color: #ead8b6; background: var(--amber-soft); color: #7a5a21; }
-    .workflow-node.coral { border-color: #ffd1da; background: var(--coral-soft); color: #c2001a; }
-    .workflow-link {
-      height: 2px;
-      background: var(--teal);
-      position: relative;
-      opacity: .75;
-    }
-    .workflow-link::after {
-      content: "";
-      position: absolute;
-      right: -1px;
-      top: -4px;
-      border-left: 6px solid var(--teal);
-      border-top: 5px solid transparent;
-      border-bottom: 5px solid transparent;
-    }
-    .tool-shot {
-      margin-top: auto;
-      height: 112px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      overflow: hidden;
-      background: #fff;
-      box-shadow: 0 8px 18px rgba(35,37,34,.12);
-    }
-    .tool-shot img { width: 100%; height: 100%; display: block; object-fit: contain; object-position: center; }
     .code-sample .dim { color: #93aaa6; }
     .concept-card {
       display: grid;
@@ -844,7 +748,6 @@
     .tag-memory { bottom: 24px; right: 10px; }
     .tag-instruction { top: 105px; right: 28px; }
     .iteration { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 10px; }
-    .iteration.compact { gap: 9px; margin-top: 0; }
     .step {
       border: 1px solid var(--line);
       background: #fff;
@@ -856,170 +759,6 @@
     .step .num { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 24px; padding: 0 8px; border-radius: 999px; background: var(--teal-soft); color: var(--teal); font-size: 13px; font-weight: 900; line-height: 1; margin-bottom: 10px; }
     .step h3 { font-size: 13.5px; line-height: 1.35; margin-bottom: 7px; font-weight: 900; }
     .step p { font-size: 11.5px; line-height: 1.45; color: var(--soft); }
-    .iteration.compact .step { min-height: 96px; padding: 12px; }
-    .iteration.compact .step .num { min-width: 24px; height: 22px; margin-bottom: 7px; font-size: 11.5px; }
-    .iteration.compact .step h3 { font-size: 12.5px; margin-bottom: 5px; }
-    .iteration.compact .step p { font-size: 10.8px; line-height: 1.38; }
-    .codex-action-panel {
-      margin-top: 9px;
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: #fff;
-      box-shadow: 0 8px 22px rgba(68,59,49,.06);
-    }
-    .codex-action-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 7px; }
-    .codex-action-head b { font-size: 13px; line-height: 1.3; }
-    .codex-action-head span { color: var(--muted); font-size: 10.5px; line-height: 1.35; }
-    .codex-prompt-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    .codex-prompt-card {
-      appearance: none;
-      width: 100%;
-      min-height: 68px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #f8f8f8;
-      padding: 9px 10px;
-      text-align: left;
-      cursor: pointer;
-      display: grid;
-      grid-template-columns: 24px 1fr;
-      gap: 8px;
-      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
-    }
-    .codex-prompt-card:hover {
-      transform: translateY(-1px);
-      border-color: var(--teal);
-      background: var(--teal-soft);
-      box-shadow: 0 8px 18px rgba(137,95,252,.12);
-    }
-    .codex-prompt-card .mini-mark {
-      width: 24px;
-      height: 24px;
-      border-radius: 7px;
-      display: grid;
-      place-items: center;
-      background: var(--teal);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 950;
-    }
-    .codex-prompt-card h3 { font-size: 12px; line-height: 1.25; margin-bottom: 3px; font-weight: 950; }
-    .codex-prompt-card p { color: var(--soft); font-size: 10.2px; line-height: 1.35; }
-    .codex-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 80;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 28px;
-      background: rgba(18, 22, 22, .58);
-      backdrop-filter: blur(8px);
-    }
-    .codex-modal.open { display: flex; }
-    .codex-modal-card {
-      width: min(940px, 94vw);
-      height: min(620px, 92vh);
-      border-radius: 18px;
-      background: #f8f8f8;
-      border: 1px solid rgba(255,255,255,.65);
-      box-shadow: 0 24px 72px rgba(0,0,0,.28);
-      overflow: hidden;
-      display: grid;
-      grid-template-rows: auto 1fr;
-    }
-    .codex-modal-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 13px 16px;
-      background: #fff;
-      border-bottom: 1px solid var(--line);
-    }
-    .codex-modal-title { display: flex; flex-direction: column; gap: 2px; }
-    .codex-modal-title b { font-size: 15px; line-height: 1.3; }
-    .codex-modal-title span { color: var(--muted); font-size: 11px; }
-    .codex-modal-close {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: #fff;
-      color: var(--ink);
-      cursor: pointer;
-      font-size: 20px;
-      line-height: 1;
-    }
-    .codex-chat-mock {
-      padding: 16px;
-      display: grid;
-      grid-template-columns: 230px 1fr;
-      gap: 14px;
-      min-height: 0;
-    }
-    .codex-app-rail {
-      border-radius: 14px;
-      background: var(--brand-dark);
-      color: #fff;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .codex-app-rail strong { font-size: 17px; line-height: 1.25; }
-    .codex-app-rail p { color: rgba(255,255,255,.72); font-size: 11px; line-height: 1.45; }
-    .codex-app-pill { display: inline-flex; width: fit-content; padding: 6px 9px; border-radius: 999px; background: rgba(255,255,255,.12); color: #fff; font-size: 10px; font-weight: 850; }
-    .codex-chat-window {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: #fff;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      min-height: 0;
-      overflow: auto;
-    }
-    .codex-mock-bubble {
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 11.2px;
-      line-height: 1.48;
-      white-space: pre-wrap;
-    }
-    .codex-mock-bubble b { display: block; margin-bottom: 4px; color: var(--ink); font-size: 10.5px; }
-    .codex-mock-bubble.user { align-self: flex-end; max-width: 88%; background: var(--blue-soft); border: 1px solid #d2e2fc; color: #0a58d3; }
-    .codex-mock-bubble.ai { align-self: flex-start; max-width: 92%; background: #f6f2ea; border: 1px solid var(--line); color: var(--soft); }
-    .codex-demo-shot {
-      margin: 0;
-      flex: 0 0 auto;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      overflow: hidden;
-      background: #1f1f1f;
-      box-shadow: 0 8px 20px rgba(0,0,0,.16);
-    }
-    .codex-demo-shot img {
-      display: block;
-      width: 100%;
-      max-height: 260px;
-      object-fit: contain;
-      object-position: center;
-    }
-    .codex-usage-guide {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #f8f8f8;
-      padding: 10px 12px;
-    }
-    .codex-usage-guide b { display: block; margin-bottom: 6px; font-size: 12px; color: var(--ink); }
-    .codex-usage-guide ol { margin: 0; padding-left: 18px; color: var(--soft); font-size: 11.2px; line-height: 1.48; }
-    .codex-usage-guide li + li { margin-top: 4px; }
-    .codex-usage-guide p { margin-top: 8px; color: var(--muted); font-size: 10.7px; line-height: 1.45; }
-    .codex-demo-shot.is-hidden,
-    .codex-usage-guide.is-hidden { display: none; }
     .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .tool {
       border: 1px solid var(--line);
@@ -1648,6 +1387,12 @@
         <p>오늘은 AI를 완벽한 복제 인간으로 만드는 이야기가 아닙니다.<br>내 목적, 판단 기준, 하지 말아야 할 것, 일하는 순서를 이해하고<br>내 기준대로 일하게 만드는 법을 봅니다.</p>
       </section>
 
+      <section class="slide quiz-slide">
+        <div class="label dark">QUIZ</div>
+        <h1>좋은 프롬프트란<br>무엇일까요?</h1>
+        <p>“어떤 정보가 있어야 AI가 일을 잘할까요?”</p>
+      </section>
+
       <section class="slide">
         <div class="slide-header"><div class="icon coral"><svg><use href="#i-compare"/></svg></div><h2>0. 좋은 프롬프트란?</h2></div>
         <div class="slide-header-sub">좋고 나쁨의 기준은 문장의 길이가 아니라, 판단에 필요한 항목이 들어 있는지입니다</div>
@@ -1891,6 +1636,25 @@ description: 내가 선호하는 순서로 토마토 파스타 만들기
         </div>
       </section>
 
+      <section class="slide">
+        <div class="slide-header"><div class="icon amber"><svg><use href="#i-summary"/></svg></div><h2>개념 한 줄 정리</h2></div>
+        <div class="slide-header-sub">비슷해 보여도 쓰임이 다릅니다</div>
+        <hr class="divider">
+        <div class="body">
+          <table class="dtable" style="width:100%; border-collapse:separate; border-spacing:0 7px;">
+            <tbody>
+              <tr><td><b>Prompt</b></td><td>질문 요청, 작업 요청</td><td>“배송 지연 안내문을 써줘”</td></tr>
+              <tr><td><b>Instruction</b></td><td>항상 지킬 기준</td><td>톤, 금지사항, 검수 방식</td></tr>
+              <tr><td><b>Memory</b></td><td>항상 기억해야 하는 정보</td><td>선호 말투, 반복 기준, 자주 쓰는 정보</td></tr>
+              <tr><td><b>Context</b></td><td>대화의 흐름</td><td>질문, 답변, 수정 요청, 첨부 자료</td></tr>
+              <tr><td><b>Context Window</b></td><td>AI가 기억할 수 있는 정보의 범위</td><td>길어지면 요약되고 일부 내용이 빠질 수 있음</td></tr>
+              <tr><td><b>Skill</b></td><td>반복 작업 매뉴얼</td><td>작업 순서, 도구 사용법, 검토 절차</td></tr>
+              <tr><td><b>Agent</b></td><td>역할을 맡은 AI</td><td>작성 Agent, 검토 Agent, 실행 Agent</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <section class="slide section">
         <div class="kicker">PART 2</div>
         <h1>불편했던 사례로 다시 보기</h1>
@@ -2011,6 +1775,204 @@ description: 내가 선호하는 순서로 토마토 파스타 만들기
         </div>
       </section>
 
+      <section class="slide section">
+        <div class="kicker">PART 3</div>
+        <h1>역할을 나눠 일하는 AI</h1>
+        <p>Main Agent는 전체 요청과 기준을 보고, 필요한 Skill과 Sub Agent를 골라 결과물을 완성합니다.</p>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header"><div class="icon"><svg><use href="#i-flow"/></svg></div><h2>5컷으로 보는 AI 작업 흐름</h2></div>
+        <div class="slide-header-sub">요청 이해 → 참고 자료 확인 → 절차와 역할 선택 → 위임 → 최종 정리</div>
+        <hr class="divider">
+        <div class="body">
+          <div class="workflow-image-wrap">
+            <img src="assets/ai-agent-workflow-detailed.svg" alt="Main Agent가 유저 요청을 받고, Context Window에서 자료와 조건을 확인한 뒤 Skill과 Sub Agent를 선택하고 결과를 전달하는 5컷 인포그래픽">
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header"><div class="icon blue"><svg><use href="#i-window"/></svg></div><h2>1-2단계: 요청과 참고 자료를 확인한다</h2></div>
+        <div class="slide-header-sub">AI는 “지금 참고할 수 있는 정보”를 바탕으로 답을 만듭니다</div>
+        <hr class="divider">
+        <div class="body flow">
+          <div class="detail-image-wrap">
+            <img src="assets/context-window-loading-detail.svg" alt="User 요청, Instruction, Memory, 파일과 대화 기록이 Context Window에 모이는 인포그래픽">
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header"><div class="icon"><svg><use href="#i-skill"/></svg></div><h2>3-4단계: 절차와 역할을 고르고 일을 맡긴다</h2></div>
+        <div class="slide-header-sub">반복 절차와 역할이 분리되면 반복 작업이 안정됩니다</div>
+        <hr class="divider">
+        <div class="body">
+          <div class="detail-image-wrap">
+            <img src="assets/skill-agent-selection-detail.svg" alt="Main Agent가 투명 인터페이스에서 교육자료 생성 Skill과 슬라이드 리뷰어 Agent를 선택하는 인포그래픽">
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header"><div class="icon coral"><svg><use href="#i-package"/></svg></div><h2>5단계: 결과를 검토하고 전달한다</h2></div>
+        <div class="slide-header-sub">Sub Agent의 결과물을 그대로 내지 않고, Main Agent가 목표에 맞게 마무리합니다</div>
+        <hr class="divider">
+        <div class="body">
+          <div class="detail-image-wrap">
+            <img src="assets/delegate-deliver-detail.svg" alt="Main Agent가 명령 카드와 Skill을 Sub Agent에게 전달하고, Sub Agent가 작업한 결과물을 Main Agent가 정제해 사용자에게 전달하는 인포그래픽">
+          </div>
+        </div>
+      </section>
+
+      <section class="slide section">
+        <div class="kicker">PART 4</div>
+        <h1>내 업무 방식을 저장하기</h1>
+        <p>AI가 내 기준대로 일하려면 기준과 반복 절차를 함께 이해해야 합니다. 기준, 절차, 역할, 도구 패키지를 저장해 첫 결과를 점점 나에게 가깝게 만듭니다.</p>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header"><div class="icon"><svg><use href="#i-skill"/></svg></div><h2>Skill은 반복 업무 절차입니다</h2></div>
+        <div class="slide-header-sub">짧은 요청만 해도 같은 순서와 기준으로 일하게 만드는 .md 절차서입니다</div>
+        <hr class="divider">
+        <div class="body skill-detail">
+          <div class="panel">
+            <h3>언제 Skill로 만들까</h3>
+            <ul>
+              <li>매번 같은 순서로 만드는 요리.</li>
+              <li>도구를 쓰는 순서가 중요한 요리.</li>
+              <li>마지막 맛 확인 기준이 정해진 요리.</li>
+            </ul>
+            <div class="callout teal" style="margin-top:12px;"><b>예시 요청</b><br>/tomato-pasta<br>2인분, 마늘은 적게, 20분 안에 만들어줘.</div>
+          </div>
+          <div class="md-sample"><span class="dim"># SKILL.md 예시</span>
+---
+name: tomato-pasta
+description: 해야 할 것과 하지 말아야 할 것을 지켜 토마토 파스타 만들기
+---
+
+1. 주문 확인
+   - 손님 수, 금지 재료, 매운맛 정도를 확인한다.
+   - 빠진 정보가 있으면 추측하지 말고 총 주방장 Agent에게 묻는다.
+
+2. 도구 준비
+   - 냄비, 팬, 집게, 체, 접시를 순서대로 꺼낸다.
+   - 면 삶을 물을 먼저 올리고, 팬은 소스 직전에 예열한다.
+
+3. 재료 준비
+   - 마늘, 토마토소스, 면, 소금, 올리브오일을 확인한다.
+   - 금지 재료가 있으면 바로 제외한다.
+
+4. 조리 순서
+   - 면을 삶는 동안 팬에서 소스를 만든다.
+   - 면수 한 국자를 넣고 농도를 맞춘 뒤 면을 버무린다.
+
+5. 최종 확인
+   - 간, 면 익힘, 소스 농도, 플레이팅을 확인한다.
+   - 결과와 조정할 점을 총 주방장 Agent에게 보고한다.</div>
+          </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header"><div class="icon coral"><svg><use href="#i-agent"/></svg></div><h2>Agent는 역할을 맡은 AI입니다</h2></div>
+        <div class="slide-header-sub">AGENT.md에 역할, 맡길 일, 판단 기준을 적어 역할별로 일을 나눕니다</div>
+        <hr class="divider">
+        <div class="body agent-board">
+          <div class="agent-card">
+            <h3>재료 손질 담당 Agent</h3>
+            <p>조리에 바로 쓸 수 있도록 재료를 준비합니다.</p>
+            <div class="md-sample"><span class="dim"># AGENT.md</span>
+# 재료 손질 담당 Agent
+
+## 역할
+- 조리 전 재료를 깨끗하게 준비한다.
+- 상한 재료와 알레르기 위험을 먼저 보고한다.
+
+## 해야 할 일
+1. 재료를 씻고 물기를 제거한다.
+2. 껍질, 씨, 힘줄처럼 먹지 않는 부분을 뺀다.
+3. 레시피에 맞는 크기로 썰어 담는다.
+
+## 결과
+- 손질 완료 재료
+- 교체 필요 재료 목록
+- 다음 담당에게 줄 주의사항</div>
+          </div>
+          <div class="agent-card">
+            <h3>양식 담당 Agent</h3>
+            <p>손질된 재료로 양식 메뉴를 조리합니다.</p>
+            <div class="md-sample"><span class="dim"># AGENT.md</span>
+# 양식 담당 Agent
+
+## 역할
+- 파스타, 스테이크 같은 양식 메뉴를 맡는다.
+- 맛과 플레이팅을 함께 확인한다.
+
+## 해야 할 일
+1. 전달받은 재료와 레시피를 확인한다.
+2. 굽기, 삶기, 소스 만들기 순서로 조리한다.
+3. 접시에 보기 좋게 담는다.
+
+## 결과
+- 완성된 양식 메뉴
+- 간, 굽기, 소스 상태 메모
+- 부족한 재료나 시간 이슈</div>
+          </div>
+          <div class="agent-card">
+            <h3>찜 요리 담당 Agent</h3>
+            <p>온도와 시간을 지키며 찜 요리를 완성합니다.</p>
+            <div class="md-sample"><span class="dim"># AGENT.md</span>
+# 찜 요리 담당 Agent
+
+## 역할
+- 찜기에 넣는 순서와 익힘 시간을 관리한다.
+- 재료가 마르지 않게 수분과 불 세기를 본다.
+
+## 해야 할 일
+1. 단단한 재료부터 넣는다.
+2. 뚜껑을 열기 전 시간을 확인한다.
+3. 익힘 상태와 간을 마지막에 점검한다.
+
+## 결과
+- 완성된 찜 요리
+- 익힘 상태 메모
+- 다음 조리 때 조정할 시간</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header"><div class="icon blue"><svg><use href="#i-repeat"/></svg></div><h2>처음부터 내 기준대로 일하지는 않습니다</h2></div>
+        <div class="slide-header-sub">반복 경험을 Instruction, Memory, Skill, Agent로 저장하면 첫 결과가 점점 나에게 가까워집니다</div>
+        <hr class="divider">
+        <div class="body">
+          <div class="iteration">
+            <div class="step"><div class="num">1</div><h3>첫 요청</h3><p>결과가 너무 일반적이거나 방향이 빗나갈 수 있습니다.</p></div>
+            <div class="step"><div class="num">2</div><h3>피드백</h3><p>“너무 어렵다”, “근거가 부족하다”, “예시가 약하다”처럼 기준을 줍니다.</p></div>
+            <div class="step"><div class="num">3</div><h3>저장</h3><p>운영 기준은 Instruction, 반복 절차는 Skill, 선호는 Memory로 옮깁니다.</p></div>
+            <div class="step"><div class="num">4</div><h3>다음 작업</h3><p>이전 경험이 기본값이 되어 첫 결과의 품질이 올라갑니다.</p></div>
+          </div>
+          <div class="callout teal" style="margin-top:12px; text-align:center;">핵심: “한 번에 완벽한 프롬프트”보다, <b>좋았던 기준을 저장하고 계속 개선하는 구조</b>가 더 강합니다.</div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header"><div class="icon amber"><svg><use href="#i-check"/></svg></div><h2>오늘부터 만드는 내 기준 설정 체크리스트</h2></div>
+        <div class="slide-header-sub">작게 시작하면 됩니다. 긴 시스템을 한 번에 만들 필요는 없습니다</div>
+        <hr class="divider">
+        <div class="body four-col">
+          <div class="step"><div class="num">1</div><h3>해야 할 것 / 하지 말아야 할 것을 쓴다</h3><p>내 업무의 품질 기준과 피해야 할 행동을 먼저 적습니다.</p></div>
+          <div class="step"><div class="num">2</div><h3>운영 원칙을 저장한다</h3><p>매번 말하는 조건을 Instruction으로 뺍니다.</p></div>
+          <div class="step"><div class="num">3</div><h3>절차를 Skill화한다</h3><p>항상 같은 순서가 있다면 절차로 저장합니다.</p></div>
+          <div class="step"><div class="num">4</div><h3>역할을 나눈다</h3><p>작성자와 리뷰어를 분리하면 품질이 올라갑니다.</p></div>
+        </div>
+      </section>
+
+      <section class="slide closing">
+        <h1>핵심 3줄</h1>
+        <p>AI와 친해지는 첫걸음은 내 업무의 해야 할 것과 하지 말아야 할 것을 분명히 적는 것입니다.<br>Instruction, Memory, Skill, Agent는 내 기준을 반복 가능하게 만드는 장치입니다.<br>작게 저장하고 반복해서 고칠수록 첫 결과가 점점 나에게 가까워집니다.</p>
+      </section>
+
       <section class="slide closing">
         <h1>완벽한 복제본이 아니라<br>“내 기준으로 일하는 방식”을 만듭니다</h1>
         <p>오늘 한 작업들은 AI가 나의 기준, 선호, 절차, 역할표를 참고해<br>처음부터 조금 더 나답게 일하도록 만드는 과정입니다.</p>
@@ -2022,191 +1984,63 @@ description: 내가 선호하는 순서로 토마토 파스타 만들기
       </section>
 
       <section class="slide">
+        <div class="slide-header"><div class="icon blue"><svg><use href="#i-rule"/></svg></div><h2>Codex 사용 전: 개인 맞춤 지침 설정</h2></div>
+        <div class="slide-header-sub">반복해서 지켜야 하는 말투, 하지 말아야 할 것, 결과 형식을 먼저 적어둡니다</div>
+        <hr class="divider">
+        <div class="body screenshot-layout">
+          <div class="screenshot-frame">
+            <img src="assets/codex-personalization-settings.png" alt="ChatGPT 개인 맞춤 설정 화면에서 맞춤형 지침을 설정하는 화면">
+            <div class="shot-marker" style="left:8%; top:21%;"><b>1</b><span>개인 맞춤 설정</span></div>
+            <div class="shot-marker" style="left:34%; top:70%;"><b>2</b><span>맞춤형 지침 입력칸</span></div>
+            <div class="shot-marker" style="left:33%; top:88%;"><b>3</b><span>내 정보 입력 영역</span></div>
+          </div>
+          <div class="guide-list">
+            <div class="guide-step"><b>1. 설정 → 개인 맞춤 설정</b><p>왼쪽 메뉴에서 개인 맞춤 설정을 선택합니다.</p></div>
+            <div class="guide-step"><b>2. 맞춤형 지침에 “항상 지킬 기준” 입력</b><p>해야 할 것, 하지 말아야 할 것, 말투, 출력 형식을 적습니다.</p></div>
+            <div class="guide-step"><b>3. 당신에 대해 알려주세요에 “내 정보” 입력</b><p>내 역할, 자주 하는 일, 선호하는 결과물 형식을 적습니다.</p></div>
+            <div class="guide-step"><b>복붙 예시</b><p>“나는 사내 교육자료를 자주 만들고, 쉬운 단어와 짧은 화면 문구를 선호합니다.”</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header"><div class="icon amber"><svg><use href="#i-memory"/></svg></div><h2>Memory: 반복 선호를 저장하기</h2></div>
+        <div class="slide-header-sub">매번 다시 말하지 않아도 좋은 취향과 반복 업무를 기억으로 남깁니다</div>
+        <hr class="divider">
+        <div class="body screenshot-layout">
+          <div class="screenshot-frame">
+            <img src="assets/codex-memory-settings.png" alt="ChatGPT 개인 맞춤 설정 화면에서 Memory 기능을 켜고 관리하는 화면">
+            <div class="shot-marker" style="left:34%; top:63%;"><b>1</b><span>메모리 영역</span></div>
+            <div class="shot-marker" style="left:82%; top:61%;"><b>2</b><span>관리 버튼</span></div>
+            <div class="shot-marker" style="left:73%; top:79%;"><b>3</b><span>참고 설정 켜기</span></div>
+          </div>
+          <div class="guide-list">
+            <div class="guide-step"><b>1. 메모리 영역을 찾습니다</b><p>개인 맞춤 설정 화면 아래쪽의 메모리 항목을 확인합니다.</p></div>
+            <div class="guide-step"><b>2. 저장된 메모리 참고를 켭니다</b><p>켜져 있어야 다음 대화에서 저장된 선호를 참고할 수 있습니다.</p></div>
+            <div class="guide-step"><b>3. 관리를 눌러 확인/삭제합니다</b><p>저장된 기억이 맞는지 보고, 틀린 내용은 삭제합니다.</p></div>
+            <div class="guide-step"><b>입력 방법</b><p>대화창에 “기억해줘: 나는 쉬운 예시와 짧은 화면 문구를 선호해”처럼 말합니다.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
         <div class="slide-header"><div class="icon blue"><svg><use href="#i-rocket"/></svg></div><h2>Codex와 Claude Code로 할 수 있는 일</h2></div>
-        <div class="slide-header-sub">문서 제작, 업무 파일 생성, 개인용 도구 제작까지 직접 결과물을 만들 수 있습니다</div>
-        <hr class="divider">
-        <div class="body">
-          <div class="possibility-grid tool-examples">
-            <div class="possibility-card rich">
-              <div class="mark">1</div>
-              <h3>교육자료와 발표자료 만들기</h3>
-              <p>지금 보고 있는 HTML 슬라이드처럼 자료 구조, 문장, UI, 발표 흐름을 함께 만들고 수정할 수 있습니다.</p>
-              <div class="deck-thumb">
-                <div class="brand">삼삼엠투</div>
-                <div class="label">AI EDUCATION</div>
-                <strong>AI와 더 친하게 지내는법</strong>
-                <span>내 기준대로 일하는 AI를 만드는 교육자료</span>
-              </div>
-            </div>
-            <div class="possibility-card rich">
-              <div class="mark" style="background:#4e90f9;">2</div>
-              <h3>명령어로 업무 파일 만들기</h3>
-              <p>Codex나 Claude Code에게 “스프레드시트와 구글 슬라이드로 정리해줘”라고 시키면 파일 생성 흐름까지 맡길 수 있습니다.</p>
-              <div class="workflow-mini" aria-label="Codex 명령어에서 업무 파일이 만들어지는 흐름">
-                <div class="workflow-node">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="m8 10 3 2-3 2"/><path d="M13 15h3"/></svg>
-                  <span>명령어</span>
-                </div>
-                <i class="workflow-link"></i>
-                <div class="workflow-node sheet">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M5 9h14M5 14h14M10 4v16M15 4v16"/></svg>
-                  <span>Spreadsheet</span>
-                </div>
-                <i class="workflow-link"></i>
-                <div class="workflow-node slides">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="16" rx="2"/><rect x="8" y="8" width="8" height="5" rx="1"/><path d="M9 17h6"/></svg>
-                  <span>Google<br>Slides</span>
-                </div>
-                <i class="workflow-link"></i>
-                <div class="workflow-node file">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v5h5"/><path d="m9 15 2 2 4-5"/></svg>
-                  <span>파일<br>생성</span>
-                </div>
-              </div>
-            </div>
-            <div class="possibility-card rich">
-              <div class="mark" style="background:#f04459;">3</div>
-              <h3>나만의 업무 도구 만들기</h3>
-              <p>마우스 포인터 강조, 드래그 영역 표시처럼 내가 필요한 기능을 맥 프로그램이나 작은 내부 도구로 만들 수 있습니다.</p>
-              <div class="tool-shot">
-                <img src="assets/personal-mac-tool-highlight.png" alt="마우스 포인터 강조와 보라색 드래그 영역이 보이는 개인용 맥 프로그램">
-              </div>
-            </div>
-          </div>
-          <div class="callout dark" style="margin-top:12px; text-align:center;">원하는 결과가 분명하면 AI는 “답변하는 창”을 넘어 “내 기준으로 함께 만드는 작업자”가 됩니다.</div>
-        </div>
-      </section>
-
-      <section class="slide">
-        <div class="slide-header"><div class="icon blue"><svg><use href="#i-repeat"/></svg></div><h2>처음부터 내 기준대로 일하지는 않습니다</h2></div>
-        <div class="slide-header-sub">반복 경험을 Instruction, Memory, Skill, Agent로 저장하면 첫 결과가 점점 나에게 가까워집니다</div>
-        <hr class="divider">
-        <div class="body">
-          <div class="iteration compact">
-            <div class="step"><div class="num">1</div><h3>첫 요청</h3><p>결과가 너무 일반적이거나 방향이 빗나갈 수 있습니다.</p></div>
-            <div class="step"><div class="num">2</div><h3>피드백</h3><p>“너무 어렵다”, “근거가 부족하다”, “예시가 약하다”처럼 기준을 줍니다.</p></div>
-            <div class="step"><div class="num">3</div><h3>저장</h3><p>운영 기준은 Instruction, 반복 절차는 Skill, 선호는 Memory로 옮깁니다.</p></div>
-            <div class="step"><div class="num">4</div><h3>다음 작업</h3><p>이전 경험이 기본값이 되어 첫 결과의 품질이 올라갑니다.</p></div>
-          </div>
-          <div class="callout teal" style="margin-top:9px; text-align:center;">핵심: 직접 다 외워서 설정하려고 하지 말고, <b>Codex에게 내 기준을 설정 파일로 바꿔달라고 시킵니다.</b></div>
-          <div class="codex-action-panel">
-            <div class="codex-action-head">
-              <b>Codex에게 이렇게 말하면 됩니다</b>
-              <span>카드를 눌러 요청 예시를 확인하세요</span>
-            </div>
-            <div class="codex-prompt-cards">
-              <button class="codex-prompt-card" type="button" data-codex-demo="instruction">
-                <span class="mini-mark">I</span>
-                <div><h3>지침 만들기</h3><p>해야 할 것 / 하지 말아야 할 것 / 결과 형식으로 정리</p></div>
-              </button>
-              <button class="codex-prompt-card" type="button" data-codex-demo="memory">
-                <span class="mini-mark" style="background:#4e90f9;">M</span>
-                <div><h3>Memory 만들기</h3><p>계속 기억할 업무 선호를 짧은 문장으로 정리</p></div>
-              </button>
-              <button class="codex-prompt-card" type="button" data-codex-demo="skill">
-                <span class="mini-mark" style="background:#f04459;">S</span>
-                <div><h3>Skill 만들기</h3><p>반복 업무를 Skill Creator로 만들 수 있게 초안 작성</p></div>
-              </button>
-              <button class="codex-prompt-card" type="button" data-codex-demo="skillUsage">
-                <span class="mini-mark" style="background:#252525;">?</span>
-                <div><h3>Skill 사용법</h3><p>목록에서 찾거나 $이름으로 직접 호출하는 방법</p></div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="slide">
-        <div class="slide-header"><div class="icon amber"><svg><use href="#i-check"/></svg></div><h2>이 슬라이드도 Instructions를 적용해 만들었습니다</h2></div>
-        <div class="slide-header-sub">AI에게 누구의 관점으로, 무엇을 하고, 무엇을 피하고, 어떤 형식으로 답할지 먼저 정했습니다</div>
-        <hr class="divider">
-        <div class="body">
-          <div class="callout amber" style="text-align:center; margin-bottom:12px;">
-            이 슬라이드 자료를 만들 때 적용한 Instructions:
-            <b>역할</b> + <b>해야 할 일</b> + <b>하지 말아야 할 일</b> + <b>결과 형식</b> + <b>참고 기준</b>
-          </div>
-          <div class="two-col">
-            <div class="panel">
-              <h3>지침에 꼭 들어갈 5가지</h3>
-              <table class="dtable">
-                <tr><td>역할</td><td>“너는 사내 교육자료를 다듬는 편집자야.”</td></tr>
-                <tr><td>해야 할 일</td><td>어려운 개념을 쉬운 말로 바꾸고, 실무 예시를 먼저 제시합니다.</td></tr>
-                <tr><td>하지 말아야 할 일</td><td>추상적인 설명만 길게 쓰거나, 확인 안 된 내용을 확정처럼 말하지 않습니다.</td></tr>
-                <tr><td>결과 형식</td><td>한 문장 결론 → 핵심 기준 3개 → 바로 적용할 예시 순서로 답합니다.</td></tr>
-                <tr><td>참고 기준</td><td>대상, 톤, 분량, 반드시 참고할 문서나 데이터 위치를 함께 적습니다.</td></tr>
-              </table>
-            </div>
-            <div class="panel">
-              <h3>이 자료에 적용한 지침 예시</h3>
-              <div class="md-sample instruction-sample">이 슬라이드 자료를 만들 때 적용할 Instructions를 정리해줘.
-
-역할:
-- 사내 교육자료를 다듬는 편집자
-
-해야 할 일:
-- 어려운 개념을 쉬운 말로 바꾸기
-- 실무자가 바로 이해할 예시를 먼저 제시하기
-- 한 페이지에는 하나의 핵심 메시지만 담기
-
-하지 말아야 할 일:
-- 추상적인 설명만 길게 하지 않기
-- 확인되지 않은 내용을 확정처럼 말하지 않기
-- 수강생이 바로 쓰기 어려운 용어를 남발하지 않기
-
-결과 형식:
-- 한 문장 결론
-- 핵심 기준 3개
-- 바로 적용할 예시 1개</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="slide">
-        <div class="slide-header"><div class="icon"><svg><use href="#i-tool"/></svg></div><h2>Plugin과 MCP는 AI가 도구를 쓰게 하는 연결 방식입니다</h2></div>
-        <div class="slide-header-sub">답변만 하는 AI에서, 파일 · 서비스 · 디자인 도구를 다루는 AI로 확장됩니다</div>
-        <hr class="divider">
-        <div class="body">
-          <div class="tool-grid">
-            <div class="tool">
-              <div class="mark">P</div>
-              <div><h3>Plugin</h3><p>특정 제품이나 기능을 AI에 붙이는 확장 기능입니다. 브라우저, Figma, 문서 변환처럼 이미 만들어진 기능을 가져다 쓸 수 있습니다.</p></div>
-            </div>
-            <div class="tool">
-              <div class="mark" style="background:#4e90f9;">M</div>
-              <div><h3>MCP</h3><p>AI와 외부 도구, 파일, 데이터, API를 연결하는 표준 통로입니다. 사내 시스템이나 업무 도구를 AI가 다룰 수 있게 만듭니다.</p></div>
-            </div>
-            <div class="tool">
-              <div class="mark" style="background:#ffd857;color:#252525;">S</div>
-              <div><h3>Skill</h3><p>AI가 일을 처리하는 순서와 검토 기준을 저장합니다. 같은 업무를 매번 비슷한 품질로 처리하게 만드는 절차입니다.</p></div>
-            </div>
-            <div class="tool">
-              <div class="mark" style="background:#f04459;">A</div>
-              <div><h3>Agent</h3><p>AI에게 역할과 책임을 나눠주는 방식입니다. 전체를 보는 역할, 조사하는 역할, 만드는 역할을 분리할 수 있습니다.</p></div>
-            </div>
-          </div>
-          <div class="callout teal" style="margin-top:12px; text-align:center;">Skill과 Agent는 “일하는 기준”이고, Plugin과 MCP는 “실제 도구와 데이터에 연결되는 통로”입니다.</div>
-        </div>
-      </section>
-
-      <section class="slide">
-        <div class="slide-header"><div class="icon amber"><svg><use href="#i-package"/></svg></div><h2>외부 도구가 연결되면 만들 수 있는 것이 달라집니다</h2></div>
-        <div class="slide-header-sub">Plugin과 MCP를 가져다 쓰거나 직접 만들면, AI는 실제 업무 결과물까지 다룰 수 있습니다</div>
+        <div class="slide-header-sub">대화형 AI를 넘어, 파일을 만들고 수정하고 결과를 확인하는 제작형 AI로 확장됩니다</div>
         <hr class="divider">
         <div class="body">
           <div class="possibility-grid">
-            <div class="possibility-card"><div class="mark">1</div><h3>문서 데이터 업데이트</h3><p>회의록, FAQ, 보고서, 표에 새 정보를 추가하고 기존 형식에 맞춰 정리합니다.</p></div>
-            <div class="possibility-card"><div class="mark" style="background:#4e90f9;">2</div><h3>디자인 도구 확장</h3><p>Figma 화면의 텍스트를 읽고, key 설정, annotation, 검수 도구 같은 플러그인으로 확장합니다.</p></div>
-            <div class="possibility-card"><div class="mark" style="background:#ffd857;color:#252525;">3</div><h3>반복 업무 자동화</h3><p>파일 정리, 알림, 리포트 생성, 데이터 취합처럼 반복되는 준비 작업을 줄입니다.</p></div>
-            <div class="possibility-card"><div class="mark" style="background:#f04459;">4</div><h3>작은 내부 도구 제작</h3><p>간단한 웹페이지, 체크 도구, 대시보드, 검수 스크립트를 업무 목적에 맞게 만듭니다.</p></div>
+            <div class="possibility-card"><div class="mark">1</div><h3>문서와 자료 만들기</h3><p>교육자료, 발표 스크립트, 체크리스트, 회의록, 릴리스 노트를 초안부터 검토까지 함께 만듭니다.</p></div>
+            <div class="possibility-card"><div class="mark" style="background:#4e90f9;">2</div><h3>작은 결과물 만들기</h3><p>간단한 웹페이지, 대시보드, 자동화 스크립트처럼 눈으로 확인 가능한 결과물을 만들 수 있습니다.</p></div>
+            <div class="possibility-card"><div class="mark" style="background:#ffd857;color:#252525;">3</div><h3>검토와 개선하기</h3><p>코드, 문서, UI, 테스트를 읽고 빠진 조건, 오류, 어색한 표현을 찾아 다듬습니다.</p></div>
+            <div class="possibility-card"><div class="mark" style="background:#f04459;">4</div><h3>반복 업무로 키우기</h3><p>자주 하는 일을 Instruction, Memory, Skill, Agent로 정리해 다음 작업의 기본값으로 만듭니다.</p></div>
           </div>
-          <div class="callout dark" style="margin-top:12px; text-align:center;">핵심은 “AI에게 답을 묻는 것”에서 “AI에게 도구를 연결해 일을 맡기는 것”으로 이동하는 것입니다.</div>
+          <div class="callout dark" style="margin-top:12px; text-align:center;">AI는 “답변하는 창”에서 “내 기준으로 함께 만드는 작업자”로 확장됩니다.</div>
         </div>
       </section>
 
       <section class="slide">
         <div class="slide-header"><div class="icon"><svg><use href="#i-tool"/></svg></div><h2>Figma 플러그인은 이렇게 만들었습니다</h2></div>
-        <div class="slide-header-sub">외부 도구를 직접 확장할 때도, 먼저 기준과 절차를 세팅하면 결과가 안정됩니다</div>
+        <div class="slide-header-sub">한 번의 명령보다, 미리 세팅한 Instruction · Memory · Skill 조합이 결과를 안정시킵니다</div>
         <hr class="divider">
         <div class="body plugin-build-layout">
           <div class="plugin-build-left">
@@ -2249,41 +2083,8 @@ description: 내가 선호하는 순서로 토마토 파스타 만들기
 
       <section class="slide closing">
         <h1>Q &amp; A</h1>
-        <p>AI가 여러분의 문서, 디자인 도구, 사내 시스템과 연결된다면<br>가장 먼저 어떤 일을 맡기고 싶나요?</p>
+        <p>“내가 자주 반복해서 시키는 일” 하나를 떠올려보세요.<br>그 일의 해야 할 것, 하지 말아야 할 것, 반복 절차, 필요한 역할은 무엇일까요?</p>
       </section>
-    </div>
-  </div>
-</div>
-
-<div class="codex-modal" id="codexDemoModal" aria-hidden="true">
-  <div class="codex-modal-card" role="dialog" aria-modal="true" aria-labelledby="codexDemoTitle">
-    <div class="codex-modal-top">
-      <div class="codex-modal-title">
-        <b id="codexDemoTitle">Codex 요청 예시</b>
-        <span id="codexDemoSubtitle">카드에 맞는 대화 예시입니다</span>
-      </div>
-      <button class="codex-modal-close" type="button" id="codexDemoClose" aria-label="닫기">×</button>
-    </div>
-    <div class="codex-chat-mock">
-      <div class="codex-app-rail">
-        <span class="codex-app-pill" id="codexDemoKind">Instruction</span>
-        <strong id="codexDemoRailTitle">내 기준을 설정으로 바꾸기</strong>
-        <p id="codexDemoRailCopy">직접 설정 문장을 처음부터 쓰기 어렵다면 Codex에게 초안을 만들게 합니다.</p>
-      </div>
-      <div class="codex-chat-window">
-        <figure class="codex-demo-shot is-hidden" id="codexDemoShot">
-          <img id="codexDemoShotImage" alt="">
-        </figure>
-        <div class="codex-usage-guide is-hidden" id="codexUsageGuide">
-          <b id="codexUsageGuideTitle"></b>
-          <ol id="codexUsageGuideSteps"></ol>
-          <p id="codexUsageGuideNote"></p>
-        </div>
-        <div class="codex-mock-bubble user"><b>나</b><span id="codexDemoUser"></span></div>
-        <div class="codex-mock-bubble ai"><b>Codex</b><span id="codexDemoAi"></span></div>
-        <div class="codex-mock-bubble user"><b>나</b><span id="codexDemoUserConfirm"></span></div>
-        <div class="codex-mock-bubble ai"><b>Codex</b><span id="codexDemoAiDone"></span></div>
-      </div>
     </div>
   </div>
 </div>
@@ -2292,26 +2093,37 @@ description: 내가 선호하는 순서로 토마토 파스타 만들기
   <div class="note">[표지] 제목과 부제를 읽습니다. 사람을 복제한다는 뜻이 아니라, 내 기준과 일하는 방식을 AI가 더 잘 참고하게 만드는 과정이라고 먼저 정리합니다.</div>
   <div class="note">[목차] 좋은 프롬프트에서 시작해, Instruction, Context, Memory, Skill, Agent를 이해하고, 마지막에는 Codex에서 실제로 지침과 Memory를 설정하는 흐름이라고 안내합니다.</div>
   <div class="note">[오프닝] AI와 친해진다는 말을 “내가 원하는 일의 기준을 함께 정하는 것”으로 설명합니다. 오늘은 기술 자체보다 기준을 전달하고 저장하는 법에 집중한다고 말합니다.</div>
+  <div class="note">[퀴즈] 바로 정답을 말하지 말고 수강생에게 묻습니다. 좋은 프롬프트에는 어떤 정보가 있어야 할지 자유롭게 답을 받아본 뒤 다음 장으로 넘어갑니다.</div>
   <div class="note">[좋은 프롬프트란] 왼쪽과 오른쪽은 같은 요청입니다. 차이는 역할, 목표, 배경, 해야 할 것 / 하지 말아야 할 것, 출력 형식, 확인 기준이 분리되어 있는지입니다. 수강생에게 문장 길이가 아니라 판단 기준의 유무를 보게 합니다.</div>
   <div class="note">[개념 파트 전환] 좋은 프롬프트의 항목들이 실제 AI 도구에서는 지침, 기억, 절차, 역할 같은 형태로 저장될 수 있다고 연결합니다.</div>
   <div class="note">[Instruction] Instruction은 총 주방장이 항상 지켜야 하는 운영 원칙입니다. 손님 요청 확인, 담당 Agent에게 일을 나누는 기준, 하지 말아야 할 것, 마지막 검수 방식을 파일로 남긴다고 설명합니다.</div>
   <div class="note">[Memory] Memory는 총 주방장이 계속 참고하면 좋은 반복 기억입니다. 단골 손님 취향, 자주 쓰는 재료, 선호하는 설명 방식처럼 참고하면 결과가 좋아지는 정보를 남긴다고 설명합니다. 다만 알레르기와 금지 재료처럼 반드시 지켜야 하는 조건은 Memory에만 맡기지 말고 매번 요청에서 다시 확인해야 합니다.</div>
   <div class="note">[Context] Context는 AI와 주고받은 질문, 답변, 수정 요청, 첨부 자료가 이어진 대화의 흐름입니다. AI에게 질문하고, 답을 받고, 다시 고쳐달라고 말하는 그 흐름 전체라고 설명합니다.</div>
   <div class="note">[Context Window] 막대 전체가 AI가 한 번에 참고할 수 있는 범위입니다. 대화가 길어지면 이전 내용은 요약되고, 세부 표현이나 작은 조건 같은 내용 일부는 빠질 수 있습니다. 중요한 기준을 다시 적으면 새 요청 쪽 비중이 커진다고 설명합니다.</div>
-  <div class="note">[Skill] Skill은 반복 작업 순서를 저장하는 방식입니다. 특정 요리를 만들 때 재료 확인, 도구 준비, 조리 순서, 마지막 맛 확인이 정해져 있는 것처럼 반복되는 순서를 저장한다고 설명합니다.</div>
+  <div class="note">[Skill] Skill은 반복 업무 절차입니다. 특정 요리를 만들 때 재료 확인, 도구 준비, 조리 순서, 마지막 맛 확인이 정해져 있는 것처럼 반복되는 순서를 저장한다고 설명합니다.</div>
   <div class="note">[Agent] Agent는 책임을 가진 역할입니다. 화면의 예시는 총 주방장 Agent로, 손님 요청을 확인하고 재료 손질, 양식, 찜 요리 담당 Agent에게 일을 나눈 뒤 최종 결과를 검토합니다. Skill이 절차라면 Agent는 그 절차 안에서 판단하고 위임하는 역할이라고 설명합니다.</div>
+  <div class="note">[한 줄 정리] 표를 천천히 읽습니다. Prompt, Instruction, Context, Context Window, Memory, Skill, Agent가 서로 다른 역할을 한다는 점만 남기면 됩니다.</div>
   <div class="note">[사례 파트 전환] 이제 개념을 실제 불편함에 연결합니다. AI가 이상하게 군다고 느끼는 순간은 대개 요청, 기준, 기억, 확인 방식 중 하나가 흐려졌기 때문입니다.</div>
   <div class="note">[말 안 들어요] 왼쪽 대화에서 금지 표현이 다시 나오는 장면을 읽습니다. 오른쪽에서는 현상, 문제와 설정 위치, 고쳐야 할 부분 순서로 설명합니다. 핵심은 계속 피해야 하는 표현은 Instruction에 저장하고, 이번 답변에서 중요한 조건은 Prompt에도 다시 써야 한다는 점입니다.</div>
   <div class="note">[까먹어요] 왼쪽 대화에서 비개발자 대상 조건이 약해지는 장면을 읽습니다. 오른쪽에서는 Context, Context Window, Memory를 연결해 설명합니다. 대화가 길어지면 일부 조건이 요약 과정에서 빠질 수 있으므로 중요한 기준은 새 요청 맨 앞에 다시 적어야 합니다.</div>
   <div class="note">[자신 있게 틀려요] 왼쪽 대화에서 확인되지 않은 정보를 확실한 것처럼 말하는 장면을 읽습니다. 오른쪽에서는 Context, Instruction, Skill을 연결합니다. 근거 자료가 없으면 추측이 섞일 수 있으므로 모르면 모른다고 말하는 지침과 확인 체크리스트가 필요합니다.</div>
+  <div class="note">[동작 흐름 전환] Main Agent가 전체 요청과 기준을 보고 필요한 절차와 역할을 골라 결과물을 완성한다는 큰 흐름만 설명합니다.</div>
+  <div class="note">[5컷 흐름] 요청 이해, 참고 자료 확인, Skill과 Sub Agent 선택, 위임, 최종 정리 순서로 그림을 따라갑니다. 앞에서 배운 개념과 연결해줍니다.</div>
+  <div class="note">[1-2단계] AI가 요청만 보는 것이 아니라 지침, 기억, 파일, 이전 대화까지 함께 참고하려고 한다고 설명합니다. 현재 참고 범위 안의 정보가 더 강하게 영향을 줍니다.</div>
+  <div class="note">[3-4단계] Skill은 절차이고 Sub Agent는 역할입니다. 어떤 순서로 만들지와 누가 어떤 관점으로 볼지를 분리하면 반복 작업이 안정됩니다.</div>
+  <div class="note">[5단계] Sub Agent가 만든 결과는 초안입니다. Main Agent가 원래 요청, 기준, 대상, 출력 형식을 다시 보고 최종 정리합니다.</div>
+  <div class="note">[활용 파트 전환] 이제 내 업무 방식을 저장하는 방법으로 넘어갑니다. 목표는 매번 긴 프롬프트를 쓰는 것이 아니라 기준, 절차, 역할표를 저장하는 것입니다.</div>
+  <div class="note">[Skill 상세] 실제 SKILL.md처럼 번호가 붙은 절차를 읽습니다. 토마토 파스타 예시에서는 주문 확인, 도구 준비, 재료 준비, 조리 순서, 최종 확인이 반복 업무의 뼈대가 됩니다.</div>
+  <div class="note">[Agent 상세] 역할을 배정하는 것이 Agent의 핵심입니다. 화면의 .md 예시는 실제 요리 담당 역할처럼 작성되어 있습니다. 역할, 해야 할 일, 결과물이 맞아야 Main Agent가 정확히 위임할 수 있다고 설명합니다.</div>
+  <div class="note">[반복 개선] 처음부터 내 기준대로 일하게 만들 수는 없습니다. 너무 어렵다, 근거가 부족하다, 예시가 약하다 같은 피드백을 지침, 기억, 절차로 옮길수록 다음 결과가 좋아집니다.</div>
+  <div class="note">[체크리스트] 수강생이 오늘 바로 할 수 있는 네 가지를 정리합니다. 해야 할 것 / 하지 말아야 할 것 쓰기, 운영 원칙 저장하기, 절차를 Skill화하기, 역할 나누기입니다.</div>
+  <div class="note">[핵심 3줄] 세 문장을 천천히 읽습니다. AI와 친해지는 첫걸음은 해야 할 것과 하지 말아야 할 것이고, Instruction, Memory, Skill, Agent는 그 기준을 반복 가능하게 만드는 장치입니다.</div>
   <div class="note">[내 기준대로 일하는 AI] 완벽한 사람 복제가 아니라 내 기준으로 일하는 방식을 만드는 것이라고 정리합니다.</div>
-  <div class="note">[가능성] Codex와 Claude Code 같은 제작형 AI는 지금 보고 있는 교육자료 같은 문서와 슬라이드, 스프레드시트와 구글 슬라이드 같은 업무 파일, 개인에게 필요한 작은 맥 프로그램까지 만들 수 있다고 설명합니다. 원하는 결과가 분명하면 AI는 답변 창을 넘어 함께 만드는 작업자가 된다고 정리합니다.</div>
-  <div class="note">[반복 개선] 처음부터 내 기준대로 일하게 만들 수는 없습니다. 너무 어렵다, 근거가 부족하다, 예시가 약하다 같은 피드백을 지침, 기억, 절차로 옮길수록 다음 결과가 좋아집니다. 하단 카드 4개를 눌러 Codex에게 초안을 맡기고, 설정 완료 응답과 Skill 사용법까지 확인하는 흐름을 보여줄 수 있습니다.</div>
-  <div class="note">[지침 작성 가이드] 이 슬라이드 자체도 Instructions를 적용해 만들었다고 강조합니다. 지침은 긴 명령문이 아니라 AI가 반복해서 참고할 역할과 기준이며, 역할, 해야 할 일, 하지 말아야 할 일, 결과 형식, 참고 기준을 나눠 쓰면 AI가 더 안정적으로 같은 방식으로 답한다고 설명합니다.</div>
-  <div class="note">[Plugin과 MCP] Plugin은 이미 만들어진 확장 기능을 붙여 쓰는 느낌이고, MCP는 AI와 외부 도구나 데이터를 연결하는 표준 통로라고 설명합니다. Skill과 Agent는 일하는 기준이고, Plugin과 MCP는 실제 도구와 데이터에 닿는 통로라고 구분해줍니다.</div>
-  <div class="note">[외부 도구 연결] 문서 데이터 업데이트, Figma 같은 디자인 도구 확장, 반복 업무 자동화, 작은 내부 도구 제작을 예로 듭니다. 수강생들이 “AI로 어디까지 할 수 있나”를 답변 생성이 아니라 업무 도구 연결 관점으로 이해하게 합니다.</div>
+  <div class="note">[개인 맞춤 지침] 스크린샷의 번호를 따라 설명합니다. 1번은 개인 맞춤 설정 메뉴, 2번은 맞춤형 지침 입력칸, 3번은 내 정보 입력 영역입니다. 맞춤형 지침에는 해야 할 것, 하지 말아야 할 것, 말투, 출력 형식을 넣습니다.</div>
+  <div class="note">[Memory 설정] 스크린샷의 번호를 따라 설명합니다. 메모리 영역에서 저장된 메모리 참고를 켜고, 관리 버튼으로 저장된 내용을 확인하거나 삭제합니다. 새 기억은 설정 화면 입력칸이 아니라 대화창에서 “기억해줘: ...”라고 말해 저장한다고 설명합니다.</div>
+  <div class="note">[가능성] Codex와 Claude Code 같은 제작형 AI는 문서, 작은 웹 결과물, 자동화, 검토와 개선까지 함께할 수 있습니다. 답변 창을 넘어 내 기준으로 함께 만드는 작업자라고 정리합니다.</div>
   <div class="note">[Figma 플러그인 제작 사례] 먼저 요구사항을 읽습니다. 피그마 화면의 텍스트를 한꺼번에 모아 다국어 key를 설정하고, 적용된 key를 annotation(화면 메모)으로 확인하는 것이 목표였다고 설명합니다. 그 다음 Instruction과 Memory로 작업 기준을 세팅하고, Brainstorm과 Deep Interview Skill로 요구사항을 개발 기획서로 바꿨다고 말합니다. 이후 “이 기획서를 기준으로 Figma Plugin을 만들어줘”라고 구현을 맡겼고, 우측 영상은 그 결과물이라고 연결합니다.</div>
-  <div class="note">[Q&A] 질문을 받습니다. 질문이 없으면 “AI가 여러분의 문서, 디자인 도구, 사내 시스템과 연결된다면 가장 먼저 어떤 일을 맡기고 싶나요?”라고 유도합니다.</div>
+  <div class="note">[Q&A] 질문을 받습니다. 질문이 없으면 “내가 자주 반복해서 시키는 일 하나를 떠올려보세요. 그 일의 해야 할 것, 하지 말아야 할 것, 반복 절차, 필요한 역할은 무엇일까요?”라고 유도합니다.</div>
 </div>
 
 <div id="presenter">
@@ -2380,65 +2192,6 @@ description: 내가 선호하는 순서로 토마토 파스타 만들기
   const bc = "BroadcastChannel" in window ? new BroadcastChannel(CH) : null;
   let seq = 0;
   const FORCE_FIRST_SLIDE = MODE === "slides";
-  const codexDemoModal = document.getElementById("codexDemoModal");
-  const codexDemoClose = document.getElementById("codexDemoClose");
-  const codexDemoContent = {
-    instruction: {
-      kind: "Instruction",
-      title: "지침 초안 만들기",
-      subtitle: "해야 할 것 / 하지 말아야 할 것 / 결과 형식을 나눠 받습니다",
-      railTitle: "내 업무 기준을 Instructions로 바꾸기",
-      railCopy: "반복해서 말하는 기준은 매번 프롬프트에 쓰지 말고 지침 초안으로 정리하게 합니다.",
-      user: "내가 자주 하는 업무 기준을 Codex Instructions로 정리해줘.\n해야 할 것 / 하지 말아야 할 것 / 결과 형식으로 나눠줘.",
-      ai: "아래처럼 Instructions에 넣을 수 있습니다.\n\n해야 할 것\n- 먼저 결론을 쓰고, 그다음 이유를 설명한다.\n- 비개발자도 이해할 수 있는 쉬운 단어를 쓴다.\n\n하지 말아야 할 것\n- 확인되지 않은 내용을 확정처럼 말하지 않는다.\n- 긴 배경 설명으로 시작하지 않는다.\n\n결과 형식\n- 제목 → 핵심 요약 → 실행 항목 순서로 정리한다.",
-      userConfirm: "좋아. 이 내용으로 내 지침에 넣을 최종 문장을 만들고, 설정까지 완료해줘.",
-      aiDone: "Instruction 설정 완료했습니다.\n\n앞으로 답변할 때 결론을 먼저 말하고, 확인되지 않은 내용은 추측이라고 표시하며, 제목 → 핵심 요약 → 실행 항목 순서로 정리하겠습니다."
-    },
-    memory: {
-      kind: "Memory",
-      title: "Memory 문장 만들기",
-      subtitle: "계속 기억할 선호를 짧고 안정적인 문장으로 바꿉니다",
-      railTitle: "반복 선호를 Memory로 바꾸기",
-      railCopy: "취향과 반복 선호는 Memory에 넣기 좋은 짧은 문장으로 정리하게 합니다.",
-      user: "앞으로 계속 기억해야 할 내 업무 선호를 Memory에 넣을 문장으로 정리해줘.\n나는 교육자료와 발표자료를 자주 만들고, 실무 예시를 선호해.",
-      ai: "Memory에 넣기 좋은 문장은 아래처럼 정리할 수 있습니다.\n\n- 사용자는 교육자료와 발표자료를 자주 만든다.\n- 설명은 추상적인 이론보다 실무 예시 중심을 선호한다.\n- 슬라이드는 한 페이지에 하나의 메시지만 담는 방식을 선호한다.\n- 답변은 짧고 바로 실행 가능한 형태를 선호한다.",
-      userConfirm: "좋아. 이 문장들을 Memory에 저장해줘.",
-      aiDone: "Memory 저장 완료했습니다.\n\n앞으로 교육자료나 발표자료를 만들 때 실무 예시 중심, 한 슬라이드 한 메시지, 짧고 실행 가능한 답변 기준을 참고하겠습니다."
-    },
-    skill: {
-      kind: "Skill Creator",
-      title: "Skill 초안 만들기",
-      subtitle: "반복 업무를 SKILL.md 구조로 바꾸는 요청입니다",
-      railTitle: "반복 업무를 Skill로 바꾸기",
-      railCopy: "반복되는 작업은 Skill Creator를 사용해 절차와 검토 기준으로 저장할 수 있습니다.",
-      user: "이 반복 업무를 Skill Creator로 만들 수 있게 SKILL.md 초안을 작성해줘.\n업무: 회의록을 읽고 결정사항, 할 일, 담당자, 마감일을 정리하는 작업",
-      ai: "SKILL.md 초안은 아래 구조로 만들 수 있습니다.\n\n---\nname: meeting-notes-update\ndescription: 회의록에서 결정사항, 할 일, 담당자, 마감일을 추출해 업무 정리 문서를 업데이트한다\n---\n\n# Meeting Notes Update\n\n## Workflow\n1. 회의록에서 결정사항을 찾는다.\n2. 할 일, 담당자, 마감일을 표로 정리한다.\n3. 애매한 담당자나 날짜는 추측하지 않고 확인 필요로 표시한다.\n4. 기존 문서 형식에 맞춰 업데이트한다.\n5. 누락 가능성이 있는 항목을 마지막에 점검한다.",
-      userConfirm: "좋아. Skill Creator로 이 내용을 실제 Skill 파일로 만들어줘.",
-      aiDone: "Skill 생성 완료했습니다.\n\n파일: ~/.codex/skills/meeting-notes-update/SKILL.md\n이제 회의록 정리 요청이 들어오면 이 절차를 참고해 결정사항, 할 일, 담당자, 마감일을 정리합니다."
-    },
-    skillUsage: {
-      kind: "Skill Usage",
-      title: "Skill 사용하는 법",
-      subtitle: "목록에서 찾거나 요청 앞에 $skill-name을 붙여 실행합니다",
-      railTitle: "스킬은 필요할 때 불러 쓰는 절차입니다",
-      railCopy: "매번 긴 설명을 쓰지 않고, 저장된 Skill을 선택하거나 이름으로 호출해 같은 방식의 작업을 반복할 수 있습니다.",
-      user: "스킬은 어떻게 만들고 사용할 수 있어?",
-      ai: "입력창에서 / 를 입력하면 사용할 수 있는 Skill 목록이 열립니다.\n목록에서 원하는 Skill을 선택하거나, 요청 앞에 $skill-name을 붙여 직접 호출하면 됩니다.",
-      userConfirm: "그럼 Skill Creator를 쓰고 싶을 때는 어떻게 말하면 돼?",
-      aiDone: "예시 요청은 이렇게 쓰면 됩니다.\n\n$skill-creator 회의록을 읽고 결정사항, 할 일, 담당자, 마감일을 정리하는 Skill을 만들어줘.\n\n중요한 점은 Skill 이름만 부르는 것이 아니라, 어떤 반복 업무를 맡길지도 함께 적는 것입니다.",
-      image: "assets/codex-skill-list-screenshot.png",
-      imageAlt: "Codex 입력창에서 Skill 목록을 연 화면",
-      guideTitle: "Skill을 사용하는 순서",
-      guideSteps: [
-        "입력창에 / 를 입력해 사용 가능한 Skill 목록을 엽니다.",
-        "목록에서 원하는 Skill을 클릭하거나 키워드로 검색합니다.",
-        "명시적으로 부르고 싶다면 요청 앞에 $skill-name을 붙입니다.",
-        "Skill 이름 뒤에는 실제로 맡길 업무와 원하는 결과물을 같이 적습니다.",
-        "반복해서 쓰는 방식이라면 Skill Creator로 새 Skill을 만들어 저장합니다."
-      ],
-      guideNote: "수강생에게는 “스킬을 외워야 하는 것”이 아니라, 반복 업무 절차를 필요할 때 불러오는 버튼이라고 설명하면 이해가 쉽습니다."
-    }
-  };
 
   slides.forEach((slide, index) => {
     const logo = document.createElement("div");
@@ -2515,56 +2268,6 @@ description: 내가 선호하는 순서로 토마토 파스타 만들기
     url.hash = "";
     window.open(url.href, "promptAgentTrainingPresenter", "width=1280,height=860");
   }
-  function isCodexModalOpen() {
-    return codexDemoModal && codexDemoModal.classList.contains("open");
-  }
-  function openCodexDemo(type) {
-    const item = codexDemoContent[type];
-    if (!item || !codexDemoModal) return;
-    document.getElementById("codexDemoTitle").textContent = item.title;
-    document.getElementById("codexDemoSubtitle").textContent = item.subtitle;
-    document.getElementById("codexDemoKind").textContent = item.kind;
-    document.getElementById("codexDemoRailTitle").textContent = item.railTitle;
-    document.getElementById("codexDemoRailCopy").textContent = item.railCopy;
-    document.getElementById("codexDemoUser").textContent = item.user;
-    document.getElementById("codexDemoAi").textContent = item.ai;
-    document.getElementById("codexDemoUserConfirm").textContent = item.userConfirm;
-    document.getElementById("codexDemoAiDone").textContent = item.aiDone;
-    const shot = document.getElementById("codexDemoShot");
-    const shotImage = document.getElementById("codexDemoShotImage");
-    const guide = document.getElementById("codexUsageGuide");
-    const guideSteps = document.getElementById("codexUsageGuideSteps");
-    if (item.image) {
-      shotImage.src = item.image;
-      shotImage.alt = item.imageAlt || "";
-      shot.classList.remove("is-hidden");
-    } else {
-      shotImage.removeAttribute("src");
-      shot.classList.add("is-hidden");
-    }
-    if (item.guideSteps) {
-      document.getElementById("codexUsageGuideTitle").textContent = item.guideTitle || "";
-      document.getElementById("codexUsageGuideNote").textContent = item.guideNote || "";
-      guideSteps.innerHTML = "";
-      item.guideSteps.forEach((step) => {
-        const li = document.createElement("li");
-        li.textContent = step;
-        guideSteps.appendChild(li);
-      });
-      guide.classList.remove("is-hidden");
-    } else {
-      guideSteps.innerHTML = "";
-      guide.classList.add("is-hidden");
-    }
-    codexDemoModal.classList.add("open");
-    codexDemoModal.setAttribute("aria-hidden", "false");
-    document.querySelector(".codex-chat-window").scrollTop = 0;
-  }
-  function closeCodexDemo() {
-    if (!codexDemoModal) return;
-    codexDemoModal.classList.remove("open");
-    codexDemoModal.setAttribute("aria-hidden", "true");
-  }
   function renderPreview(frameEl, index) {
     frameEl.innerHTML = "";
     if (index < 0 || index >= total) return false;
@@ -2601,11 +2304,6 @@ description: 내가 선호하는 순서로 토마토 파스타 만들기
 
   document.addEventListener("keydown", (event) => {
     if (event.ctrlKey || event.metaKey || event.altKey) return;
-    if (isCodexModalOpen()) {
-      if (event.key === "Escape") closeCodexDemo();
-      event.preventDefault();
-      return;
-    }
     switch (event.key) {
       case "ArrowRight":
       case "PageDown":
@@ -2642,18 +2340,6 @@ description: 내가 선호하는 순서로 토마토 파스타 만들기
         break;
     }
   });
-
-  document.addEventListener("click", (event) => {
-    const target = event.target instanceof Element ? event.target : event.target.parentElement;
-    const card = target ? target.closest("[data-codex-demo]") : null;
-    if (card) {
-      event.preventDefault();
-      openCodexDemo(card.dataset.codexDemo);
-      return;
-    }
-    if (event.target === codexDemoModal) closeCodexDemo();
-  });
-  if (codexDemoClose) codexDemoClose.addEventListener("click", closeCodexDemo);
 
   if (MODE === "main") {
     document.getElementById("btn-prev").addEventListener("click", () => go(current - 1));

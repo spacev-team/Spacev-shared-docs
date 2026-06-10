@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="AI 멀티탭에 여러 Plugin 묶음이 꽂히고 각 Plugin 안에 MCP Skill Agent Tool이 들어있는 그림">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbf9ff"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="strip" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#252525"/>
+      <stop offset="1" stop-color="#3d3459"/>
+    </linearGradient>
+    <linearGradient id="pluginA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#fbf9ff"/>
+    </linearGradient>
+    <linearGradient id="pluginB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f8fff9"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#252525" flood-opacity="0.13"/>
+    </filter>
+    <filter id="cardShadow" x="-20%" y="-25%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#443b31" flood-opacity="0.10"/>
+    </filter>
+    <filter id="plugShadow" x="-30%" y="-40%" width="160%" height="190%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#443b31" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .label { font-family: Arial, Helvetica, sans-serif; letter-spacing: 0; }
+      .muted { fill: #252525; }
+      .purple { fill: #895ffc; }
+      .cable { fill: none; stroke: #8f7cff; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+      .cable-soft { stroke: #b8adff; stroke-width: 4; opacity: .82; }
+      .plug-head { fill: #fff; stroke: #cfc3ff; stroke-width: 2; }
+      .pin { stroke: #8f7cff; stroke-width: 6; stroke-linecap: round; }
+      .plugin-card { stroke: #dedede; stroke-width: 1.4; }
+      .plugin-title { fill: #252525; font-size: 34px; font-weight: 900; }
+      .plugin-sub { fill: #252525; font-size: 17px; font-weight: 700; }
+      .tag { fill: #f5f1ff; stroke: #e7e2f4; stroke-width: 1; }
+      .tag-text { fill: #895ffc; font-size: 15px; font-weight: 900; }
+      .piece { fill: #fff; stroke: #e7e2f4; stroke-width: 1.2; }
+      .piece-title { fill: #252525; font-size: 20px; font-weight: 900; }
+      .piece-sub { fill: #252525; font-size: 13px; font-weight: 700; }
+      .piece-mark { font-size: 14px; font-weight: 900; }
+      .socket { fill: #fff; opacity: .92; }
+      .socket-line { stroke: #d8d1ef; stroke-width: 3; stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" rx="34" fill="url(#bg)"/>
+  <g opacity=".55">
+    <path d="M70 118 H1130" stroke="#f0edf7"/>
+    <path d="M70 260 H1130" stroke="#f0edf7"/>
+    <path d="M70 402 H1130" stroke="#f0edf7"/>
+    <path d="M70 544 H1130" stroke="#f0edf7"/>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <rect x="84" y="118" width="292" height="484" rx="44" fill="url(#strip)"/>
+    <text class="label" x="230" y="184" text-anchor="middle" fill="#fff" font-size="54" font-weight="900">AI</text>
+    <text class="label" x="230" y="219" text-anchor="middle" fill="#cdc6ea" font-size="20" font-weight="800">Codex · Claude</text>
+
+    <rect x="128" y="255" width="204" height="102" rx="28" fill="#fff" opacity=".98"/>
+    <circle cx="183" cy="306" r="34" fill="#fff" stroke="#ececec" stroke-width="2"/>
+    <circle cx="277" cy="306" r="34" fill="#fff" stroke="#ececec" stroke-width="2"/>
+    <image href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjFlbSIgc3R5bGU9ImZsZXg6bm9uZTtsaW5lLWhlaWdodDoxIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIxZW0iIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRpdGxlPkNvZGV4PC90aXRsZT48cGF0aCBkPSJNMTkuNTAzIDBINC40OTZBNC40OTYgNC40OTYgMCAwMDAgNC40OTZ2MTUuMDA3QTQuNDk2IDQuNDk2IDAgMDA0LjQ5NiAyNGgxNS4wMDdBNC40OTYgNC40OTYgMCAwMDI0IDE5LjUwM1Y0LjQ5NkE0LjQ5NiA0LjQ5NiAwIDAwMTkuNTAzIDB6IiBmaWxsPSIjZmZmIj48L3BhdGg+PHBhdGggZD0iTTkuMDY0IDMuMzQ0YTQuNTc4IDQuNTc4IDAgMDEyLjI4NS0uMzEyYzEgLjExNSAxLjg5MS41NCAyLjY3MyAxLjI3NS4wMS4wMS4wMjQuMDE3LjAzNy4wMjFhLjA5LjA5IDAgMDAuMDQzIDAgNC41NSA0LjU1IDAgMDEzLjA0Ni4yNzVsLjA0Ny4wMjIuMTE2LjA1N2E0LjU4MSA0LjU4MSAwIDAxMi4xODggMi4zOTljLjIwOS41MS4zMTMgMS4wNDEuMzE1IDEuNTk1YTQuMjQgNC4yNCAwIDAxLS4xMzQgMS4yMjMuMTIzLjEyMyAwIDAwLjAzLjExNWMuNTk0LjYwNy45ODggMS4zMyAxLjE4MyAyLjE3LjI4OSAxLjQyNS0uMDA3IDIuNzEtLjg4NyAzLjg1NGwtLjEzNi4xNjZhNC41NDggNC41NDggMCAwMS0yLjIwMSAxLjM4OC4xMjMuMTIzIDAgMDAtLjA4MS4wNzZjLS4xOTEuNTUxLS4zODMgMS4wMjMtLjc0IDEuNDk0LS45IDEuMTg3LTIuMjIyIDEuODQ2LTMuNzExIDEuODM4LTEuMTg3LS4wMDYtMi4yMzktLjQ0LTMuMTU3LTEuMzAyYS4xMDcuMTA3IDAgMDAtLjEwNS0uMDI0Yy0uMzg4LjEyNS0uNzguMTQzLTEuMjA0LjEzOGE0LjQ0MSA0LjQ0MSAwIDAxLTEuOTQ1LS40NjYgNC41NDQgNC41NDQgMCAwMS0xLjYxLTEuMzM1Yy0uMTUyLS4yMDItLjMwMy0uMzkyLS40MTQtLjYxN2E1LjgxIDUuODEgMCAwMS0uMzctLjk2MSA0LjU4MiA0LjU4MiAwIDAxLS4wMTQtMi4yOTguMTI0LjEyNCAwIDAwLjAwNi0uMDU2LjA4NS4wODUgMCAwMC0uMDI3LS4wNDggNC40NjcgNC40NjcgMCAwMS0xLjAzNC0xLjY1MSAzLjg5NiAzLjg5NiAwIDAxLS4yNTEtMS4xOTIgNS4xODkgNS4xODkgMCAwMS4xNDEtMS42Yy4zMzctMS4xMTIuOTgyLTEuOTg1IDEuOTMzLTIuNjE4LjIxMi0uMTQxLjQxMy0uMjUxLjYwMS0uMzMuMjE1LS4wODkuNDMtLjE2NC42NDYtLjIyN2EuMDk4LjA5OCAwIDAwLjA2NS0uMDY2IDQuNTEgNC41MSAwIDAxLjgyOS0xLjYxNSA0LjUzNSA0LjUzNSAwIDAxMS44MzctMS4zODh6bTMuNDgyIDEwLjU2NWEuNjM3LjYzNyAwIDAwMCAxLjI3MmgzLjYzNmEuNjM3LjYzNyAwIDEwMC0xLjI3MmgtMy42MzZ6TTguNDYyIDkuMjNhLjYzNy42MzcgMCAwMC0xLjEwNi42MzFsMS4yNzIgMi4yMjQtMS4yNjYgMi4xMzZhLjYzNi42MzYgMCAxMDEuMDk1LjY0OWwxLjQ1NC0yLjQ1NWEuNjM2LjYzNiAwIDAwLjAwNS0uNjRMOC40NjIgOS4yM3oiIGZpbGw9InVybCgjbG9iZS1pY29ucy1jb2RleC1fUl8wXykiPjwvcGF0aD48ZGVmcz48bGluZWFyR3JhZGllbnQgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGlkPSJsb2JlLWljb25zLWNvZGV4LV9SXzBfIiB4MT0iMTIiIHgyPSIxMiIgeTE9IjMiIHkyPSIyMSI+PHN0b3Agc3RvcC1jb2xvcj0iI0IxQTdGRiI+PC9zdG9wPjxzdG9wIG9mZnNldD0iLjUiIHN0b3AtY29sb3I9IiM3QTlERkYiPjwvc3RvcD48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMzOTQxRkYiPjwvc3RvcD48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48L3N2Zz4=" x="160" y="283" width="46" height="46"/>
+    <image href="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRDk3NzU3IiByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+Q2xhdWRlPC90aXRsZT48cGF0aCBkPSJtNC43MTQ0IDE1Ljk1NTUgNC43MTc0LTIuNjQ3MS4wNzktLjIzMDctLjA3OS0uMTI3NWgtLjIzMDdsLS43ODkzLS4wNDg2LTIuNjk1Ni0uMDcyOS0yLjMzNzUtLjA5NzEtMi4yNjQ2LS4xMjE0LS41NzA3LS4xMjE1LS41MzQzLS43MDQyLjA1NDYtLjM1MjIuNDc5Ny0uMzIxOC42ODYuMDYwOCAxLjUxNzkuMTAzMiAyLjI3NjcuMTU3OCAxLjY1MTQuMDk3MiAyLjQ0NjguMjU1aC4zODg2bC4wNTQ2LS4xNTc5LS4xMzM2LS4wOTcxLS4xMDMyLS4wOTcyTDYuOTczIDkuODM1NmwtMi41NS0xLjY4NzktMS4zMzU2LS45NzE0LS43MjI1LS40OTE4LS4zNjQzLS40NjE0LS4xNTc4LTEuMDA3OC42NTU3LS43MjI1Ljg4MDMuMDYwNy4yMjQ2LjA2MDcuODkyNS42ODYgMS45MDY0IDEuNDc1NCAyLjQ4OTMgMS44MzM2LjM2NDMuMzAzNS4xNDU3LS4xMDMyLjAxODItLjA3MjgtLjE2NC0uMjczMy0xLjM1MzktMi40NDY3LTEuNDQ1LTIuNDg5My0uNjQzNS0xLjAzMi0uMTctLjYxOTRjLS4wNjA3LS4yNTUtLjEwMzItLjQ2NzQtLjEwMzItLjcyODVMNi4yODcuMTMzNSA2LjY5OTcgMGwuOTk1Ny4xMzM2LjQxOS4zNjQyLjYxOTIgMS40MTQ3IDEuMDAxOCAyLjIyODIgMS41NTQzIDMuMDI5Ni40NTUzLjg5ODUuMjQyOS44MzE4LjA5MS4yNTVoLjE1Nzl2LS4xNDU3bC4xMjc1LTEuNzA2LjIzNjgtMi4wOTQ3LjIzMDctMi42OTU3LjA3ODktLjc1ODkuMzc2NC0uOTEwNy43NDY4LS40OTE4LjU4MjguMjc5My40Nzk3LjY4Ni0uMDY2OC40NDMzLS4yODUzIDEuODUxNy0uNTU4NiAyLjkwMjEtLjM2NDMgMS45NDI5aC4yMTI1bC4yNDI5LS4yNDI5Ljk4MzUtMS4zMDUzIDEuNjUxNC0yLjA2NDMuNzI4Ni0uODE5Ni44NS0uOTA0Ni41NDY0LS40MzExaDEuMDMyMWwuNzU5IDEuMTI5My0uMzQgMS4xNjU3LTEuMDYyNSAxLjM0NzgtLjg4MDQgMS4xNDE0LTEuMjYyOCAxLjctLjc4OTMgMS4zNi4wNzI5LjEwOTMuMTg4Mi0uMDE4MyAyLjg1MzUtLjYwNyAxLjU0MjEtLjI3OTQgMS44Mzk2LS4zMTU3LjgzMTguMzg4Ni4wOTEuMzk0Ni0uMzI3OC44MDc1LTEuOTY3LjQ4NTctMi4zMDcyLjQ2MTQtMy40MzY0LjgxMzYtLjA0MjUuMDMwNC4wNDg2LjA2MDcgMS41NDgyLjE0NTcuNjYxOC4wMzY0aDEuNjIxbDMuMDE3NS4yMjQ3Ljc4OTIuNTIyLjQ3MzYuNjM3Ni0uMDc5LjQ4NTctMS4yMTQyLjYxOTMtMS42MzkzLS4zODg2LTMuODI1LS45MTA3LTEuMzExMy0uMzI3OWgtLjE4MjJ2LjEwOTNsMS4wOTI5IDEuMDY4NiAyLjAwMzUgMS44MDkyIDIuNTA3NSAyLjMzMTQuMTI3NS41NzY4LS4zMjE4LjQ1NTQtLjM0LS4wNDg2LTIuMjAzOS0xLjY1NzUtLjg1LS43NDY4LTEuOTI0Ni0xLjYyMWgtLjEyNzV2LjE3bC40NDMyLjY0OTYgMi4zNDM2IDMuNTIxNC4xMjE0IDEuMDgwNy0uMTcuMzUyMS0uNjA3MS4yMTI1LS42Njc5LS4xMjE0LTEuMzcyMS0xLjkyNDZMMTQuMzggMTcuOTU5bC0xLjE0MTQtMS45NDI4LS4xMzk3LjA3OS0uNjc0IDcuMjU1Mi0uMzE1Ni4zNzAzLS43Mjg2LjI3OTMtLjYwNzEtLjQ2MTQtLjMyMTgtLjc0NjguMzIxOC0xLjQ3NTMuMzg4Ni0xLjkyNDYuMzE1Ny0xLjUzLjI4NTMtMS45MDA0LjE3LS42MzE0LS4wMTIxLS4wNDI1LS4xMzk3LjAxODItMS40MzI4IDEuOTY3Mi0yLjE3OTYgMi45NDQ2LTEuNzI0MyAxLjg0NTYtLjQxMjguMTY0LS43MTY0LS4zNzA0LjA2NjctLjY2MTguNDAwOC0uNTg4OSAyLjM4Ni0zLjAzNTcgMS40Mzg5LTEuODgyLjkyOS0xLjA4NjgtLjAwNjItLjE1NzloLS4wNTQ2bC02LjMzODUgNC4xMTY0LTEuMTI5My4xNDU3LS40ODU3LS40NTU0LjA2MDgtLjc0NjcuMjMwNy0uMjQyOSAxLjkwNjQtMS4zMTE0WiIvPjwvc3ZnPg==" x="254" y="283" width="46" height="46"/>
+
+    <rect x="132" y="420" width="196" height="94" rx="25" fill="#ffffff" opacity=".13" stroke="#ffffff" stroke-opacity=".18"/>
+    <text class="label" x="230" y="459" text-anchor="middle" fill="#fff" font-size="23" font-weight="900">Multi Tap</text>
+    <text class="label" x="230" y="489" text-anchor="middle" fill="#cfc8ea" font-size="15" font-weight="800">Plugin을 여러 개 꽂습니다</text>
+
+    <circle class="socket" cx="360" cy="278" r="13"/>
+    <path class="socket-line" d="M355 272 H365M355 284 H365"/>
+    <circle class="socket" cx="360" cy="470" r="13"/>
+    <path class="socket-line" d="M355 464 H365M355 476 H365"/>
+  </g>
+
+  <path class="cable cable-soft" d="M373 278 C442 214 484 197 544 202"/>
+  <path class="cable" d="M373 470 C447 542 494 558 544 535"/>
+
+  <g filter="url(#plugShadow)">
+    <rect class="plug-head" x="448" y="238" width="96" height="78" rx="20"/>
+    <path class="pin" d="M430 265 H456M430 289 H456"/>
+    <text class="label" x="496" y="281" text-anchor="middle" fill="#895ffc" font-size="15" font-weight="900">Plugin</text>
+    <text class="label" x="496" y="300" text-anchor="middle" fill="#252525" font-size="11" font-weight="800">A</text>
+  </g>
+
+  <g filter="url(#plugShadow)">
+    <rect class="plug-head" x="448" y="432" width="96" height="78" rx="20"/>
+    <path class="pin" d="M430 459 H456M430 483 H456"/>
+    <text class="label" x="496" y="475" text-anchor="middle" fill="#895ffc" font-size="15" font-weight="900">Plugin</text>
+    <text class="label" x="496" y="494" text-anchor="middle" fill="#252525" font-size="11" font-weight="800">B</text>
+  </g>
+
+  <g filter="url(#cardShadow)">
+    <rect x="566" y="78" width="548" height="262" rx="30" fill="url(#pluginA)" class="plugin-card"/>
+    <rect x="596" y="110" width="90" height="34" rx="17" class="tag"/>
+    <text class="label tag-text" x="641" y="132" text-anchor="middle">Plugin A</text>
+    <text class="label plugin-title" x="704" y="136">회의 정리 플러그인</text>
+    <text class="label plugin-sub" x="704" y="166">외부 연결, 반복 절차, 역할 담당자를 하나로 묶음</text>
+
+    <rect x="606" y="194" width="222" height="54" rx="16" class="piece"/>
+    <text class="label piece-mark" x="629" y="226" fill="#895ffc">MCP</text>
+    <text class="label piece-title" x="684" y="219">외부 도구</text>
+    <text class="label piece-sub" x="684" y="238">Notion · Slack</text>
+
+    <rect x="852" y="194" width="222" height="54" rx="16" class="piece"/>
+    <text class="label piece-mark" x="875" y="226" fill="#008a05">Skill</text>
+    <text class="label piece-title" x="930" y="219">반복 절차</text>
+    <text class="label piece-sub" x="930" y="238">요약 순서</text>
+
+    <rect x="606" y="264" width="222" height="54" rx="16" class="piece"/>
+    <text class="label piece-mark" x="629" y="296" fill="#c2001a">Agent</text>
+    <text class="label piece-title" x="684" y="289">역할 담당</text>
+    <text class="label piece-sub" x="684" y="308">자료 정리 담당</text>
+
+    <rect x="852" y="264" width="222" height="54" rx="16" class="piece"/>
+    <text class="label piece-mark" x="875" y="296" fill="#7a5a21">Tool</text>
+    <text class="label piece-title" x="930" y="289">업무 기능</text>
+    <text class="label piece-sub" x="930" y="308">파일 생성</text>
+  </g>
+
+  <g filter="url(#cardShadow)">
+    <rect x="566" y="382" width="548" height="262" rx="30" fill="url(#pluginB)" class="plugin-card"/>
+    <rect x="596" y="414" width="90" height="34" rx="17" class="tag"/>
+    <text class="label tag-text" x="641" y="436" text-anchor="middle">Plugin B</text>
+    <text class="label plugin-title" x="704" y="440">디자인 검토 플러그인</text>
+    <text class="label plugin-sub" x="704" y="470">필요한 기능 묶음을 바꿔 꽂으면 다른 일을 맡길 수 있음</text>
+
+    <rect x="606" y="498" width="222" height="54" rx="16" class="piece"/>
+    <text class="label piece-mark" x="629" y="530" fill="#895ffc">MCP</text>
+    <text class="label piece-title" x="684" y="523">외부 도구</text>
+    <text class="label piece-sub" x="684" y="542">Figma 연결</text>
+
+    <rect x="852" y="498" width="222" height="54" rx="16" class="piece"/>
+    <text class="label piece-mark" x="875" y="530" fill="#008a05">Skill</text>
+    <text class="label piece-title" x="930" y="523">반복 절차</text>
+    <text class="label piece-sub" x="930" y="542">검토 체크리스트</text>
+
+    <rect x="606" y="568" width="222" height="54" rx="16" class="piece"/>
+    <text class="label piece-mark" x="629" y="600" fill="#c2001a">Agent</text>
+    <text class="label piece-title" x="684" y="593">역할 담당</text>
+    <text class="label piece-sub" x="684" y="612">UX 리뷰 담당</text>
+
+    <rect x="852" y="568" width="222" height="54" rx="16" class="piece"/>
+    <text class="label piece-mark" x="875" y="600" fill="#7a5a21">Tool</text>
+    <text class="label piece-title" x="930" y="593">업무 기능</text>
+    <text class="label piece-sub" x="930" y="612">화면 분석</text>
+  </g>
+</svg>
