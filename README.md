@@ -23,6 +23,12 @@ education/
   ai-data-training/
     index.html
     assets/
+  coding-ai-cloudflare-deploy/
+    index.html
+    setup/
+      index.html
+    cloudflare-deploy/
+      index.html
 shared/
   styles/
   assets/

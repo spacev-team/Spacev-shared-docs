@@ -15,6 +15,9 @@ export default defineConfig({
         claudeCodeN8nWorkflow: resolve(__dirname, 'education/claude-code-n8n-workflow/index.html'),
         claudeCodePlaywrightCrawling: resolve(__dirname, 'education/claude-code-playwright-crawling/index.html'),
         aiDataTraining: resolve(__dirname, 'education/ai-data-training/index.html'),
+        codingAiCloudflareDeploy: resolve(__dirname, 'education/coding-ai-cloudflare-deploy/index.html'),
+        codingAiSetupGuide: resolve(__dirname, 'education/coding-ai-cloudflare-deploy/setup/index.html'),
+        cloudflareDeployGuide: resolve(__dirname, 'education/coding-ai-cloudflare-deploy/cloudflare-deploy/index.html'),
         codexPluginGuide: resolve(__dirname, 'company/codex-plugin-guide/index.html')
       }
     }
