@@ -1,0 +1,988 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>플러그인 이해하고 직접 만들어 팀에 공유하기</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+      :root {
+        --paper: #fff;
+        --canvas: #f8f8f8;
+        --ink: #252525;
+        --muted: #696969;
+        --line: #dedede;
+        --line-soft: #ececec;
+        --brand: #895ffc;
+        --brand-deep: #5227c9;
+        --brand-soft: #f5f1ff;
+        --coral: #f93250;
+        --green: #008a05;
+        --blue: #4e90f9;
+        --shadow: rgba(0, 0, 0, .02) 0 0 0 1px, rgba(0, 0, 0, .04) 0 2px 8px, rgba(0, 0, 0, .1) 0 10px 30px;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 0, 0, .025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 0, 0, .025) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+      }
+
+      .page {
+        position: relative;
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 56px 0 80px;
+      }
+      .top-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 28px;
+      }
+      .hero {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(180deg, #fff, #f7f7f7);
+        border: 1px solid var(--line-soft);
+        border-radius: 30px;
+        padding: 46px 48px;
+        box-shadow: var(--shadow);
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        width: 420px;
+        height: 420px;
+        right: -150px;
+        top: -180px;
+        background: radial-gradient(circle, rgba(137, 95, 252, .18), transparent 68%);
+      }
+      .label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--brand);
+        background: #fff;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .3px;
+        text-transform: uppercase;
+      }
+      .hero h1 {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        margin: 22px 0 16px;
+        font-size: clamp(34px, 5.4vw, 58px);
+        line-height: 1.08;
+        letter-spacing: -1.8px;
+      }
+      .hero p {
+        position: relative;
+        z-index: 1;
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+      .quick {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+      }
+      .quick a {
+        padding: 16px;
+        border: 1px solid var(--line-soft);
+        border-radius: 18px;
+        background: #fff;
+        color: var(--ink);
+        text-decoration: none;
+        font-weight: 800;
+        box-shadow: rgba(0, 0, 0, .04) 0 2px 8px;
+      }
+      .quick small {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--brand);
+        font-size: 12px;
+      }
+
+      .section-title {
+        margin: 54px 0 18px;
+      }
+      .section-title span {
+        color: var(--brand);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: .7px;
+        text-transform: uppercase;
+      }
+      .section-title h2 {
+        margin: 8px 0 0;
+        font-size: 30px;
+        letter-spacing: -.8px;
+      }
+
+      code {
+        padding: 2px 6px;
+        border-radius: 7px;
+        background: var(--brand-soft);
+        color: var(--brand-deep);
+        font-family: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+        font-size: .92em;
+        font-weight: 700;
+      }
+
+      .skill-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .skill-card {
+        padding: 26px;
+        border: 1px solid var(--line-soft);
+        border-radius: 28px;
+        background: #fff;
+        box-shadow: var(--shadow);
+      }
+      .skill-card .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 16px;
+        color: #fff;
+        font-size: 22px;
+        font-weight: 900;
+        margin-bottom: 18px;
+      }
+      .skill-card.one .badge { background: var(--blue); }
+      .skill-card.two .badge { background: var(--brand); }
+      .skill-card.three .badge { background: var(--green); }
+      .skill-card h3 {
+        margin: 0 0 12px;
+        font-size: 22px;
+      }
+      .skill-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .skill-card ul {
+        margin: 16px 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 9px;
+      }
+      .skill-card li {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      .note-panel {
+        margin-top: 18px;
+        padding: 20px 22px;
+        border-radius: 22px;
+        border: 1px solid #e8e0ff;
+        background: var(--brand-soft);
+        color: var(--brand-deep);
+        font-size: 16px;
+        line-height: 1.65;
+        font-weight: 700;
+      }
+      .note-panel.warn {
+        border-color: #ffd9df;
+        background: #fff3f5;
+        color: #b3243b;
+      }
+      .note-panel a {
+        color: var(--brand-deep);
+        font-weight: 850;
+      }
+
+      /* --- intro slide --- */
+      .lead-text {
+        max-width: 820px;
+        margin: 0 0 20px;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.7;
+      }
+      .plugin-slide {
+        display: grid;
+        grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+        gap: 28px;
+        align-items: center;
+        padding: 30px;
+        border: 1px solid var(--line-soft);
+        border-radius: 28px;
+        background: #fff;
+        box-shadow: var(--shadow);
+      }
+      .plugin-slide .eyebrow {
+        color: var(--brand);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: .6px;
+        text-transform: uppercase;
+      }
+      .plugin-slide h3 {
+        margin: 12px 0;
+        font-size: 26px;
+        line-height: 1.28;
+        letter-spacing: -.6px;
+      }
+      .plugin-slide-copy > p {
+        margin: 0 0 18px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.65;
+      }
+      .plugin-units { display: grid; gap: 10px; }
+      .plugin-units > div {
+        display: grid;
+        grid-template-columns: 58px 1fr;
+        gap: 12px;
+        align-items: baseline;
+        padding: 12px 14px;
+        border: 1px solid var(--line-soft);
+        border-radius: 14px;
+        background: var(--canvas);
+      }
+      .plugin-units b { color: var(--brand-deep); font-size: 15px; font-weight: 900; }
+      .plugin-units span { color: var(--muted); font-size: 14px; line-height: 1.5; }
+      .plugin-core {
+        margin: 18px 0 0;
+        color: var(--ink);
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.6;
+      }
+      .plugin-core b { color: var(--brand-deep); }
+      .plugin-slide-art {
+        border-radius: 18px;
+        background: linear-gradient(180deg, #faf9ff, #f3f0ff);
+        border: 1px solid #ece6ff;
+        padding: 16px;
+      }
+      .plugin-slide-art img { display: block; width: 100%; height: auto; }
+
+      /* --- comparison --- */
+      .compare-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .compare-card {
+        padding: 24px;
+        border-radius: 26px;
+        border: 1px solid var(--line-soft);
+        background: #fff;
+        box-shadow: var(--shadow);
+      }
+      .compare-card.is-plugin {
+        border-color: #e8e0ff;
+        background: var(--brand-soft);
+      }
+      .compare-card h3 {
+        margin: 0 0 14px;
+        font-size: 20px;
+        letter-spacing: -.4px;
+      }
+      .compare-card.is-plugin h3 { color: var(--brand-deep); }
+      .compare-card ul {
+        list-style: none; margin: 0; padding: 0;
+        display: grid; gap: 11px;
+      }
+      .compare-card li {
+        position: relative; padding-left: 18px;
+        color: var(--muted); font-size: 15px; line-height: 1.55;
+      }
+      .compare-card li::before {
+        content: ""; position: absolute; left: 0; top: 9px;
+        width: 6px; height: 6px; border-radius: 50%; background: var(--brand);
+      }
+      .compare-card li b { color: var(--ink); font-weight: 800; }
+
+      /* --- build steps --- */
+      .build-stack { display: grid; gap: 18px; }
+      .build-step {
+        padding: 24px;
+        border: 1px solid var(--line-soft);
+        border-radius: 28px;
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+      .step {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-size: 12px;
+        font-weight: 900;
+      }
+      .step-head {
+        display: flex; align-items: center; gap: 12px;
+        margin-bottom: 16px; flex-wrap: wrap;
+      }
+      .step-head h3 { margin: 0; font-size: 23px; letter-spacing: -.5px; }
+      .step-body {
+        display: grid;
+        grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+        gap: 22px;
+        align-items: start;
+      }
+      .step-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 11px; }
+      .step-list li {
+        position: relative; padding-left: 20px;
+        color: var(--muted); font-size: 15px; line-height: 1.55;
+      }
+      .step-list li::before {
+        content: ""; position: absolute; left: 0; top: 9px;
+        width: 7px; height: 7px; border-radius: 50%; background: var(--brand);
+      }
+      .step-list li b { color: var(--ink); font-weight: 800; }
+      .step-code { display: grid; gap: 12px; }
+      .file-tag {
+        display: inline-block; width: fit-content;
+        margin: 0 0 -6px;
+        padding: 4px 10px; border-radius: 8px;
+        background: var(--brand-soft); color: var(--brand-deep);
+        font-size: 12px; font-weight: 800;
+        font-family: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+      }
+      .code-block {
+        margin: 0; padding: 16px 18px;
+        border-radius: 16px;
+        background: #1b1b1f; color: #f3f3f3;
+        font-family: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+        font-size: 13.5px; line-height: 1.65;
+        overflow-x: auto; white-space: pre;
+      }
+      .code-block .cmt { color: #8b8b99; }
+      .code-block .key { color: #c4b3ff; }
+      .code-block .str { color: #97e3a0; }
+
+      /* --- best practice prompt --- */
+      .bp-block {
+        margin-top: 18px;
+        padding: 24px 26px;
+        border-radius: 26px;
+        border: 1px solid #e8e0ff;
+        background: linear-gradient(180deg, #faf7ff, #f2ecff);
+        box-shadow: var(--shadow);
+      }
+      .bp-block .bp-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--brand-deep);
+        font-weight: 900;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+      }
+      .bp-block h3 { margin: 10px 0 8px; font-size: 22px; letter-spacing: -.5px; }
+      .bp-block > p { margin: 0 0 16px; color: var(--muted); font-size: 16px; line-height: 1.65; }
+      .prompt-bubble {
+        margin: 0;
+        padding: 18px 20px;
+        border-radius: 18px;
+        border-bottom-left-radius: 6px;
+        background: #fff;
+        border: 1px solid #ece6ff;
+        color: var(--ink);
+        font-size: 15px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        font-family: inherit;
+      }
+      .bp-tips { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+      .bp-tips li {
+        position: relative; padding-left: 20px;
+        color: var(--muted); font-size: 15px; line-height: 1.5;
+      }
+      .bp-tips li::before {
+        content: ""; position: absolute; left: 0; top: 9px;
+        width: 7px; height: 7px; border-radius: 50%; background: var(--brand);
+      }
+      .bp-tips li b { color: var(--ink); font-weight: 800; }
+
+      /* --- mcp examples --- */
+      .mcp-examples {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 14px;
+      }
+      .mcp-ex {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 15px;
+        border: 1px solid #ece6ff;
+        border-radius: 16px;
+        background: #fff;
+      }
+      .mcp-ex img { width: 28px; height: 28px; flex: none; object-fit: contain; }
+      .mcp-ex b { display: block; color: var(--ink); font-size: 15px; font-weight: 800; }
+      .mcp-ex span { color: var(--muted); font-size: 13px; line-height: 1.4; }
+
+      /* --- popular resource cards (skills / agents) --- */
+      .res-label { display: block; margin: 18px 0 10px; color: var(--muted); font-size: 13px; font-weight: 800; }
+      .res-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .res-card {
+        display: block;
+        padding: 14px 16px;
+        border: 1px solid var(--line-soft);
+        border-radius: 16px;
+        background: #fff;
+        text-decoration: none;
+        color: var(--ink);
+        transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+      }
+      .res-card:hover {
+        border-color: var(--brand);
+        transform: translateY(-1px);
+        box-shadow: rgba(137, 95, 252, .12) 0 6px 18px;
+      }
+      .res-card .rc-name {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-family: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+        font-weight: 800;
+        font-size: 15px;
+        color: var(--brand-deep);
+      }
+      .res-card .rc-name::after {
+        content: "↗";
+        margin-left: auto;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      .res-card .rc-desc { margin-top: 6px; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+
+      .source-link {
+        display: inline-flex;
+        margin-top: 14px;
+        color: var(--brand);
+        font-weight: 850;
+        text-decoration: none;
+      }
+
+      @media (max-width: 920px) {
+        .page { width: min(100% - 24px, 760px); padding-top: 28px; }
+        .hero { padding: 32px 26px; border-radius: 24px; }
+        .quick,
+        .skill-grid,
+        .compare-grid,
+        .plugin-slide,
+        .mcp-examples,
+        .res-grid,
+        .step-body { grid-template-columns: 1fr; }
+        .build-step { padding: 18px; }
+        .plugin-slide { padding: 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <a class="top-link" href="../../">← SpaceV Shared Docs</a>
+
+      <section class="hero">
+        <span class="label">Company Guide</span>
+        <h1>플러그인 이해하고 직접 만들어 팀에 공유하기</h1>
+        <p>
+          플러그인이 무엇인지, 왜 쓰는지, 그리고 직접 만들어 팀에 배포하는 방법까지 한 번에 정리했습니다.
+          Claude Code 공식 문서의 절차를 따라 단계별로 직접 만들어 봅니다.
+        </p>
+      </section>
+
+      <nav class="quick" aria-label="가이드 바로가기">
+        <a href="#about"><small>01</small>플러그인이란?</a>
+        <a href="#why"><small>02</small>왜 사용하는가</a>
+        <a href="#build"><small>03</small>직접 만들기</a>
+      </nav>
+
+      <section id="about">
+        <div class="section-title">
+          <span>About</span>
+          <h2>플러그인이란?</h2>
+        </div>
+
+        <div class="plugin-slide">
+          <div class="plugin-slide-copy">
+            <span class="eyebrow">PLUGIN</span>
+            <h3>AI에 기능을 꽂아 쓰는 연결 묶음입니다</h3>
+            <p>AI 자체를 바꾸는 것이 아니라, 필요한 도구와 절차를 플러그처럼 연결해 더 많은 일을 맡기는 방식입니다.</p>
+            <div class="plugin-units">
+              <div><b>MCP</b><span>Notion, Figma, Slack 같은 외부 서비스와 연결합니다.</span></div>
+              <div><b>Skill</b><span>반복되는 업무 절차와 검토 기준을 불러옵니다.</span></div>
+              <div><b>Agent</b><span>자료 정리, 검토, 제작처럼 역할을 나눠 맡깁니다.</span></div>
+              <div><b>Tool</b><span>문서, 파일, 브라우저 같은 실제 작업 기능을 실행합니다.</span></div>
+            </div>
+            <p class="plugin-core"><b>핵심:</b> AI에게 기능 플러그를 꽂아, 답변을 넘어 실제 작업까지 맡깁니다.</p>
+          </div>
+          <div class="plugin-slide-art">
+            <img src="./assets/plugin-ai-multitap.svg" alt="AI 멀티탭에 여러 Plugin이 꽂히고, 각 Plugin 안에 MCP·Skill·Agent·Tool이 들어있는 그림. 예: 회의 정리 플러그인, 디자인 검토 플러그인" />
+          </div>
+        </div>
+
+        <div class="note-panel">
+          기능 묶음을 바꿔 꽂으면 “회의 정리 플러그인”, “디자인 검토 플러그인”처럼 다른 일을 맡길 수 있습니다.
+          그럼 이런 묶음은 어떻게 직접 만들까요? → <a href="#build">아래 03. 직접 만들기</a>에서 단계별로 따라가 봅니다.
+        </div>
+      </section>
+
+      <section id="why">
+        <div class="section-title">
+          <span>Why</span>
+          <h2>왜 플러그인을 사용하는가?</h2>
+        </div>
+
+        <div class="note-panel">
+          한 줄로 — 잘 만들어 둔 자동화 묶음을, 나 혼자만 쓰지 말고 <b>팀·조직 전체가 쉽게 쓰게</b> 하기 위해서입니다.
+        </div>
+
+        <p class="lead-text" style="margin-top:22px;">
+          설정은 그냥 내 폴더(<code>.claude/</code>)에 둬도 동작합니다. 그런데도 굳이 플러그인으로 만드는 이유는 <b>공유·재사용·버전 관리</b> 때문입니다.
+        </p>
+
+        <div class="compare-grid">
+          <article class="compare-card">
+            <h3>그냥 설정 (<code>.claude/</code>)</h3>
+            <ul>
+              <li><b>적용 범위</b> · 내 프로젝트 한 곳에서만</li>
+              <li><b>공유</b> · 파일을 일일이 복사해서 전달</li>
+              <li><b>버전</b> · 누가 어떤 버전 쓰는지 모름</li>
+              <li><b>표준화</b> · 사람마다 설정이 제각각</li>
+            </ul>
+          </article>
+          <article class="compare-card is-plugin">
+            <h3>플러그인</h3>
+            <ul>
+              <li><b>적용 범위</b> · 여러 프로젝트에서 재사용</li>
+              <li><b>공유</b> · <code>/plugin install</code> 한 번이면 끝</li>
+              <li><b>버전</b> · 버전을 올리면 팀원 전체가 동기화</li>
+              <li><b>표준화</b> · 팀 베스트 프랙티스를 코드처럼 배포</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="skill-grid" style="margin-top:18px;">
+          <article class="skill-card one">
+            <div class="badge">1</div>
+            <h3>재사용</h3>
+            <p>한 번 잘 만들어 두면 모든 프로젝트에서 똑같이 동작합니다.</p>
+          </article>
+          <article class="skill-card two">
+            <div class="badge">2</div>
+            <h3>공유</h3>
+            <p>마켓플레이스(사내 비공개 저장소도 가능)에 올려두면, 팀원은 명령어 한 줄로 설치합니다. “내 노하우 세팅”이 곧 “팀 자산”이 됩니다.</p>
+          </article>
+          <article class="skill-card three">
+            <div class="badge">3</div>
+            <h3>버전 관리 · 표준화</h3>
+            <p>규칙을 업데이트하면 모두가 같은 최신 버전을 사용합니다. 팀 전체가 같은 품질·같은 방식으로 작업합니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="build">
+        <div class="section-title">
+          <span>Build</span>
+          <h2>플러그인 직접 만들기 (Step by Step)</h2>
+        </div>
+
+        <div class="note-panel">
+          예시로 인사를 건네는 <code>hello</code> 스킬을 가진 <code>my-first-plugin</code>을 직접 만들어 봅니다.
+          앞에서 본 개념 단위(MCP·Skill·Agent·Tool)는 실제로는 <code>.mcp.json</code> · <code>skills/</code> · <code>agents/</code> · <code>hooks/</code> 폴더와
+          <b>신분증 역할의 <code>plugin.json</code></b>으로 포장됩니다.
+        </div>
+
+        <div class="bp-block">
+          <span class="bp-tag">★ Best Practice</span>
+          <h3>보통은 Claude에게 통째로 시킵니다</h3>
+          <p>
+            파일을 하나하나 손으로 만들기보다, Claude Code에게 <b>“이런 플러그인 만들어줘”</b>라고 시키는 게 가장 빠릅니다.
+            아래 Step들은 <b>그렇게 만들어진 결과물의 구조를 이해하고 검토</b>하기 위한 것입니다.
+          </p>
+          <pre class="prompt-bubble">team-review 라는 플러그인을 만들어줘.
+
+목표: 우리 팀의 코드 리뷰를 자동화하는 거야.
+
+포함할 것:
+1) 우리 팀 컨벤션을 점검하는 convention-check 스킬
+2) PR을 리뷰하는 code-reviewer 에이전트 (model은 sonnet)
+3) Slack 연동 MCP 서버 (서버 링크는 내가 전달할게)
+
+.claude-plugin/plugin.json 까지 갖춰서 폴더 구조로 만들고,
+마지막에 `claude plugin validate` 로 검증까지 해줘.</pre>
+          <ul class="bp-tips">
+            <li><b>목표·포함 요소·폴더 구조</b>를 구체적으로 적습니다 (위처럼 번호로 나열).</li>
+            <li>한 번에 다 맡기기보다 <b>스킬 → 에이전트 → MCP 순</b>으로 하나씩 확인하며 진행합니다.</li>
+            <li><b>MCP는 서버 링크를 함께 전달</b>하면 Claude가 <code>.mcp.json</code>을 정확히 만들어 줍니다.</li>
+            <li><b>검증(<code>claude plugin validate</code>)·로컬 테스트(<code>--plugin-dir</code>)</b>까지 함께 요청합니다.</li>
+            <li>완성 후 <b><code>README.md</code>와 버전(<code>version</code>)</b>도 챙기게 합니다.</li>
+          </ul>
+        </div>
+
+        <div class="build-stack" style="margin-top:22px;">
+          <article class="build-step">
+            <div class="step-head">
+              <span class="step">Step 0</span>
+              <h3>사전 준비</h3>
+            </div>
+            <div class="step-body">
+              <ul class="step-list">
+                <li>Claude Code가 <b>설치·로그인</b>되어 있어야 합니다.</li>
+                <li><code>/plugin</code> 명령이 보이지 않으면 최신 버전으로 업데이트하세요.</li>
+              </ul>
+              <div class="step-code">
+                <span class="file-tag">Claude Code 안에서</span>
+                <pre class="code-block">/plugin   <span class="cmt"># 명령이 보이면 준비 완료</span></pre>
+              </div>
+            </div>
+          </article>
+
+          <article class="build-step">
+            <div class="step-head">
+              <span class="step">Step 1</span>
+              <h3>플러그인 폴더 만들기</h3>
+            </div>
+            <div class="step-body">
+              <ul class="step-list">
+                <li>플러그인은 <b>자기만의 폴더 하나</b>로 시작합니다.</li>
+                <li>이 폴더 안에 스킬·에이전트·설정이 모두 담깁니다.</li>
+              </ul>
+              <div class="step-code">
+                <span class="file-tag">terminal</span>
+                <pre class="code-block">mkdir my-first-plugin</pre>
+              </div>
+            </div>
+          </article>
+
+          <article class="build-step">
+            <div class="step-head">
+              <span class="step">Step 2</span>
+              <h3>Manifest(신분증) 만들기</h3>
+            </div>
+            <div class="step-body">
+              <ul class="step-list">
+                <li><b>name</b> · 고유 이름이자 명령어 네임스페이스 (<code>/my-first-plugin:hello</code>)</li>
+                <li><b>description</b> · 플러그인 관리자에서 보이는 설명</li>
+                <li><b>version</b> · 올리면 사용자에게 업데이트가 전달됨</li>
+                <li><b>author</b> · (선택) 작성자 표기</li>
+              </ul>
+              <div class="step-code">
+                <span class="file-tag">terminal</span>
+                <pre class="code-block">mkdir my-first-plugin/.claude-plugin</pre>
+                <span class="file-tag">my-first-plugin/.claude-plugin/plugin.json</span>
+                <pre class="code-block">{
+  <span class="key">"name"</span>: <span class="str">"my-first-plugin"</span>,
+  <span class="key">"description"</span>: <span class="str">"기본기를 익히는 인사 플러그인"</span>,
+  <span class="key">"version"</span>: <span class="str">"1.0.0"</span>,
+  <span class="key">"author"</span>: { <span class="key">"name"</span>: <span class="str">"당신 이름"</span> }
+}</pre>
+              </div>
+            </div>
+            <div class="note-panel warn">
+              ⚠️ <b>자주 하는 실수</b> — <code>skills/</code>, <code>agents/</code>, <code>hooks/</code>는 <code>.claude-plugin/</code> <b>안에 넣으면 안 됩니다.</b>
+              <code>.claude-plugin/</code> 안에는 <code>plugin.json</code>만 두고, 나머지 폴더는 모두 플러그인 루트에 둡니다.
+            </div>
+          </article>
+
+          <article class="build-step">
+            <div class="step-head">
+              <span class="step">Step 3</span>
+              <h3>Skill(스킬) 추가하기</h3>
+            </div>
+            <div class="step-body">
+              <ul class="step-list">
+                <li>스킬은 <code>skills/&lt;이름&gt;/SKILL.md</code> 형태로 만듭니다.</li>
+                <li>폴더 이름(<code>hello</code>)이 곧 <b>명령어 이름</b>이 됩니다.</li>
+                <li><code>description</code>을 보고 Claude가 알아서 호출하기도 합니다.</li>
+              </ul>
+              <div class="step-code">
+                <span class="file-tag">terminal</span>
+                <pre class="code-block">mkdir -p my-first-plugin/skills/hello</pre>
+                <span class="file-tag">my-first-plugin/skills/hello/SKILL.md</span>
+                <pre class="code-block"><span class="cmt">---
+description: 사용자에게 친근하게 인사하기
+---</span>
+
+사용자에게 따뜻하게 인사하고, 오늘 무엇을 도와줄지 물어봅니다.</pre>
+              </div>
+            </div>
+            <div class="note-panel">
+              📁 <b>인식 위치</b> — 스킬은 플러그인 루트의 <code>skills/&lt;이름&gt;/SKILL.md</code> 위치여야 인식됩니다. (<code>.claude-plugin/</code> 안에 넣으면 ❌)
+            </div>
+            <div class="step-code" style="margin-top:14px;">
+              <span class="file-tag">스킬이 인식되는 위치 (예시)</span>
+              <pre class="code-block">my-first-plugin/
+├── .claude-plugin/
+│   └── plugin.json
+└── skills/
+    └── hello/
+        └── SKILL.md          <span class="cmt"># → /my-first-plugin:hello</span></pre>
+            </div>
+            <span class="res-label">인기 스킬 (claudemarketplaces.com) — 클릭하면 스킬 상세로 이동</span>
+            <div class="res-grid">
+              <a class="res-card" href="https://claudemarketplaces.com/skills/anthropics/skills/pdf" target="_blank" rel="noreferrer">
+                <span class="rc-name">pdf</span>
+                <span class="rc-desc">PDF 병합·분할·텍스트/표 추출, OCR</span>
+              </a>
+              <a class="res-card" href="https://claudemarketplaces.com/skills/anthropics/skills/xlsx" target="_blank" rel="noreferrer">
+                <span class="rc-name">xlsx</span>
+                <span class="rc-desc">엑셀 데이터·수식·차트 생성·편집</span>
+              </a>
+              <a class="res-card" href="https://claudemarketplaces.com/skills/anthropics/skills/docx" target="_blank" rel="noreferrer">
+                <span class="rc-name">docx</span>
+                <span class="rc-desc">Word 문서 생성·편집·서식</span>
+              </a>
+              <a class="res-card" href="https://claudemarketplaces.com/skills/anthropics/skills/pptx" target="_blank" rel="noreferrer">
+                <span class="rc-name">pptx</span>
+                <span class="rc-desc">프레젠테이션 슬라이드 제작</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="build-step">
+            <div class="step-head">
+              <span class="step">Step 4</span>
+              <h3>Agent(에이전트) 추가하기</h3>
+            </div>
+            <div class="step-body">
+              <ul class="step-list">
+                <li>에이전트는 <code>agents/</code> 폴더에 <b>마크다운 파일 1개</b>로 만듭니다.</li>
+                <li>frontmatter에 <code>name</code>·<code>description</code>·<code>model</code>, 본문에 <b>역할(시스템 프롬프트)</b>을 적습니다.</li>
+                <li><code>description</code>을 보고 Claude가 자동 호출하거나, <code>/agents</code>에서 직접 부릅니다.</li>
+              </ul>
+              <div class="step-code">
+                <span class="file-tag">terminal</span>
+                <pre class="code-block">mkdir my-first-plugin/agents</pre>
+                <span class="file-tag">my-first-plugin/agents/code-reviewer.md</span>
+                <pre class="code-block"><span class="cmt">---
+name: code-reviewer
+description: PR과 변경된 코드를 리뷰합니다. 코드 리뷰나 PR 점검이 필요할 때 사용하세요.
+model: sonnet
+---</span>
+
+당신은 시니어 코드 리뷰어입니다. 다음을 점검하세요:
+1. 버그와 엣지 케이스
+2. 보안 문제
+3. 팀 코드 컨벤션 준수
+4. 테스트 커버리지</pre>
+              </div>
+            </div>
+            <div class="note-panel">
+              📁 <b>인식 위치</b> — 에이전트는 플러그인 루트의 <code>agents/&lt;이름&gt;.md</code> 위치여야 <code>/agents</code>에 인식됩니다. (<code>.claude-plugin/</code> 안에 넣으면 ❌)
+            </div>
+            <div class="step-code" style="margin-top:14px;">
+              <span class="file-tag">에이전트가 인식되는 위치 (예시)</span>
+              <pre class="code-block">my-first-plugin/
+├── .claude-plugin/
+│   └── plugin.json
+└── agents/
+    └── code-reviewer.md      <span class="cmt"># → /agents 에 등록</span></pre>
+            </div>
+            <span class="res-label">인기 에이전트 (wshobson/agents) — 클릭하면 .md 파일로 이동</span>
+            <div class="res-grid">
+              <a class="res-card" href="https://github.com/wshobson/agents/blob/main/plugins/backend-development/agents/backend-architect.md" target="_blank" rel="noreferrer">
+                <span class="rc-name">backend-architect</span>
+                <span class="rc-desc">백엔드 아키텍처·API 설계를 잡아주는 에이전트</span>
+              </a>
+              <a class="res-card" href="https://github.com/wshobson/agents/blob/main/plugins/application-performance/agents/frontend-developer.md" target="_blank" rel="noreferrer">
+                <span class="rc-name">frontend-developer</span>
+                <span class="rc-desc">프론트엔드 UI·컴포넌트 개발 전문</span>
+              </a>
+              <a class="res-card" href="https://github.com/wshobson/agents/blob/main/plugins/backend-development/agents/security-auditor.md" target="_blank" rel="noreferrer">
+                <span class="rc-name">security-auditor</span>
+                <span class="rc-desc">보안 취약점·인증 흐름 점검</span>
+              </a>
+              <a class="res-card" href="https://github.com/wshobson/agents/blob/main/plugins/backend-development/agents/test-automator.md" target="_blank" rel="noreferrer">
+                <span class="rc-name">test-automator</span>
+                <span class="rc-desc">테스트 작성·커버리지 자동화</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="build-step">
+            <div class="step-head">
+              <span class="step">Step 5</span>
+              <h3>MCP(외부 도구) 연결하기</h3>
+            </div>
+            <div class="step-body">
+              <ul class="step-list">
+                <li>MCP는 Slack·Figma·Notion 같은 외부 서비스를 연결합니다. <b>종류가 매우 다양</b>합니다.</li>
+                <li><code>.mcp.json</code>을 손으로 쓰기보다, 보통 <b>MCP 서버 링크를 Claude에게 전달해 “추가해줘”</b>라고 시킵니다 — Claude가 <code>.mcp.json</code>을 알맞게 만들어 줍니다.</li>
+                <li>플러그인이 켜지면 서버가 <b>자동 시작</b>되어 Claude의 도구로 쓰입니다.</li>
+              </ul>
+              <div class="step-code">
+                <span class="file-tag">Claude Code에게 요청</span>
+                <pre class="code-block">이 MCP 서버를 my-first-plugin 플러그인에 추가해줘:
+https://github.com/modelcontextprotocol/servers (Slack)
+
+.mcp.json 에 알맞게 설정하고,
+필요한 환경변수(SLACK_BOT_TOKEN 등)도 함께 정리해줘.</pre>
+              </div>
+            </div>
+            <div class="note-panel">
+              💡 MCP는 종류가 다양합니다 — <b>링크만 바꿔 전달</b>하면 어떤 서비스든 같은 방식으로 연결됩니다.
+              <div class="mcp-examples">
+                <div class="mcp-ex">
+                  <img src="./assets/icon-slack.svg" alt="Slack" />
+                  <div><b>Slack</b><span>메시지 전송·채널 조회</span></div>
+                </div>
+                <div class="mcp-ex">
+                  <img src="./assets/icon-figma.svg" alt="Figma" />
+                  <div><b>Figma</b><span>디자인 파일·컴포넌트 읽기</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="build-step">
+            <div class="step-head">
+              <span class="step">Step 6</span>
+              <h3>로컬에서 테스트하기</h3>
+            </div>
+            <div class="step-body">
+              <ul class="step-list">
+                <li><code>--plugin-dir</code> 플래그로 설치 없이 바로 불러옵니다.</li>
+                <li>보통 <b>플러그인 폴더가 아니라, 플러그인을 실제로 사용할 다른 경로</b>(테스트용 프로젝트)에서 Claude를 켜고 <code>--plugin-dir</code>로 플러그인 위치를 가리킵니다 — 진짜 설치된 것처럼 동작하는지 보기 위해서입니다.</li>
+                <li>스킬·에이전트가 등록됐는지 확인하고, 수정할 때마다 <code>/reload-plugins</code>로 다시 불러옵니다.</li>
+              </ul>
+              <div class="step-code">
+                <span class="file-tag">terminal — 플러그인을 사용할 다른 경로에서</span>
+                <pre class="code-block">cd ~/work/test-project        <span class="cmt"># 플러그인 폴더가 아닌 다른 경로</span>
+claude --plugin-dir ~/dev/my-first-plugin</pre>
+                <span class="file-tag">Claude Code 안에서</span>
+                <pre class="code-block">/my-first-plugin:hello   <span class="cmt"># 스킬 동작 확인</span>
+/agents                  <span class="cmt"># 에이전트 등록 확인</span></pre>
+              </div>
+            </div>
+            <div class="note-panel">
+              💡 <b><code>/my-first-plugin:hello</code>처럼 앞에 <code>플러그인이름:</code>이 붙는 이유</b> — 여러 플러그인에 같은 이름의 스킬(<code>hello</code>)이 있어도 충돌하지 않도록, 플러그인 이름(<code>plugin.json</code>의 <code>name</code>)을 <b>네임스페이스</b>로 붙입니다.
+            </div>
+          </article>
+
+          <article class="build-step">
+            <div class="step-head">
+              <span class="step">Step 7</span>
+              <h3>팀에 공유하기 (배포)</h3>
+            </div>
+            <div class="step-body">
+              <ul class="step-list">
+                <li>팀이 <code>/plugin install</code> 한 줄로 받게 하려면 <b>마켓플레이스</b>를 만듭니다.</li>
+                <li>마켓플레이스는 <b>플러그인 목록을 담은 git 저장소</b>이고, <b>사내 비공개(private) 저장소</b>도 그대로 됩니다.</li>
+                <li>배포 전 <code>claude plugin validate</code>로 검증하고, <code>README.md</code>를 추가합니다.</li>
+                <li>플러그인과 <code>marketplace.json</code>을 <b>이미 만들어 둔 git 저장소에 올리면</b> 배포 완료입니다 — 이 작업도 Claude에게 요청하면 됩니다.</li>
+                <li>여기서 <a href="#why" style="color:var(--brand-deep);font-weight:850;">02. 왜 쓰는가</a>의 “공유·버전관리·표준화” 효과가 실현됩니다.</li>
+              </ul>
+              <div class="step-code">
+                <span class="file-tag">1) 검증 — terminal</span>
+                <pre class="code-block">claude plugin validate ./my-first-plugin</pre>
+                <span class="file-tag">2) 마켓플레이스 저장소 구조</span>
+                <pre class="code-block">team-plugins/                        <span class="cmt"># git 저장소</span>
+├── .claude-plugin/
+│   └── marketplace.json
+└── my-first-plugin/                 <span class="cmt"># Step 1~5에서 만든 플러그인</span>
+    ├── .claude-plugin/plugin.json
+    ├── skills/
+    ├── agents/
+    └── .mcp.json</pre>
+                <span class="file-tag">team-plugins/.claude-plugin/marketplace.json</span>
+                <pre class="code-block">{
+  <span class="key">"name"</span>: <span class="str">"spacev-team"</span>,
+  <span class="key">"owner"</span>: { <span class="key">"name"</span>: <span class="str">"SpaceV"</span>, <span class="key">"email"</span>: <span class="str">"teddy@spacev.kr"</span> },
+  <span class="key">"plugins"</span>: [
+    {
+      <span class="key">"name"</span>: <span class="str">"my-first-plugin"</span>,
+      <span class="key">"source"</span>: <span class="str">"./my-first-plugin"</span>,
+      <span class="key">"description"</span>: <span class="str">"기본기를 익히는 인사 플러그인"</span>,
+      <span class="key">"version"</span>: <span class="str">"1.0.0"</span>
+    }
+  ]
+}</pre>
+                <span class="file-tag">3) 원격 저장소에 올리기 — Claude Code에게 요청</span>
+                <pre class="code-block">my-first-plugin 과 marketplace.json 을
+https://github.com/spacev-team/team-plugins 저장소에 올려줘.
+
+적절한 커밋 메시지로 add·commit 하고,
+origin main 으로 push 해줘.</pre>
+                <span class="file-tag">4) 팀원이 설치 — Claude Code 안에서</span>
+                <pre class="code-block">/plugin marketplace add spacev-team/team-plugins
+/plugin install my-first-plugin@spacev-team</pre>
+              </div>
+            </div>
+            <div class="note-panel">
+              <b>업데이트 전파</b> — <code>plugin.json</code>(또는 marketplace 항목)의 <code>version</code>을 올려 push하면,
+              팀원은 <code>/plugin marketplace update</code> 후 새 버전을 받습니다.
+              (<code>version</code>을 생략하면 git 커밋 SHA 기준으로 매 커밋이 새 버전으로 취급됩니다.)
+            </div>
+          </article>
+        </div>
+
+        <div class="bp-block">
+          <span class="bp-tag">★ Best Practice</span>
+          <h3>이 모든 걸 한 번에 — Claude에게 배포까지 맡기기</h3>
+          <p>구조가 익숙해졌다면, 만들기부터 검증·배포 준비까지 한 번에 요청할 수 있습니다.</p>
+          <pre class="prompt-bubble">방금 만든 my-first-plugin 을 팀에 배포할 수 있게 정리해줘.
+
+1) `claude plugin validate` 로 검증
+2) 설치·사용법을 담은 README.md 작성
+3) plugin.json 의 version 을 확인해서 정리
+4) spacev-team/team-plugins 저장소용 .claude-plugin/marketplace.json 생성
+
+마지막에 팀원이 설치할 때 쓸 명령어도 알려줘.</pre>
+          <ul class="bp-tips">
+            <li>실제 push는 사람이 확인 후 직접 합니다 — Claude에게는 <b>준비까지</b> 맡기는 게 안전합니다.</li>
+            <li>업데이트할 때도 <b>“version 올리고 marketplace.json 갱신해줘”</b>처럼 시키면 됩니다.</li>
+          </ul>
+        </div>
+
+        <div class="note-panel" style="margin-top:22px;">
+          더 알아보기 — 플러그인에는 <b>훅(hooks/)</b>, <b>LSP 서버(.lsp.json)</b>, <b>백그라운드 모니터(monitors/)</b>도 담을 수 있습니다.
+          <a href="https://code.claude.com/docs/en/plugins" target="_blank" rel="noreferrer">Claude Code 공식 플러그인 문서</a>에서 전체 구성요소를 확인하세요.
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
