@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에이전트·스킬 구조 변화</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #fafafa;
+  color: #111;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.page { max-width: 860px; margin: 0 auto; padding: 56px 32px 100px; }
+
+/* ── HEADER ── */
+.header { margin-bottom: 60px; }
+.header-eyebrow { font-size: 11px; color: #999; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+.header-title { font-size: 30px; font-weight: 700; color: #111; margin-bottom: 8px; }
+.header-sub { font-size: 14px; color: #666; }
+
+/* ── SECTION ── */
+.section { margin-bottom: 64px; }
+.sec-eyebrow { font-size: 11px; color: #999; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.sec-title { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 28px; }
+
+/* ── TREE ── */
+.tree-block {
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 2;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 16px;
+}
+.tree-root { color: #555; font-weight: 600; }
+.tree-connector { color: #ccc; }
+.tree-name { color: #111; font-weight: 600; }
+.tree-name.purple { color: #7c3aed; }
+.tree-name.blue   { color: #0369a1; }
+.tree-name.amber  { color: #b45309; }
+.tree-name.green  { color: #166534; }
+.tree-name.gray   { color: #888; }
+.tree-arrow { color: #bbb; }
+.tree-desc { color: #555; font-weight: 400; }
+.tree-subdesc { color: #999; font-size: 12px; }
+
+/* ── COMPARE ── */
+.compare-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.compare-col {}
+.compare-label { font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+.compare-label.before { color: #999; }
+.compare-label.after  { color: #166534; }
+
+/* ── DIFF TABLE ── */
+.diff-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; font-size: 13px; }
+.diff-table th { padding: 12px 18px; background: #f5f5f5; font-weight: 600; text-align: left; font-size: 12px; color: #555; }
+.diff-table td { padding: 14px 18px; border-top: 1px solid #f0f0f0; vertical-align: top; }
+.diff-table .topic { font-weight: 600; color: #333; font-size: 12px; }
+.diff-table .before-val { color: #aaa; font-size: 12px; line-height: 1.6; }
+.diff-table .after-val  { color: #166534; font-size: 12px; line-height: 1.6; font-weight: 500; }
+
+/* ── SKILL DETAIL ── */
+.skill-detail { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 24px 28px; margin-bottom: 14px; }
+.skill-detail-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #f0f0f0; }
+.skill-cmd { font-family: 'Menlo', 'Monaco', monospace; font-size: 16px; font-weight: 700; }
+.skill-cmd.purple { color: #7c3aed; }
+.skill-cmd.blue   { color: #0369a1; }
+.skill-cmd.amber  { color: #b45309; }
+.skill-oneliner { font-size: 13px; color: #888; }
+.skill-tree { font-family: 'Menlo', 'Monaco', 'Courier New', monospace; font-size: 12px; line-height: 2; color: #555; }
+.skill-tree .step-name { color: #111; font-weight: 600; }
+.skill-tree .step-note { color: #999; }
+.skill-tree .connector { color: #ccc; }
+
+/* ── FLOW ── */
+.flow-wrap { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 28px; }
+.flow-label { font-size: 11px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; }
+.flow-tree { font-family: 'Menlo', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 2.2; }
+.flow-note { margin-top: 16px; background: #f6fff8; border: 1px solid #d1fae5; border-radius: 8px; padding: 12px 16px; font-size: 12px; color: #166534; line-height: 1.7; }
+
+/* ── USAGE ── */
+.usage-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.usage-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px; }
+.usage-when { font-size: 11px; color: #999; margin-bottom: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.usage-cmd { font-family: 'Menlo', 'Monaco', monospace; font-size: 12px; background: #f5f5f5; border-radius: 6px; padding: 10px 12px; margin-bottom: 12px; color: #333; line-height: 1.8; }
+.usage-result { font-family: 'Menlo', 'Monaco', monospace; font-size: 11px; color: #999; line-height: 1.9; }
+.usage-result .hi { color: #166534; font-weight: 600; }
+
+/* ── OMC ── */
+.omc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.omc-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 20px; }
+.omc-tree { font-family: 'Menlo', 'Monaco', monospace; font-size: 12px; line-height: 2; }
+
+/* ── NEW BADGE ── */
+.badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; vertical-align: middle; margin-left: 6px; }
+.badge-new { background: #dcfce7; color: #166534; }
+.badge-omc { background: #ede9fe; color: #6d28d9; }
+
+.callout { background: #f6fff8; border: 1px solid #d1fae5; border-radius: 10px; padding: 16px 20px; margin-top: 14px; font-size: 13px; color: #166534; line-height: 1.7; }
+.callout strong { font-weight: 700; }
+
+@media (max-width: 640px) {
+  .compare-wrap { grid-template-columns: 1fr; }
+  .usage-grid   { grid-template-columns: 1fr; }
+  .omc-grid     { grid-template-columns: 1fr; }
+}
+
+.top-link { display: inline-block; color: #999; text-decoration: none; font-size: 13px; font-weight: 600; margin-bottom: 28px; }
+.top-link:hover { color: #111; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a class="top-link" href="../../">← SpaceV Shared Docs</a>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">교육 자료 · Claude 스킬 시스템</div>
+    <div class="header-title">에이전트·스킬 구조 변화</div>
+    <div class="header-sub">기존 프로젝트 에이전트 → oh-my-claudecode 방법론 접목 후 새 스킬 체계</div>
+  </div>
+
+
+  <!-- 1. STRUCTURE -->
+  <div class="section">
+    <div class="sec-eyebrow">01</div>
+    <div class="sec-title">전체 구조 한눈에</div>
+
+    <div class="compare-wrap">
+      <div class="compare-col">
+        <div class="compare-label before">▸ 전에는</div>
+        <div class="tree-block">
+<div class="tree-root">프로젝트/.claude/agents/</div>
+<div><span class="tree-connector">├── </span><span class="tree-name gray">main-coordinator</span></div>
+<div><span class="tree-connector">│   └── </span><span class="tree-subdesc">수동으로 역할 연결</span></div>
+<div><span class="tree-connector">├── </span><span class="tree-name gray">db-analyst</span></div>
+<div><span class="tree-connector">│   └── </span><span class="tree-subdesc">집계 + 세그먼트 분류</span></div>
+<div><span class="tree-connector">└── </span><span class="tree-name gray">strategy-planner</span></div>
+<div><span class="tree-connector">&nbsp;&nbsp;&nbsp; └── </span><span class="tree-subdesc">기획 프레임 채우기</span></div>
+        </div>
+        <div style="font-size:12px; color:#bbb; padding: 0 4px;">⚠ 이 프로젝트에서만 사용 가능</div>
+      </div>
+
+      <div class="compare-col">
+        <div class="compare-label after">▸ 지금은</div>
+        <div class="tree-block">
+<div class="tree-root">~/.claude/skills/</div>
+<div><span class="tree-connector">├── </span><span class="tree-name purple">growth/</span><span class="tree-arrow">         ← </span><span class="tree-desc">오케스트레이터</span></div>
+<div><span class="tree-connector">│   └── </span><span class="tree-subdesc">목표 → 스킬 선택 → 종합</span></div>
+<div><span class="tree-connector">├── </span><span class="tree-name blue">data-trace/</span><span class="tree-arrow">     ← </span><span class="tree-desc">분석 + 원인</span></div>
+<div><span class="tree-connector">│   └── </span><span class="tree-subdesc">DB 스캔 + 인사이트 + 추적</span></div>
+<div><span class="tree-connector">└── </span><span class="tree-name amber">strategy-interview/</span></div>
+<div><span class="tree-connector">&nbsp;&nbsp;&nbsp; └── </span><span class="tree-subdesc">소크라테스 인터뷰 → 브리프</span></div>
+        </div>
+        <div style="font-size:12px; color:#166534; padding: 0 4px;">✓ 어떤 프로젝트에서도 사용 가능</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 2. DIFF -->
+  <div class="section">
+    <div class="sec-eyebrow">02</div>
+    <div class="sec-title">뭐가 달라졌어요?</div>
+
+    <table class="diff-table">
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>전에는</th>
+          <th>지금은</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="topic">데이터 분석</td>
+          <td class="before-val">집계하고 세그먼트 나눔<br>"~일 수 있음" 수준 가설로 끝</td>
+          <td class="after-val">인사이트 점수 매기기 (놀라운 정도 × 레버리지)<br>경쟁 가설 3개로 원인까지 추적</td>
+        </tr>
+        <tr>
+          <td class="topic">전략 기획</td>
+          <td class="before-val">프레임 채우기<br>문제 불명확해도 기획안 생성</td>
+          <td class="after-val">모호성 수치화 → 25% 미만 전까지 기획안 없음<br>가정 도전 · 레버리지 탐색 · 근본원인 추적</td>
+        </tr>
+        <tr>
+          <td class="topic">스킬 연결</td>
+          <td class="before-val">분석 → 기획 연결을 사람이 직접 해야 함<br>컨텍스트가 끊김</td>
+          <td class="after-val">data-trace 결과를 strategy-interview에 자동 주입<br>확인된 사실은 재질문 없음</td>
+        </tr>
+        <tr>
+          <td class="topic">사용 범위</td>
+          <td class="before-val">이 프로젝트 전용</td>
+          <td class="after-val">어떤 프로젝트에서도 동일하게 사용<br>목표만 바꿔서 바로 실행</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- 3. SKILLS -->
+  <div class="section">
+    <div class="sec-eyebrow">03</div>
+    <div class="sec-title">각 스킬 기능</div>
+
+    <div class="skill-detail">
+      <div class="skill-detail-header">
+        <div class="skill-cmd purple">/growth</div>
+        <div class="skill-oneliner">오케스트레이터 — 목표를 읽고 스킬을 골라 실행한 뒤 종합</div>
+      </div>
+      <div class="skill-tree">
+<div><span class="connector">├── </span><span class="step-name">Step 1.</span> 사용자 목표·목적 파악</div>
+<div><span class="connector">├── </span><span class="step-name">Step 2.</span> 자동 분류</div>
+<div><span class="connector">│   ├── </span><span class="step-note">DATA     → "왜?", 데이터 파일, 패턴 질문</span></div>
+<div><span class="connector">│   ├── </span><span class="step-note">STRATEGY → "뭘 해야 해?", 기획 방향, 가설</span></div>
+<div><span class="connector">│   └── </span><span class="step-note">PIPELINE → "분석하고 기획까지", 둘 다 필요</span></div>
+<div><span class="connector">├── </span><span class="step-name">Step 3.</span> 알맞은 스킬 실행 (자동)</div>
+<div><span class="connector">└── </span><span class="step-name">Step 4.</span> 결과 종합 → 데이터 / 전략 / 다음 액션</div>
+      </div>
+    </div>
+
+    <div class="skill-detail">
+      <div class="skill-detail-header">
+        <div class="skill-cmd blue">/data-trace</div>
+        <div class="skill-oneliner">DB 스캔 → 인사이트 랭킹 → 원인 추적</div>
+      </div>
+      <div class="skill-tree">
+<div><span class="connector">├── </span><span class="step-name">Phase 1. Scan</span></div>
+<div><span class="connector">│   ├── </span><span class="step-note">데이터 품질 점검 (중복·결측·날짜 이상)</span></div>
+<div><span class="connector">│   └── </span><span class="step-note">세그먼트·상태값 분포 파악 (원본 파일 수정 안 함)</span></div>
+<div><span class="connector">├── </span><span class="step-name">Phase 2. Insight Mining</span></div>
+<div><span class="connector">│   ├── </span><span class="step-note">Surprise × Leverage 점수 계산</span></div>
+<div><span class="connector">│   └── </span><span class="step-note">상위 인사이트 3~7개 랭킹</span></div>
+<div><span class="connector">└── </span><span class="step-name">Phase 3. Trace</span></div>
+<div><span class="connector">&nbsp;&nbsp;&nbsp; ├── </span><span class="step-note">레인 A: 행동/동기 원인</span></div>
+<div><span class="connector">&nbsp;&nbsp;&nbsp; ├── </span><span class="step-note">레인 B: 구조/UX 원인</span></div>
+<div><span class="connector">&nbsp;&nbsp;&nbsp; ├── </span><span class="step-note">레인 C: 데이터 품질 원인 (먼저 의심)</span></div>
+<div><span class="connector">&nbsp;&nbsp;&nbsp; └── </span><span class="step-note">반론 라운드 → 핵심 미지수 → 다음 탐색</span></div>
+      </div>
+    </div>
+
+    <div class="skill-detail">
+      <div class="skill-detail-header">
+        <div class="skill-cmd amber">/strategy-interview</div>
+        <div class="skill-oneliner">소크라테스 인터뷰 → 모호성 게이트 → 전략 브리프</div>
+      </div>
+      <div class="skill-tree">
+<div><span class="connector">├── </span><span class="step-name">Round 0.</span> 전략 토폴로지 확인 (문제 구성 요소 잠금)</div>
+<div><span class="connector">├── </span><span class="step-name">Round 1~.</span> 1문 1답 소크라테스</div>
+<div><span class="connector">│   ├── </span><span class="step-note">가장 불명확한 차원 타깃 → 한 가지만 질문</span></div>
+<div><span class="connector">│   └── </span><span class="step-note">답변 후 모호성 점수 계산 (0~100%)</span></div>
+<div><span class="connector">├── </span><span class="step-name">챌린지 모드</span></div>
+<div><span class="connector">│   ├── </span><span class="step-note">Round 4: 가정 도전 (이게 정말 맞는 전제인가?)</span></div>
+<div><span class="connector">│   ├── </span><span class="step-note">Round 6: 레버리지 탐색 (하나만 바꾼다면?)</span></div>
+<div><span class="connector">│   └── </span><span class="step-note">Round 8: 근본원인 추적 (증상 vs 원인)</span></div>
+<div><span class="connector">└── </span><span class="step-name">모호성 25% 미만 달성</span> → 전략 브리프 생성</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 4. PIPELINE -->
+  <div class="section">
+    <div class="sec-eyebrow">04</div>
+    <div class="sec-title">스킬이 연결되는 방식 (PIPELINE 모드)</div>
+
+    <div class="flow-wrap">
+      <div class="flow-label">사용자: "분석하고 기획까지 잡아줘"</div>
+      <div class="flow-tree">
+<div><span style="color:#7c3aed; font-weight:700;">/growth</span> <span style="color:#999;">목표 입력 받음</span></div>
+<div><span style="color:#ccc;">└── </span><span style="color:#555;">PIPELINE 판단</span></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ccc;">├── </span><span style="color:#0369a1; font-weight:700;">/data-trace</span> <span style="color:#999;">실행</span></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ccc;">│   ├── </span><span style="color:#999;">Scan → Insight Mining → Trace</span></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ccc;">│   └── </span><span style="color:#166534;">결과: 인사이트 + 원인 가설 + 핵심 미지수</span></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ccc;">│</span></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ccc;">├── </span><span style="color:#555;">컨텍스트 자동 주입 ↓</span></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ccc;">│   └── </span><span style="color:#999;">확인된 사실 전달, 재질문 없음</span></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ccc;">│</span></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ccc;">├── </span><span style="color:#b45309; font-weight:700;">/strategy-interview</span> <span style="color:#999;">실행</span></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ccc;">│   └── </span><span style="color:#999;">미결 항목만 질문 → 모호성 25% 미만 → 브리프</span></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ccc;">│</span></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ccc;">└── </span><span style="color:#166534; font-weight:600;">종합 출력</span> <span style="color:#999;">데이터 → 전략 → 다음 액션</span></div>
+      </div>
+      <div class="flow-note">
+        <strong>컨텍스트 자동 주입이란?</strong> data-trace에서 확인된 인사이트와 원인 가설이 strategy-interview에 자동으로 전달됩니다. 이미 아는 사실은 다시 묻지 않고, 아직 불명확한 것(성공 기준, 개입 방식)에만 집중해서 질문합니다.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 5. USAGE -->
+  <div class="section">
+    <div class="sec-eyebrow">05</div>
+    <div class="sec-title">사용법</div>
+
+    <div class="usage-grid">
+      <div class="usage-card">
+        <div class="usage-when">📊 데이터 분석이 필요할 때</div>
+        <div class="usage-cmd"><span style="color:#7c3aed;">/growth</span><br>이 CSV에서 인사이트를 찾고 싶다</div>
+        <div class="usage-result">
+          <div>├── DATA로 분류</div>
+          <div>├── /data-trace 실행</div>
+          <div>└── <span class="hi">인사이트 + 원인 추적</span></div>
+        </div>
+      </div>
+
+      <div class="usage-card">
+        <div class="usage-when">🗺️ 전략 방향이 필요할 때</div>
+        <div class="usage-cmd"><span style="color:#7c3aed;">/growth</span><br>보류율을 낮춰 공개방 수를 늘리고 싶다</div>
+        <div class="usage-result">
+          <div>├── STRATEGY로 분류</div>
+          <div>├── /strategy-interview 실행</div>
+          <div>└── <span class="hi">인터뷰 → 전략 브리프</span></div>
+        </div>
+      </div>
+
+      <div class="usage-card">
+        <div class="usage-when">⚡ 분석 + 기획 한 번에</div>
+        <div class="usage-cmd"><span style="color:#7c3aed;">/growth</span><br>퍼널 분석하고 다음 액션까지 잡아줘</div>
+        <div class="usage-result">
+          <div>├── PIPELINE으로 분류</div>
+          <div>├── data-trace → strategy-interview</div>
+          <div>└── <span class="hi">결과 종합 + 다음 액션</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tree-block" style="margin-top: 14px;">
+      <div style="color:#999; font-size:11px; margin-bottom:8px;">스킬 단독 실행도 가능</div>
+<div><span class="tree-connector">├── </span><span class="tree-name blue">/data-trace</span><span class="tree-arrow"> </span><span class="tree-desc">보류사유별_분석결과.csv</span></div>
+<div><span class="tree-connector">└── </span><span class="tree-name amber">/strategy-interview</span><span class="tree-arrow"> </span><span class="tree-desc">재운영 임대인을 다시 활성화하고 싶다</span></div>
+    </div>
+  </div>
+
+
+  <!-- 6. OMC ORIGINS -->
+  <div class="section">
+    <div class="sec-eyebrow">06</div>
+    <div class="sec-title">oh-my-claudecode에서 가져온 것</div>
+
+    <div class="omc-grid">
+      <div class="omc-card">
+        <div class="omc-tree">
+<div style="color:#6d28d9; font-size:11px; margin-bottom:4px;">OMC 원본</div>
+<div style="font-weight:700; color:#333; margin-bottom:2px;">deep-interview</div>
+<div style="color:#ccc; font-size:12px; margin-bottom:10px;">↓ 전략 도메인으로 적용</div>
+<div style="font-weight:700; color:#b45309; margin-bottom:10px;">/strategy-interview</div>
+<div><span style="color:#ccc;">├── </span><span style="color:#555;">1문 1답 소크라테스</span></div>
+<div><span style="color:#ccc;">├── </span><span style="color:#555;">모호성 수치화 (0~100%)</span></div>
+<div><span style="color:#ccc;">├── </span><span style="color:#555;">임계값 게이트 (25%)</span></div>
+<div><span style="color:#ccc;">├── </span><span style="color:#555;">Round 0 토폴로지 확인</span></div>
+<div><span style="color:#ccc;">└── </span><span style="color:#555;">챌린지 에이전트 3종</span></div>
+        </div>
+      </div>
+
+      <div class="omc-card">
+        <div class="omc-tree">
+<div style="color:#6d28d9; font-size:11px; margin-bottom:4px;">OMC 원본</div>
+<div style="font-weight:700; color:#333; margin-bottom:2px;">trace</div>
+<div style="color:#ccc; font-size:12px; margin-bottom:10px;">↓ 데이터 분석으로 적용</div>
+<div style="font-weight:700; color:#0369a1; margin-bottom:10px;">/data-trace (일부)</div>
+<div><span style="color:#ccc;">├── </span><span style="color:#555;">경쟁 가설 3개 병렬 추적</span></div>
+<div><span style="color:#ccc;">├── </span><span style="color:#555;">증거 있음 / 없음 / 반증</span></div>
+<div><span style="color:#ccc;">├── </span><span style="color:#555;">증거 강도 계층화</span></div>
+<div><span style="color:#ccc;">├── </span><span style="color:#555;">반론 라운드</span></div>
+<div><span style="color:#ccc;">└── </span><span style="color:#555;">핵심 미지수 + 다음 탐색</span></div>
+        </div>
+      </div>
+
+      <div class="omc-card">
+        <div class="omc-tree">
+<div style="color:#6d28d9; font-size:11px; margin-bottom:4px;">OMC 원본</div>
+<div style="font-weight:700; color:#333; margin-bottom:2px;">autopilot 오케스트레이션</div>
+<div style="color:#ccc; font-size:12px; margin-bottom:10px;">↓ 전략·분석 파이프라인으로</div>
+<div style="font-weight:700; color:#7c3aed; margin-bottom:10px;">/growth</div>
+<div><span style="color:#ccc;">├── </span><span style="color:#555;">요청 자동 분류</span></div>
+<div><span style="color:#ccc;">├── </span><span style="color:#555;">스킬 간 자동 핸드오프</span></div>
+<div><span style="color:#ccc;">└── </span><span style="color:#555;">파이프라인 실행 구조</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>새로 추가한 것 <span class="badge badge-new">NEW</span></strong><br>
+      <strong>Insight Mining</strong> — surprise × leverage 점수로 인사이트를 자동 랭킹합니다. OMC trace는 코드 버그 추적용이라 이 레이어가 없었고, 데이터 분석 컨텍스트에 맞게 새로 설계했습니다.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
