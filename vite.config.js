@@ -19,6 +19,8 @@ export default defineConfig({
         codingAiCloudflareDeploy: resolve(__dirname, 'education/coding-ai-cloudflare-deploy/index.html'),
         codingAiSetupGuide: resolve(__dirname, 'education/coding-ai-cloudflare-deploy/setup/index.html'),
         cloudflareDeployGuide: resolve(__dirname, 'education/coding-ai-cloudflare-deploy/cloudflare-deploy/index.html'),
+        goodData: resolve(__dirname, 'company/good-data/index.html'),
+        n8nAutomationHandbook: resolve(__dirname, 'company/n8n-automation-handbook/index.html'),
         codexPluginGuide: resolve(__dirname, 'company/codex-plugin-guide/index.html'),
         claudePluginGuide: resolve(__dirname, 'company/claude-plugin-guide/index.html'),
         skillStructureOverview: resolve(__dirname, 'company/skill-structure-overview/index.html')

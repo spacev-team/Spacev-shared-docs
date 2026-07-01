@@ -33,9 +33,20 @@ shared/
   styles/
   assets/
 company/
+  good-data/
+    index.html
+    assets/
+  n8n-automation-handbook/
+    index.html
+    assets/
   codex-plugin-guide/
     index.html
     assets/
+  claude-plugin-guide/
+    index.html
+    assets/
+  skill-structure-overview/
+    index.html
 ```
 
 ## 로컬 실행
