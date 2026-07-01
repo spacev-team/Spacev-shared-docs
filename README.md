@@ -17,8 +17,6 @@ education/
     assets/
   ai-basics-claude-code/
     index.html
-  ai-basics-claude-code-self-study/
-    index.html
   claude-code-n8n-workflow/
     index.html
     assets/
@@ -37,6 +35,8 @@ shared/
   styles/
   assets/
 company/
+  ai-basics-claude-code-self-study/
+    index.html
   good-data/
     index.html
     assets/
