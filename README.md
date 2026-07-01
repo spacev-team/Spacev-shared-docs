@@ -39,6 +39,8 @@ company/
   n8n-automation-handbook/
     index.html
     assets/
+  playwright-crawling-automation/
+    index.html
   codex-plugin-guide/
     index.html
     assets/
