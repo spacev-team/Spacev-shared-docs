@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         home: resolve(__dirname, 'index.html'),
         aiBasicsClaudeCode: resolve(__dirname, 'education/ai-basics-claude-code/index.html'),
+        aiBasicsClaudeCodeSelfStudy: resolve(__dirname, 'education/ai-basics-claude-code-self-study/index.html'),
         aiConversation: resolve(__dirname, 'education/ai-conversation-level-0/index.html'),
         aiConversationSlides: resolve(__dirname, 'education/ai-conversation-level-0/slides/index.html'),
         aiConversationMaterials: resolve(__dirname, 'education/ai-conversation-level-0/materials/index.html'),

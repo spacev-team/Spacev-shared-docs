@@ -15,6 +15,10 @@ education/
     slides/     # 기존 공유 링크 유지용
     materials/  # 기존 공유 링크 유지용
     assets/
+  ai-basics-claude-code/
+    index.html
+  ai-basics-claude-code-self-study/
+    index.html
   claude-code-n8n-workflow/
     index.html
     assets/

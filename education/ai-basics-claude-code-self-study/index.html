@@ -1,0 +1,1146 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 기초부터 CS 응대 도우미까지 - 자습 가이드</title>
+    <style>
+      :root {
+        --ink: #202124;
+        --text: #34363b;
+        --muted: #6b6f7a;
+        --subtle: #8a9099;
+        --paper: #ffffff;
+        --canvas: #f6f7f8;
+        --band: #eef6f1;
+        --line: #dfe4ea;
+        --green: #008a05;
+        --green-deep: #086b28;
+        --violet: #5d3ebc;
+        --violet-soft: #f1edff;
+        --blue: #2468d1;
+        --blue-soft: #edf4ff;
+        --amber: #9f7100;
+        --amber-soft: #fff7df;
+        --coral: #c2283f;
+        --coral-soft: #fff0f2;
+        --shadow: 0 18px 42px rgba(31, 42, 68, 0.08);
+        font-family:
+          Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+          "Malgun Gothic", "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--text);
+        background: var(--canvas);
+        line-height: 1.68;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        min-height: 64px;
+        padding: 14px 28px;
+        background: rgba(255, 255, 255, 0.94);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(12px);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: var(--ink);
+        font-weight: 800;
+      }
+
+      .brand img {
+        width: 78px;
+        height: auto;
+        display: block;
+      }
+
+      .toplinks {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .toplinks a,
+      .inline-action {
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .hero {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.96)),
+          var(--band);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero-inner,
+      .page-grid,
+      .footer-inner {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      .hero-inner {
+        padding: 72px 0 42px;
+      }
+
+      .eyebrow {
+        margin: 0 0 14px;
+        color: var(--green-deep);
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      p {
+        letter-spacing: 0;
+      }
+
+      h1 {
+        max-width: 820px;
+        margin: 0;
+        color: var(--ink);
+        font-size: 48px;
+        line-height: 1.18;
+        font-weight: 900;
+      }
+
+      .hero-copy {
+        max-width: 760px;
+        margin: 22px 0 0;
+        color: #48505b;
+        font-size: 19px;
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 28px;
+      }
+
+      .meta-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(8, 107, 40, 0.18);
+        background: #fff;
+        color: var(--green-deep);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .page-grid {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 34px;
+        padding: 36px 0 72px;
+      }
+
+      .toc {
+        position: sticky;
+        top: 88px;
+        align-self: start;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .toc strong {
+        display: block;
+        margin-bottom: 12px;
+        color: var(--ink);
+        font-size: 15px;
+      }
+
+      .toc a {
+        display: block;
+        padding: 8px 0;
+        border-top: 1px solid #eef1f4;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .toc a:hover {
+        color: var(--green-deep);
+      }
+
+      article {
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+      }
+
+      .section {
+        padding: 34px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .section.band {
+        background: #fcfefa;
+      }
+
+      .section-label {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        margin-bottom: 10px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: var(--violet-soft);
+        color: var(--violet);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      h2 {
+        margin: 0 0 16px;
+        color: var(--ink);
+        font-size: 30px;
+        line-height: 1.28;
+        font-weight: 900;
+      }
+
+      h3 {
+        margin: 30px 0 10px;
+        color: var(--ink);
+        font-size: 22px;
+        line-height: 1.36;
+        font-weight: 850;
+      }
+
+      h4 {
+        margin: 0 0 8px;
+        color: var(--ink);
+        font-size: 17px;
+        font-weight: 850;
+      }
+
+      p {
+        margin: 0 0 14px;
+      }
+
+      p:last-child {
+        margin-bottom: 0;
+      }
+
+      .lead {
+        color: #3f464f;
+        font-size: 18px;
+      }
+
+      .note,
+      .warning,
+      .practice,
+      .definition {
+        margin: 18px 0;
+        padding: 18px 20px;
+        border-radius: 8px;
+        border: 1px solid;
+      }
+
+      .note {
+        background: var(--blue-soft);
+        border-color: #cfe0ff;
+      }
+
+      .warning {
+        background: var(--coral-soft);
+        border-color: #ffd0d7;
+      }
+
+      .practice {
+        background: var(--amber-soft);
+        border-color: #f1dfaa;
+      }
+
+      .definition {
+        background: var(--band);
+        border-color: #cfe5d6;
+      }
+
+      .note strong,
+      .warning strong,
+      .practice strong,
+      .definition strong {
+        color: var(--ink);
+      }
+
+      .grid-2,
+      .grid-3 {
+        display: grid;
+        gap: 14px;
+        margin: 20px 0;
+      }
+
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .card {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .card.accent {
+        border-color: #cfe5d6;
+        background: #fbfffc;
+      }
+
+      .card.blue {
+        border-color: #cfe0ff;
+        background: #f8fbff;
+      }
+
+      .card.violet {
+        border-color: #ddd5ff;
+        background: #fbf9ff;
+      }
+
+      .card.amber {
+        border-color: #ecdca5;
+        background: #fffdf4;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 26px;
+        margin-bottom: 10px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        background: #edf1f5;
+        color: #4c5562;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      ul,
+      ol {
+        margin: 10px 0 0;
+        padding-left: 22px;
+      }
+
+      li {
+        margin: 7px 0;
+      }
+
+      .steps {
+        counter-reset: step;
+        display: grid;
+        gap: 12px;
+        margin: 20px 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .steps li {
+        counter-increment: step;
+        position: relative;
+        margin: 0;
+        padding: 16px 18px 16px 58px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .steps li::before {
+        content: counter(step);
+        position: absolute;
+        left: 18px;
+        top: 17px;
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--green);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      table {
+        width: 100%;
+        margin: 18px 0;
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      th,
+      td {
+        padding: 13px 14px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: #f1f5f8;
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      th:last-child,
+      td:last-child {
+        border-right: 0;
+      }
+
+      code,
+      pre {
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      }
+
+      code {
+        padding: 2px 5px;
+        border-radius: 5px;
+        background: #eef1f5;
+        color: #27303b;
+        font-size: 0.92em;
+      }
+
+      pre {
+        margin: 18px 0;
+        padding: 18px;
+        overflow: auto;
+        border-radius: 8px;
+        background: #1f2530;
+        color: #f6f8fb;
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      pre code {
+        padding: 0;
+        background: transparent;
+        color: inherit;
+        font-size: inherit;
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .flow .node {
+        min-height: 110px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .flow .node strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--green-deep);
+      }
+
+      .checklist {
+        display: grid;
+        gap: 10px;
+        margin: 16px 0 0;
+      }
+
+      .checklist div {
+        padding: 13px 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .kbd {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        padding: 2px 7px;
+        border: 1px solid #cfd5dd;
+        border-radius: 6px;
+        background: #fff;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .footer-inner {
+        padding: 30px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 960px) {
+        .page-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: static;
+        }
+
+        .toc nav {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0 18px;
+        }
+
+        .grid-3,
+        .flow {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .topbar {
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 14px 18px;
+        }
+
+        .hero-inner,
+        .page-grid,
+        .footer-inner {
+          width: min(100% - 28px, 1180px);
+        }
+
+        .hero-inner {
+          padding: 44px 0 30px;
+        }
+
+        h1 {
+          font-size: 34px;
+        }
+
+        h2 {
+          font-size: 26px;
+        }
+
+        .section {
+          padding: 24px 18px;
+        }
+
+        .grid-2,
+        .toc nav {
+          grid-template-columns: 1fr;
+        }
+
+        table {
+          display: block;
+          overflow-x: auto;
+          white-space: nowrap;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="../../">
+        <img src="../../shared/assets/logo_dark.png" alt="삼삼엠투" />
+        <span>AI 자습 가이드</span>
+      </a>
+      <nav class="toplinks" aria-label="상단 링크">
+        <a href="../ai-basics-claude-code/">원본 슬라이드</a>
+        <a href="../../">공유자료 홈</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">SELF STUDY · AI BASICS & CLAUDE CODE</p>
+        <h1>AI 기초부터 나만의 CS 응대 도우미까지</h1>
+        <p class="hero-copy">
+          이 문서는 교육 시간에 보조 자료로 사용한 슬라이드를 혼자 공부할 수 있도록 풀어쓴 자습용 자료입니다.
+          발표자가 말로 설명하던 배경, 실습 의도, 입력 예시, 결과 검수 기준까지 한 번에 따라갈 수 있게 구성했습니다.
+        </p>
+        <div class="hero-meta" aria-label="학습 정보">
+          <span class="meta-pill">권장 학습 시간 60-90분</span>
+          <span class="meta-pill">비개발자도 읽을 수 있는 난이도</span>
+          <span class="meta-pill">Claude 프로젝트 실습 포함</span>
+          <span class="meta-pill">세로 스크롤 문서</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-grid">
+      <aside class="toc" aria-label="목차">
+        <strong>목차</strong>
+        <nav>
+          <a href="#start">0. 먼저 이해할 것</a>
+          <a href="#model">1. AI 모델</a>
+          <a href="#tool">2. AI 도구</a>
+          <a href="#context">3. 컨텍스트 엔지니어링</a>
+          <a href="#project">4. Claude 프로젝트 실습</a>
+          <a href="#skill">5. Skill로 반복 가능하게 만들기</a>
+          <a href="#review">6. 복습 체크리스트</a>
+        </nav>
+      </aside>
+
+      <article>
+        <section class="section band" id="start">
+          <span class="section-label">0 · 학습 방향</span>
+          <h2>이 자료의 목표</h2>
+          <p class="lead">
+            이번 학습의 핵심은 AI에게 한 번 좋은 답을 받는 방법이 아닙니다. 우리 팀의 기준, 정책, 말투,
+            검수 절차를 AI가 계속 참고하게 만들어서 사람마다 결과물이 흔들리지 않게 만드는 방법을 익히는 것입니다.
+          </p>
+          <div class="grid-2">
+            <div class="card accent">
+              <h4>교육 시간의 슬라이드</h4>
+              <p>강사가 설명을 덧붙이는 전제로 만든 자료입니다. 키워드와 흐름을 빠르게 보여주는 데 초점이 있습니다.</p>
+            </div>
+            <div class="card blue">
+              <h4>이 자습 문서</h4>
+              <p>혼자 읽어도 왜 그렇게 해야 하는지 이해할 수 있게 설명, 예시, 따라 하기 절차를 함께 제공합니다.</p>
+            </div>
+          </div>
+          <div class="definition">
+            <strong>오늘의 큰 그림</strong>
+            <p>
+              AI 모델은 생각하는 두뇌이고, AI 도구는 그 두뇌가 실제 파일과 업무 환경에서 행동할 수 있게 해주는 손과 발입니다.
+              여기에 정책, 체크리스트, 프로젝트 지침 같은 맥락을 잘 넣어주면 AI는 단순한 챗봇이 아니라 팀 기준을 따르는 업무 도우미가 됩니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="model">
+          <span class="section-label">1 · AI 모델</span>
+          <h2>AI 모델은 두뇌입니다</h2>
+          <p>
+            AI 모델은 우리가 입력한 문장을 이해하고, 다음에 이어질 가능성이 높은 답변을 만들어내는 시스템입니다.
+            쉽게 말하면 질문을 읽고 판단하고 문장을 만드는 두뇌에 가깝습니다. ChatGPT, Claude, Gemini 같은 서비스에서
+            우리가 대화하는 대상의 핵심에는 각각의 모델이 있습니다.
+          </p>
+          <p>
+            중요한 점은 모델이 똑똑해 보여도 그 자체만으로는 실제 작업 환경을 움직일 수 없다는 것입니다.
+            예를 들어 “바탕화면에 폴더 만들어줘”라고 말하면 모델은 폴더 만드는 방법을 설명할 수는 있지만,
+            일반적인 대화창 안에서는 실제로 내 컴퓨터에 폴더를 만들지 못합니다.
+          </p>
+
+          <div class="grid-2">
+            <div class="card accent">
+              <span class="tag">모델이 잘하는 일</span>
+              <h4>생각하고 답하기</h4>
+              <ul>
+                <li>문장 이해하기</li>
+                <li>요약, 번역, 분류하기</li>
+                <li>아이디어와 초안 만들기</li>
+                <li>규칙을 읽고 판단하기</li>
+              </ul>
+            </div>
+            <div class="card">
+              <span class="tag">모델만으로 어려운 일</span>
+              <h4>내 작업 환경을 직접 바꾸기</h4>
+              <ul>
+                <li>파일 생성과 수정</li>
+                <li>코드 실행과 오류 확인</li>
+                <li>폴더 구조 탐색</li>
+                <li>외부 도구와 연결된 반복 작업</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>모델마다 답변 스타일이 다른 이유</h3>
+          <p>
+            회사마다 모델을 훈련시키는 방식, 중요하게 보는 기준, 강점으로 삼는 작업이 조금씩 다릅니다.
+            그래서 같은 질문을 해도 어떤 모델은 더 신중하게 답하고, 어떤 모델은 더 유연하게 여러 대안을 제시하며,
+            어떤 모델은 이미지나 영상 같은 여러 형식의 정보를 함께 다루는 데 강점을 보입니다.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>모델 계열</th>
+                <th>교육자료에서 기억할 포인트</th>
+                <th>예시 모델명</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Claude</strong></td>
+                <td>원칙 기반, 신중한 답변, 긴 문맥 처리와 코딩 보조에 강한 편으로 소개합니다.</td>
+                <td>Sonnet, Opus, Haiku</td>
+              </tr>
+              <tr>
+                <td><strong>GPT</strong></td>
+                <td>범용성과 유연한 답변에 강하고, 다양한 업무 초안 작성에 넓게 쓰기 좋습니다.</td>
+                <td>gpt-5.5, gpt-5.4</td>
+              </tr>
+              <tr>
+                <td><strong>Gemini</strong></td>
+                <td>텍스트, 이미지, 영상 등 여러 형태의 정보를 함께 이해하는 멀티모달 활용에 초점을 둡니다.</td>
+                <td>gemini-pro, gemini-flash, gemini-*</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="practice">
+            <strong>혼자 점검하기</strong>
+            <p>
+              AI에게 “우리 팀 환불 정책을 기준으로 답변해줘”라고만 말했을 때와, 실제 환불 정책 파일을 함께 준 뒤 답변하게 했을 때
+              어떤 차이가 생길지 생각해보세요. 이 차이를 이해하는 것이 뒤에서 배울 컨텍스트 엔지니어링의 출발점입니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="tool">
+          <span class="section-label">2 · AI 도구</span>
+          <h2>AI 도구는 손과 발입니다</h2>
+          <p>
+            AI 코딩 도구는 모델이 실제 작업 환경에서 행동할 수 있도록 연결해주는 제품입니다. 모델이 “이렇게 고치면 된다”고
+            판단하는 것에서 끝나는 것이 아니라, 도구가 폴더를 읽고 파일을 수정하고 명령을 실행해 결과를 확인합니다.
+          </p>
+          <p>
+            여기서 말하는 “코딩 도구”는 개발자만 쓰는 물건이라는 뜻이 아닙니다. 파일을 만들고, 자료를 정리하고,
+            반복 절차를 실행하는 일을 맡길 수 있기 때문에 비개발자의 업무 자동화나 문서 제작에도 같은 개념이 적용됩니다.
+          </p>
+
+          <div class="flow" aria-label="AI 도구 작업 흐름">
+            <div class="node">
+              <strong>읽는다</strong>
+              <span>폴더, 파일, 문서 구조를 확인하고 필요한 맥락을 찾습니다.</span>
+            </div>
+            <div class="node">
+              <strong>판단한다</strong>
+              <span>모델이 요청과 자료를 바탕으로 무엇을 해야 할지 결정합니다.</span>
+            </div>
+            <div class="node">
+              <strong>바꾼다</strong>
+              <span>허용된 범위 안에서 파일을 만들거나 내용을 수정합니다.</span>
+            </div>
+            <div class="node">
+              <strong>검증한다</strong>
+              <span>명령 실행, 빌드, 미리보기 등을 통해 결과가 맞는지 확인합니다.</span>
+            </div>
+          </div>
+
+          <h3>엔진과 도구를 구분해야 합니다</h3>
+          <p>
+            같은 AI라도 “어떤 모델을 쓰는가”와 “어떤 도구 위에서 쓰는가”는 다른 질문입니다. 모델은 엔진처럼 생각하고
+            판단하는 역할을 하고, 도구는 그 엔진을 실제 업무 환경에 연결합니다.
+          </p>
+
+          <div class="grid-2">
+            <div class="card violet">
+              <span class="tag">엔진</span>
+              <h4>AI 모델</h4>
+              <p>생각하고 판단하고 문장을 만듭니다.</p>
+              <ul>
+                <li>GPT: gpt-5.5, gpt-5.4</li>
+                <li>Claude: Sonnet, Opus, Haiku</li>
+                <li>Gemini: gemini-pro, gemini-flash, gemini-*</li>
+              </ul>
+            </div>
+            <div class="card blue">
+              <span class="tag">도구</span>
+              <h4>실행 제품</h4>
+              <p>모델을 내 작업 환경에 연결해 실제 업무를 수행하게 합니다.</p>
+              <ul>
+                <li>Codex</li>
+                <li>Claude Code</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="note">
+            <strong>핵심 정리</strong>
+            <p>
+              모델만 있으면 “답변”을 받을 수 있고, 도구까지 있으면 “작업 결과물”을 만들 수 있습니다.
+              앞으로 실습할 Claude 프로젝트와 Skill도 이 차이를 이해한 뒤 보면 훨씬 명확해집니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="context">
+          <span class="section-label">3 · 컨텍스트 엔지니어링</span>
+          <h2>필요한 정보를, 필요한 때에 넣는 기술</h2>
+          <p>
+            컨텍스트는 AI가 지금 답변을 만들 때 참고하는 배경 정보입니다. 우리가 이전에 나눈 대화, 업로드한 문서,
+            프로젝트 지침, 정책 파일, 체크리스트가 모두 컨텍스트가 될 수 있습니다.
+          </p>
+          <p>
+            컨텍스트 엔지니어링은 단순히 많은 자료를 한 번에 넣는 일이 아닙니다. 오히려 중요한 것은 필요한 정보를
+            필요한 순간에, AI가 헷갈리지 않는 형태로 제공하는 것입니다. 자료가 많아질수록 AI가 무엇을 우선해야 하는지
+            모호해질 수 있기 때문입니다.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <span class="tag">좋지 않은 방식</span>
+              <h4>매번 긴 프롬프트에 전부 붙여넣기</h4>
+              <p>정책, 체크리스트, 금지 표현, 출력 형식을 매번 사람이 직접 복사합니다. 빠뜨리기 쉽고 사람마다 결과가 달라집니다.</p>
+            </div>
+            <div class="card accent">
+              <span class="tag">좋은 방식</span>
+              <h4>자료와 규칙을 구조화해서 재사용하기</h4>
+              <p>프로젝트 지침, 지식 파일, Skill처럼 반복 사용 가능한 형태로 만들어 AI가 같은 기준을 계속 참고하게 합니다.</p>
+            </div>
+          </div>
+
+          <h3>Claude Code의 5가지 무기</h3>
+          <p>
+            슬라이드에서는 Claude Code를 예로 들어, 작업 맥락을 다루는 대표적인 장치를 5가지로 정리했습니다.
+            모든 기능을 한 번에 외울 필요는 없습니다. “AI에게 어떤 정보를 언제 줄 것인가”라는 관점으로 보면 됩니다.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>장치</th>
+                <th>쉽게 말하면</th>
+                <th>언제 유용한가</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>CLAUDE.md</strong></td>
+                <td>프로젝트 규칙을 미리 적어두는 안내문</td>
+                <td>항상 지켜야 하는 말투, 구조, 금지 사항이 있을 때</td>
+              </tr>
+              <tr>
+                <td><strong>Skills</strong></td>
+                <td>특정 일을 할 때만 켜지는 전문가 설명서</td>
+                <td>CS 답변, 자료 제작, 코드 리뷰처럼 반복되는 업무 절차가 있을 때</td>
+              </tr>
+              <tr>
+                <td><strong>MCP</strong></td>
+                <td>외부 도구나 데이터와 AI를 연결하는 통로</td>
+                <td>Slack, Notion, Figma, 문서 저장소 같은 외부 맥락을 가져와야 할 때</td>
+              </tr>
+              <tr>
+                <td><strong>Hooks</strong></td>
+                <td>특정 상황에 자동으로 규칙이나 정보를 끼워 넣는 장치</td>
+                <td>파일 수정 전후, 테스트 실행 전후처럼 반복 타이밍이 정해져 있을 때</td>
+              </tr>
+              <tr>
+                <td><strong>Sub-agents</strong></td>
+                <td>작업을 나눠 맡기고 요약 결과만 돌려받는 방식</td>
+                <td>조사, 검토, 구현처럼 동시에 나눠서 진행할 일이 있을 때</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="definition">
+            <strong>한 문장으로 정리</strong>
+            <p>
+              좋은 AI 활용은 “AI가 알아서 잘하겠지”가 아니라, AI가 참고해야 할 기준을 업무 단위로 잘 포장해두는 일입니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="project">
+          <span class="section-label">4 · 실습</span>
+          <h2>Claude 프로젝트로 CS 응대 도우미 만들기</h2>
+          <p>
+            이제 개념을 실제 업무 예시로 바꿔봅니다. 목표는 단기임대 서비스의 고객 문의에 대해 정책과 체크리스트를 기준으로
+            안전한 응대문구를 만드는 도우미입니다. 여기서 “안전하다”는 말은 환불, 보상, 입주 가능 시간처럼 회사 정책과
+            운영 확인이 필요한 내용을 AI가 임의로 확정하지 않는다는 뜻입니다.
+          </p>
+
+          <h3>실습 파일의 역할</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>파일</th>
+                <th>역할</th>
+                <th>어디에 쓰나</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>sample-policy.md</code></td>
+                <td>입주 안내 지연, 환불, 보상, 담당자 확인 기준을 담은 정책 파일</td>
+                <td>Claude 프로젝트의 지식 파일</td>
+              </tr>
+              <tr>
+                <td><code>reply-checklist.md</code></td>
+                <td>공감 표현, 과한 약속 금지, 다음 조치 안내 같은 답변 품질 기준</td>
+                <td>Claude 프로젝트의 지식 파일</td>
+              </tr>
+              <tr>
+                <td><code>sample-customer-message.md</code></td>
+                <td>테스트에 사용할 고객 문의 예시</td>
+                <td>지식 파일 또는 테스트 입력</td>
+              </tr>
+              <tr>
+                <td><code>harness-prompt.md</code></td>
+                <td>작업 순서와 출력 형식을 묶은 실행 프롬프트</td>
+                <td>프로젝트 지침 또는 첫 실행 프롬프트</td>
+              </tr>
+              <tr>
+                <td><code>expected-output-example.md</code></td>
+                <td>기대 결과와 비교할 수 있는 예시 출력</td>
+                <td>강사 참고 또는 결과 비교</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="warning">
+            <strong>왜 정책 파일이 필요한가</strong>
+            <p>
+              고객이 강하게 항의하거나 보상을 요구하면 AI가 친절하게 보이려고 과한 약속을 할 수 있습니다.
+              그래서 “어디까지 말해도 되는지”를 정책 파일로 먼저 잡아줘야 합니다.
+            </p>
+          </div>
+
+          <h3>Step 1. 프로젝트 만들기</h3>
+          <ol class="steps">
+            <li>Claude에 접속한 뒤 <strong>프로젝트</strong> 메뉴에서 새 프로젝트를 만듭니다.</li>
+            <li>프로젝트 이름은 <strong>CS 답변 품질 도우미</strong>처럼 역할이 바로 보이게 정합니다.</li>
+            <li>목표 입력칸에는 이 프로젝트가 무엇을 하려는지 적습니다.</li>
+            <li>프로젝트 지침에는 항상 지켜야 할 답변 규칙과 출력 순서를 적습니다.</li>
+          </ol>
+
+          <h4>목표 입력칸 예시</h4>
+          <pre><code>정책·체크리스트·샘플 문의를 바탕으로, 단기임대 예약·입주 문제·환불·보상 문의에 대해 일관된 기준으로 안전한 고객 답변 초안과 내부 검수표를 작성하는 CS 답변 품질 도우미를 만듭니다.</code></pre>
+
+          <p>
+            목표 입력칸은 “이 프로젝트가 무엇을 위한 것인지”를 설명하는 곳입니다. 여기에는 세부 규칙보다 프로젝트의 목적,
+            다루는 업무 범위, 기대 결과를 적는 것이 좋습니다.
+          </p>
+
+          <h4>프로젝트 지침 예시</h4>
+          <pre><code>당신은 CS 답변 품질 담당자입니다.
+
+업로드된 sample-policy.md, reply-checklist.md, sample-customer-message.md를 근거로 고객 문의를 분석하고 답변 초안을 작성합니다.
+
+정책에 없는 환불·보상·입주 가능 시간은 확정하지 마세요.
+고객에게 보낼 답변과 내부 검수표/처리 메모는 반드시 분리하세요.
+공개 게시 예고, 고액 보상 요구, 법적 조치 예고 등은 담당 리더 확인이 필요한 건으로 표시하세요.
+
+출력은 항상 다음 순서로 작성하세요.
+1. 상황 요약
+2. 적용 정책 근거
+3. 위험 검수표
+4. 고객 답변 초안
+5. 내부 처리 메모</code></pre>
+
+          <div class="note">
+            <strong>목표와 지침의 차이</strong>
+            <p>
+              목표 입력칸은 “무엇을 만들지”이고, 프로젝트 지침은 “항상 어떻게 답할지”입니다.
+              둘을 분리하면 나중에 프로젝트 목적은 유지하면서도 답변 형식이나 검수 기준만 바꾸기 쉬워집니다.
+            </p>
+          </div>
+
+          <h3>Step 2. 지식 파일 업로드하기</h3>
+          <p>
+            이제 정책과 체크리스트를 지식 파일로 넣습니다. 이 단계가 중요한 이유는 AI가 매번 사용자의 기억에만 의존하지 않고,
+            같은 기준 파일을 계속 참고하게 만들기 위해서입니다.
+          </p>
+
+          <div class="grid-3">
+            <div class="card accent">
+              <span class="tag">정책</span>
+              <h4><code>sample-policy.md</code></h4>
+              <p>환불, 보상, 입주 안내 지연, 담당 리더 확인 기준처럼 답변의 근거가 되는 내용을 담습니다.</p>
+            </div>
+            <div class="card blue">
+              <span class="tag">검수</span>
+              <h4><code>reply-checklist.md</code></h4>
+              <p>공감 표현, 과한 약속 금지, 다음 조치 안내, 내부 메모 분리 같은 품질 기준을 담습니다.</p>
+            </div>
+            <div class="card amber">
+              <span class="tag">샘플</span>
+              <h4><code>sample-customer-message.md</code></h4>
+              <p>실습용 고객 문의입니다. 실제 입력이 들어왔을 때 어떤 형태로 처리할지 테스트합니다.</p>
+            </div>
+          </div>
+
+          <h3>Step 3. 테스트 프롬프트 실행하기</h3>
+          <p>
+            파일을 넣었다면 실제 문의를 던져봅니다. 처음에는 고객 답변만 바로 요구하지 말고,
+            상황 요약, 정책 근거, 위험 검수표를 먼저 만들게 하는 것이 좋습니다. 그래야 AI가 어떤 기준으로 답변을 만들었는지 확인할 수 있습니다.
+          </p>
+
+          <pre><code>아래 고객 문의에 대한 답변 초안을 작성해줘.
+
+고객 문의:
+오늘 오후 3시에 단기임대 숙소에 입주하기로 했는데 아직 입실 안내와 도어락 비밀번호를 받지 못했습니다. 짐을 들고 숙소 앞에 와 있고, 전액 환불과 대체 숙소 비용 보상을 요구합니다. 오늘 안에 답변이 없으면 온라인 커뮤니티에 올리겠다고 합니다.
+
+반드시 sample-policy.md의 예약·입실·환불·보상 기준을 확인하고, reply-checklist.md 기준으로 위험 요소를 검수한 뒤 작성해줘.
+
+출력은 상황 요약, 적용 정책 근거, 위험 검수표, 고객 답변 초안, 내부 처리 메모 순서로 보여줘.</code></pre>
+
+          <h3>Step 4. 결과를 검수하기</h3>
+          <p>
+            좋은 결과인지 확인할 때는 문장이 예쁜지만 보면 안 됩니다. 특히 CS 응대에서는 과한 약속을 하지 않았는지가 중요합니다.
+            아래 항목을 기준으로 결과를 검수하세요.
+          </p>
+
+          <div class="checklist">
+            <div>상황 요약에서 고객의 핵심 불편이 빠지지 않았는가?</div>
+            <div>정책 근거가 실제 업로드한 정책 파일을 기준으로 작성되었는가?</div>
+            <div>전액 환불, 대체 숙소 비용 보상, 정확한 입주 가능 시간을 임의로 확정하지 않았는가?</div>
+            <div>온라인 공개 예고나 고액 보상 요구를 담당 리더 확인이 필요한 건으로 표시했는가?</div>
+            <div>고객 답변 초안과 내부 처리 메모가 분리되어 있는가?</div>
+          </div>
+
+          <div class="definition">
+            <strong>실습의 진짜 목적</strong>
+            <p>
+              답변 하나를 잘 쓰는 것이 아니라, 정책 파일과 체크리스트를 기반으로 매번 비슷한 품질의 답변이 나오게 만드는 것입니다.
+              이것이 자료를 AI에게 “업로드했다”를 넘어, 업무 기준으로 “구조화했다”에 가까운 상태입니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="skill">
+          <span class="section-label">5 · Skill</span>
+          <h2>반복되는 절차는 Skill로 바꿉니다</h2>
+          <p>
+            프로젝트를 만든 뒤에도 매번 긴 프롬프트를 입력해야 한다면 여전히 번거롭습니다. 그래서 반복되는 업무 절차는
+            Skill로 감싸는 것이 좋습니다. 사용자는 고객 문의만 넣고, Skill 내부에서 정책과 체크리스트를 기준으로 답변을 만들게 하는 방식입니다.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <span class="tag">Before</span>
+              <h4>매번 긴 프롬프트 작성</h4>
+              <p>
+                고객 문의, 정책, 체크리스트, 금지 표현, 출력 형식을 매번 복사합니다.
+                시간이 오래 걸리고 일부 기준을 빠뜨리기 쉽습니다.
+              </p>
+            </div>
+            <div class="card accent">
+              <span class="tag">After</span>
+              <h4><code>/cs-reply "고객 문의"</code></h4>
+              <p>
+                사용자는 고객 문의만 입력합니다. Skill이 내부 지식과 규칙을 적용해 바로 보낼 수 있는 응대문구를 작성합니다.
+              </p>
+            </div>
+          </div>
+
+          <h3>Skill Creator에 넣을 프롬프트 예시</h3>
+          <pre><code>CS 응대문구 작성 Skill을 만들어줘.
+
+스킬 이름: cs-reply
+사용 방식: /cs-reply "고객 문의사항..."
+입력: 사용자가 따옴표 안에 넣은 고객 문의사항 1개만 받는다.
+내부 지식: sample-policy.md와 reply-checklist.md를 항상 기준으로 사용한다.
+목적: 고객 문의를 정책과 체크리스트 기준으로 검토한 뒤, 고객에게 바로 보낼 한국어 응대문구를 작성한다.
+처리: 문의 의도 파악 → 적용 정책 확인 → 위험 표현 제거 → 응대문구 작성
+주의: 정책에 없는 환불·보상·입주 가능 시간은 확정하지 않는다.
+출력: 기본 출력은 고객 응대문구만. 상황 요약·검수표·내부 메모는 사용자가 별도로 요청할 때만 분리해서 보여준다.
+톤: 먼저 공감하고, 과한 약속을 피하며, 필요한 확인 절차를 안내한다.</code></pre>
+
+          <h3>Skill을 테스트하는 입력 예시</h3>
+          <pre><code>/cs-reply "오늘 입주 예정인데 아직 입실 안내와 도어락 비밀번호를 받지 못했습니다. 짐을 들고 숙소 앞에 있고, 전액 환불과 대체 숙소 비용 보상을 요구합니다."</code></pre>
+
+          <p>
+            이 입력의 기대 결과는 고객에게 바로 보낼 수 있는 응대문구입니다. 단, 답변 안에서 전액 환불이나 대체 숙소 비용 보상을
+            확정하면 안 됩니다. 먼저 불편에 공감하고, 확인 중인 항목과 다음 안내 절차를 말하되, 정책에 없는 약속은 피해야 합니다.
+          </p>
+
+          <div class="practice">
+            <strong>좋은 Skill의 기준</strong>
+            <p>
+              사용자가 매번 복잡한 설명을 하지 않아도 같은 기준으로 결과가 나와야 합니다.
+              즉, Skill은 “짧은 명령어”가 아니라 반복 업무의 기준과 절차를 담은 작은 업무 매뉴얼입니다.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="review">
+          <span class="section-label">6 · 복습</span>
+          <h2>혼자 공부한 뒤 확인할 체크리스트</h2>
+          <p>
+            아래 질문에 스스로 답할 수 있으면 이번 자료의 핵심을 이해한 것입니다.
+          </p>
+          <div class="checklist">
+            <div><span class="kbd">1</span> AI 모델과 AI 도구의 차이를 “두뇌”와 “손발”로 설명할 수 있다.</div>
+            <div><span class="kbd">2</span> GPT, Claude, Gemini 모델 계열의 차이를 간단히 말할 수 있다.</div>
+            <div><span class="kbd">3</span> Codex와 Claude Code 같은 도구가 왜 실제 작업 결과물을 만들 수 있는지 이해했다.</div>
+            <div><span class="kbd">4</span> 컨텍스트 엔지니어링이 “많은 자료를 넣기”가 아니라 “필요한 정보를 필요한 때에 넣기”라는 점을 이해했다.</div>
+            <div><span class="kbd">5</span> 프로젝트 목표와 프로젝트 지침의 역할을 구분할 수 있다.</div>
+            <div><span class="kbd">6</span> CS 응대 도우미가 정책에 없는 환불·보상·입주 가능 시간을 확정하면 안 되는 이유를 설명할 수 있다.</div>
+            <div><span class="kbd">7</span> 반복되는 업무 절차를 <code>/cs-reply</code> 같은 Skill로 감싸는 이유를 이해했다.</div>
+          </div>
+
+          <div class="definition">
+            <strong>마지막으로 기억할 문장</strong>
+            <p>
+              좋은 AI 활용은 한 번 좋은 답을 받는 것이 아니라, 팀 기준대로 계속 좋은 답이 나오게 만드는 것입니다.
+            </p>
+          </div>
+          <a class="inline-action" href="../ai-basics-claude-code/">원본 슬라이드 다시 보기</a>
+        </section>
+      </article>
+    </div>
+
+    <footer>
+      <div class="footer-inner">
+        SpaceV Shared Docs · AI 기초부터 CS 응대 도우미까지 자습 가이드
+      </div>
+    </footer>
+  </body>
+</html>
