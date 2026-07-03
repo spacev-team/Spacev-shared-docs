@@ -248,6 +248,19 @@ h1 {
   line-height: 1.5;
 }
 
+.nav-card .card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nav-card .card-meta {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
 .empty-panel {
   display: grid;
   gap: 8px;
