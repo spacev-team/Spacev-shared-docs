@@ -31,6 +31,8 @@ education/
       index.html
     cloudflare-deploy/
       index.html
+  apps-script-intro/
+    index.html
 shared/
   styles/
   assets/
@@ -52,6 +54,8 @@ company/
     index.html
     assets/
   skill-structure-overview/
+    index.html
+  calendar-bot-guide/
     index.html
 ```
 
