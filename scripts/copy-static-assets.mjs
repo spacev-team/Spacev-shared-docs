@@ -11,6 +11,7 @@ const staticAssetDirs = [
   'company/good-data/assets',
   'company/n8n-automation-handbook/assets',
   'company/codex-plugin-guide/assets',
+  'education/practical-lab1-setup/assets',
 ];
 
 for (const assetDir of staticAssetDirs) {

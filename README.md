@@ -33,6 +33,9 @@ education/
       index.html
   apps-script-intro/
     index.html
+  practical-lab1-setup/
+    index.html
+    assets/
 shared/
   styles/
   assets/
