@@ -27,7 +27,8 @@ export default defineConfig({
         claudePluginGuide: resolve(__dirname, 'company/claude-plugin-guide/index.html'),
         skillStructureOverview: resolve(__dirname, 'company/skill-structure-overview/index.html'),
         appsScriptIntro: resolve(__dirname, 'education/apps-script-intro/index.html'),
-        calendarBotGuide: resolve(__dirname, 'company/calendar-bot-guide/index.html')
+        calendarBotGuide: resolve(__dirname, 'company/calendar-bot-guide/index.html'),
+        securityHarnessEngineering: resolve(__dirname, 'education/security-harness-engineering/index.html')
       }
     }
   }
